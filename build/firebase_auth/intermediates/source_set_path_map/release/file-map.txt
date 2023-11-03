@@ -1,0 +1,17 @@
+io.flutter.plugins.firebase.auth.firebase_auth-jetified-annotation-experimental-1.1.0-0 /Users/nawafaljohani/.gradle/caches/transforms-3/0d4e20d93b9420fa3e49755c90b0242c/transformed/jetified-annotation-experimental-1.1.0/res
+io.flutter.plugins.firebase.auth.firebase_auth-jetified-window-java-1.0.0-beta04-1 /Users/nawafaljohani/.gradle/caches/transforms-3/1ded766fc1f144eb20c367ae0d4019e1/transformed/jetified-window-java-1.0.0-beta04/res
+io.flutter.plugins.firebase.auth.firebase_auth-jetified-firebase-common-20.4.2-2 /Users/nawafaljohani/.gradle/caches/transforms-3/58d5c0219203210e82c9e97f2d2dbb05/transformed/jetified-firebase-common-20.4.2/res
+io.flutter.plugins.firebase.auth.firebase_auth-core-1.6.0-3 /Users/nawafaljohani/.gradle/caches/transforms-3/91f3842acfc4994c82129f81d38698a4/transformed/core-1.6.0/res
+io.flutter.plugins.firebase.auth.firebase_auth-jetified-play-services-basement-18.1.0-4 /Users/nawafaljohani/.gradle/caches/transforms-3/a120dcdc2bdfae30d56f1d75900c4d14/transformed/jetified-play-services-basement-18.1.0/res
+io.flutter.plugins.firebase.auth.firebase_auth-jetified-window-1.0.0-beta04-5 /Users/nawafaljohani/.gradle/caches/transforms-3/d4d8b400a6f6bc4083439e3cf02ae955/transformed/jetified-window-1.0.0-beta04/res
+io.flutter.plugins.firebase.auth.firebase_auth-browser-1.4.0-6 /Users/nawafaljohani/.gradle/caches/transforms-3/d6771a029cd989f28f0ebb12973086c9/transformed/browser-1.4.0/res
+io.flutter.plugins.firebase.auth.firebase_auth-jetified-play-services-base-18.0.1-7 /Users/nawafaljohani/.gradle/caches/transforms-3/e37a10b77183f4483d58ba99b2b520a1/transformed/jetified-play-services-base-18.0.1/res
+io.flutter.plugins.firebase.auth.firebase_auth-main-8 /Users/nawafaljohani/.pub-cache/hosted/pub.dev/firebase_auth-4.12.1/android/src/main/res
+io.flutter.plugins.firebase.auth.firebase_auth-release-9 /Users/nawafaljohani/.pub-cache/hosted/pub.dev/firebase_auth-4.12.1/android/src/release/res
+io.flutter.plugins.firebase.auth.firebase_auth-pngs-10 /Users/nawafaljohani/Desktop/ApplicationCodeSource/medapp/medappfv/build/firebase_auth/generated/res/pngs/release
+io.flutter.plugins.firebase.auth.firebase_auth-resValues-11 /Users/nawafaljohani/Desktop/ApplicationCodeSource/medapp/medappfv/build/firebase_auth/generated/res/resValues/release
+io.flutter.plugins.firebase.auth.firebase_auth-rs-12 /Users/nawafaljohani/Desktop/ApplicationCodeSource/medapp/medappfv/build/firebase_auth/generated/res/rs/release
+io.flutter.plugins.firebase.auth.firebase_auth-mergeReleaseResources-13 /Users/nawafaljohani/Desktop/ApplicationCodeSource/medapp/medappfv/build/firebase_auth/intermediates/incremental/release/mergeReleaseResources/merged.dir
+io.flutter.plugins.firebase.auth.firebase_auth-mergeReleaseResources-14 /Users/nawafaljohani/Desktop/ApplicationCodeSource/medapp/medappfv/build/firebase_auth/intermediates/incremental/release/mergeReleaseResources/stripped.dir
+io.flutter.plugins.firebase.auth.firebase_auth-merged_res-15 /Users/nawafaljohani/Desktop/ApplicationCodeSource/medapp/medappfv/build/firebase_auth/intermediates/merged_res/release
+io.flutter.plugins.firebase.auth.firebase_auth-packaged_res-16 /Users/nawafaljohani/Desktop/ApplicationCodeSource/medapp/medappfv/build/firebase_core/intermediates/packaged_res/release
