@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 ThemeData lightTheme = ThemeData(
-  fontFamily: GoogleFonts.josefinSlab().fontFamily,
+  fontFamily: GoogleFonts.roboto().fontFamily,
   brightness: Brightness.light,
   appBarTheme: const AppBarTheme(
     backgroundColor: Colors.transparent,
@@ -18,11 +18,11 @@ ThemeData lightTheme = ThemeData(
   ),
   textTheme: TextTheme(
     labelSmall: const TextStyle(
-        color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
+        color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
     labelMedium: const TextStyle(
-        color: Colors.black, fontSize: 36, fontWeight: FontWeight.bold),
+        color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
     labelLarge: const TextStyle(
-        color: Colors.black, fontSize: 48, fontWeight: FontWeight.bold),
+        color: Colors.white, fontSize: 48, fontWeight: FontWeight.bold),
     bodyLarge: const TextStyle(
       color: Colors.white,
       fontSize: 36,

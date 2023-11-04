@@ -8,7 +8,6 @@ import 'package:medappfv/Themes/lighttheme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Pages/login_signup/login_page.dart';
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

@@ -3,6 +3,7 @@ import 'package:medappfv/Pages/Hompage.dart';
 import 'package:medappfv/Pages/IntroScreens/intro_page_1.dart';
 import 'package:medappfv/Pages/IntroScreens/intro_page_2.dart';
 import 'package:medappfv/Pages/IntroScreens/intro_page_3.dart';
+import 'package:medappfv/Pages/login_signup/login_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -61,10 +62,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           final prefs = await SharedPreferences.getInstance();
                           prefs.setBool('showHome', true);
 
-                          Navigator.pushReplacement(context,
-                              MaterialPageRoute(builder: (context) {
-                            return Homepage();
-                          }));
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return LoginPage();
+                              },
+                            ),
+                          );
                         },
                         child: Text('Done'),
                       )

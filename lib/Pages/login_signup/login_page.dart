@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medappfv/Pages/login_signup/signup.dart';
 import 'package:medappfv/components/my_textfield.dart';
 
 import '../../components/my_button.dart';
@@ -36,7 +37,7 @@ class LoginPage extends StatelessWidget {
               // welcome back, you've been missed!
               Text(
                 'Welcome back you\'ve been missed!',
-                style: Theme.of(context).textTheme.labelSmall,
+                style: Theme.of(context).textTheme.labelMedium,
               ),
 
               const SizedBox(height: 25),
@@ -90,7 +91,7 @@ class LoginPage extends StatelessWidget {
                     Expanded(
                       child: Divider(
                         thickness: 0.5,
-                        color: Colors.grey[400],
+                        color: Colors.grey[600],
                       ),
                     ),
                     Padding(
@@ -103,7 +104,7 @@ class LoginPage extends StatelessWidget {
                     Expanded(
                       child: Divider(
                         thickness: 0.5,
-                        color: Colors.grey[400],
+                        color: Colors.grey[600],
                       ),
                     ),
                   ],
@@ -134,14 +135,29 @@ class LoginPage extends StatelessWidget {
                 children: [
                   Text(
                     'Not a member?',
-                    style: TextStyle(),
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                    ),
                   ),
                   const SizedBox(width: 4),
-                  const Text(
-                    'Register now',
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
+                  GestureDetector(
+                    onTap: () {
+                         Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return SignUpPage();
+                              },
+                            ),
+                          );
+                    },
+                    child: const Text(
+                      'Register now',
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 45, 29, 87),
+                        fontWeight: FontWeight.bold,
+                      ),
+                      
                     ),
                   ),
                 ],

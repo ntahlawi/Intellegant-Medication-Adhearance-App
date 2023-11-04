@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
-  fontFamily: GoogleFonts.josefinSlab().fontFamily,
+  fontFamily: GoogleFonts.roboto().fontFamily,
   appBarTheme: const AppBarTheme(
     backgroundColor: Colors.transparent,
     elevation: 0,
@@ -18,9 +18,9 @@ ThemeData darkTheme = ThemeData(
   ),
   textTheme: TextTheme(
     labelSmall: const TextStyle(
-        color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+        color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
     labelMedium: const TextStyle(
-        color: Colors.white, fontSize: 36, fontWeight: FontWeight.bold),
+        color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
     labelLarge: const TextStyle(
         color: Colors.white, fontSize: 48, fontWeight: FontWeight.bold),
     bodyLarge: const TextStyle(

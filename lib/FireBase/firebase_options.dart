@@ -50,23 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD01yj4wUsVLihT_fWcSH5Zoyxgo5yF-EU',
-    appId: '1:587231571634:android:217c3cdd7fdc57aac1e3ab',
-    messagingSenderId: '587231571634',
-    projectId: 'ima-app-173da',
-    storageBucket: 'ima-app-173da.appspot.com',
+    apiKey: 'AIzaSyCTqLBL7bhZW78WJk0622400zprlaUzn2o',
+    appId: '1:712666636722:android:2a1bd33ebd73d47c5d44ab',
+    messagingSenderId: '712666636722',
+    projectId: 'medappfv',
+    storageBucket: 'medappfv.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAozBhAYjpUA09YlgGwfFqXTR2lZl_dIvs',
-    appId: '1:587231571634:ios:492b1d22f38e46f5c1e3ab',
-    messagingSenderId: '587231571634',
-    projectId: 'ima-app-173da',
-    storageBucket: 'ima-app-173da.appspot.com',
-    androidClientId:
-        '587231571634-gtd4ursn1tkr4kf0c2vvmjg29ub5qfmm.apps.googleusercontent.com',
-    iosClientId:
-        '587231571634-tnjjra2ialg1fgp095p03cpt3dlqe0fb.apps.googleusercontent.com',
-    iosBundleId: 'com.imafv.medapp ',
+    apiKey: 'AIzaSyAWf4iTK_wcpLnQGCFMul_1nyj1bilPrEQ',
+    appId: '1:712666636722:ios:94d54a82cc4a67e95d44ab',
+    messagingSenderId: '712666636722',
+    projectId: 'medappfv',
+    storageBucket: 'medappfv.appspot.com',
+    iosBundleId: 'com.example.medappfv',
   );
 }
