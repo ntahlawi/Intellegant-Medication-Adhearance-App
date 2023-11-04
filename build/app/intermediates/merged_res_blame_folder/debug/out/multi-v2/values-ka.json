@@ -4,24 +4,7 @@
             "outputFile": "com.example.medappfv.app-mergeDebugResources-19:/values-ka/values-ka.xml",
             "map": [
                 {
-                    "source": "/Users/nawafaljohani/.gradle/caches/transforms-3/a120dcdc2bdfae30d56f1d75900c4d14/transformed/jetified-play-services-basement-18.1.0/res/values-ka/values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "195",
-                        "endColumns": "138",
-                        "endOffsets": "333"
-                    },
-                    "to": {
-                        "startLines": "10",
-                        "startColumns": "4",
-                        "startOffsets": "1065",
-                        "endColumns": "142",
-                        "endOffsets": "1203"
-                    }
-                },
-                {
-                    "source": "/Users/nawafaljohani/.gradle/caches/transforms-3/d6771a029cd989f28f0ebb12973086c9/transformed/browser-1.4.0/res/values-ka/values-ka.xml",
+                    "source": "C:\\Users\\hassa\\.gradle\\caches\\transforms-3\\d6771a029cd989f28f0ebb12973086c9\\transformed\\browser-1.4.0\\res\\values-ka\\values-ka.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",
@@ -38,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "/Users/nawafaljohani/.gradle/caches/transforms-3/a6445cc82d3582a2f626284763eee066/transformed/core-1.9.0/res/values-ka/values-ka.xml",
+                    "source": "C:\\Users\\hassa\\.gradle\\caches\\transforms-3\\a6445cc82d3582a2f626284763eee066\\transformed\\core-1.9.0\\res\\values-ka\\values-ka.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -55,7 +38,7 @@
                     }
                 },
                 {
-                    "source": "/Users/nawafaljohani/.gradle/caches/transforms-3/e37a10b77183f4483d58ba99b2b520a1/transformed/jetified-play-services-base-18.0.1/res/values-ka/values.xml",
+                    "source": "C:\\Users\\hassa\\.gradle\\caches\\transforms-3\\e37a10b77183f4483d58ba99b2b520a1\\transformed\\jetified-play-services-base-18.0.1\\res\\values-ka\\values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
@@ -69,6 +52,23 @@
                         "startOffsets": "55,160,309,437,547,701,835,957,1208,1381,1489,1644,1772,1933,2072,2138,2199",
                         "endColumns": "104,148,127,109,153,133,121,107,172,107,154,127,160,138,65,60,75",
                         "endOffsets": "155,304,432,542,696,830,952,1060,1376,1484,1639,1767,1928,2067,2133,2194,2270"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\hassa\\.gradle\\caches\\transforms-3\\a120dcdc2bdfae30d56f1d75900c4d14\\transformed\\jetified-play-services-basement-18.1.0\\res\\values-ka\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "195",
+                        "endColumns": "138",
+                        "endOffsets": "333"
+                    },
+                    "to": {
+                        "startLines": "10",
+                        "startColumns": "4",
+                        "startOffsets": "1065",
+                        "endColumns": "142",
+                        "endOffsets": "1203"
                     }
                 }
             ]

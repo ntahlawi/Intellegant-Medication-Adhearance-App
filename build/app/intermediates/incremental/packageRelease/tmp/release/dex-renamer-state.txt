@@ -1,4 +1,0 @@
-#Fri Nov 03 18:06:49 AST 2023
-base.0=/Users/nawafaljohani/Desktop/ApplicationCodeSource/medapp/medappfv/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-renamed.0=classes.dex
-path.0=classes.dex

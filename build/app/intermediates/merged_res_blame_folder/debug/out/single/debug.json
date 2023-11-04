@@ -22,9 +22,5 @@
     {
         "merged": "com.example.medappfv.app-merged_res-21:/mipmap-xhdpi_ic_launcher.png.flat",
         "source": "com.example.medappfv.app-main-14:/mipmap-xhdpi/ic_launcher.png"
-    },
-    {
-        "merged": "com.example.medappfv.app-merged_res-21:/drawable_launch_background.xml.flat",
-        "source": "com.example.medappfv.app-main-14:/drawable/launch_background.xml"
     }
 ]
