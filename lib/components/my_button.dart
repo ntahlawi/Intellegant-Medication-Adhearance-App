@@ -19,7 +19,7 @@ class MyButton extends StatelessWidget {
         child: Center(
           child: Text(
             "Sign In",
-            style: Theme.of(context).textTheme.labelSmall,
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
         ),
       ),

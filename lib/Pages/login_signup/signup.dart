@@ -108,12 +108,12 @@ class SignUpPage extends StatelessWidget {
               const SizedBox(height: 50),
 
               // google + apple sign in buttons
-              Row(
+               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   // google button
                   SquareTile(imagePath: 'assets/google.png'),
-
+                  
                   SizedBox(width: 25),
 
                   // apple button

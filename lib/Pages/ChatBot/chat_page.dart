@@ -18,13 +18,17 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   final _messages = <ChatMessage>[
-    ChatMessage('Hello, how can I help you?',false),
+    ChatMessage(
+      'Hello, how can I help you?',
+      false,
+    ),
   ];
   var _awaitingResponse = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Column(
@@ -64,7 +68,8 @@ class _ChatPageState extends State<ChatPage> {
       });
     } catch (err) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('An error has occurred. Please try again.')),
+        const SnackBar(
+            content: Text('An error has occurred. Please try again.')),
       );
       setState(() {
         _awaitingResponse = false;

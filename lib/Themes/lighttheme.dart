@@ -12,26 +12,44 @@ ThemeData lightTheme = ThemeData(
     ),
   ),
   colorScheme: const ColorScheme.light(
-    background: Color.fromRGBO(247, 247, 247, 1),
-    primary: Color.fromRGBO(20, 24, 57, 1),
-    secondary: Color.fromRGBO(90, 98, 140, 1),
-  ),
-  textTheme: TextTheme(
-    labelSmall: const TextStyle(
-        color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
-    labelMedium: const TextStyle(
-        color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-    labelLarge: const TextStyle(
-        color: Colors.white, fontSize: 48, fontWeight: FontWeight.bold),
-    bodyLarge: const TextStyle(
-      color: Colors.white,
-      fontSize: 36,
+      background: Color.fromRGBO(247, 247, 247, 1),
+      primary: Color.fromRGBO(20, 24, 57, 1),
+      secondary: Color.fromRGBO(90, 98, 140, 1),
+      primaryContainer: Colors.black),
+  iconTheme: IconThemeData(color: Colors.white),
+  textTheme: const TextTheme(
+    labelSmall: TextStyle(
+      color: Color.fromRGBO(217, 217, 217, 1),
     ),
-    bodySmall: const TextStyle(
-      color: Colors.white,
+    labelMedium: TextStyle(
+      color: Color.fromRGBO(217, 217, 217, 1),
     ),
-    bodyMedium: const TextStyle(
-      color: Colors.white,
+    labelLarge: TextStyle(
+      color: Color.fromRGBO(217, 217, 217, 1),
+    ),
+    bodyLarge: TextStyle(
+      color: Color.fromRGBO(217, 217, 217, 1),
+    ),
+    bodySmall: TextStyle(
+      color: Color.fromRGBO(217, 217, 217, 1),
+    ),
+    bodyMedium: TextStyle(
+      color: Color.fromRGBO(217, 217, 217, 1),
+    ),
+    titleSmall: TextStyle(
+      color: Colors.black,
+    ),
+    titleMedium: TextStyle(
+      color: Color.fromRGBO(217, 217, 217, 1),
+    ),
+    titleLarge: TextStyle(
+      color: Color.fromRGBO(217, 217, 217, 1),
+    ),
+    headlineSmall: TextStyle(
+      color: Color.fromRGBO(217, 217, 217, 1),
+    ),
+    headlineMedium: TextStyle(
+      color: Color.fromRGBO(217, 217, 217, 1),
     ),
   ),
 );

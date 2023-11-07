@@ -33,6 +33,6 @@ class OBcheck extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: lightTheme,
         darkTheme: darkTheme,
-        home: showHome ? LoginPage() : OnBoardingScreen(),
+        home: showHome ? LoginPage() : const OnBoardingScreen(),
       );
 }

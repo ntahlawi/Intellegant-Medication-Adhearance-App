@@ -1,5 +1,6 @@
+// ignore_for_file: file_names, prefer_const_literals_to_create_immutables, prefer_const_constructors, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
-import 'package:medappfv/Pages/Hompage.dart';
 import 'package:medappfv/Pages/IntroScreens/intro_page_1.dart';
 import 'package:medappfv/Pages/IntroScreens/intro_page_2.dart';
 import 'package:medappfv/Pages/IntroScreens/intro_page_3.dart';
@@ -19,7 +20,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   bool isLastPage = false;
 
   // page controller
-  PageController _controller = PageController();
+  final PageController _controller = PageController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,14 +35,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               });
             },
             children: [
-              IntroPage1(),
-              IntroPage2(),
-              IntroPage3(),
+               IntroPage1(),
+               IntroPage2(),
+               IntroPage3(),
             ],
           ),
           // dot indicators
           Container(
-            alignment: Alignment(0, 0.75),
+            alignment: const Alignment(0, 0.75),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -50,7 +51,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   onTap: () {
                     _controller.jumpToPage(2);
                   },
-                  child: Text('skip'),
+                  child: Text('skip',
+                      style: Theme.of(context).textTheme.labelSmall),
                 ),
 
                 SmoothPageIndicator(controller: _controller, count: 3),
@@ -71,15 +73,18 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                             ),
                           );
                         },
-                        child: Text('Done'),
+                        child: const Text('Done'),
                       )
                     : GestureDetector(
                         onTap: () {
                           _controller.nextPage(
-                              duration: Duration(milliseconds: 500),
+                              duration: const Duration(milliseconds: 500),
                               curve: Curves.easeIn);
                         },
-                        child: Text('Next'),
+                        child: Text(
+                          'Next',
+                          style: Theme.of(context).textTheme.labelSmall,
+                        ),
                       )
               ],
             ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medappfv/Pages/login_signup/signup.dart';
+import 'package:medappfv/components/NavBar.dart';
 import 'package:medappfv/components/my_textfield.dart';
-
 import '../../components/my_button.dart';
 import '../../components/square_tile.dart';
 
@@ -27,18 +27,19 @@ class LoginPage extends StatelessWidget {
               const SizedBox(height: 50),
 
               // logo
-              const Icon(
+              Icon(
                 Icons.lock,
                 size: 100,
+                color: Theme.of(context).iconTheme.color,
               ),
 
               const SizedBox(height: 50),
 
               // welcome back, you've been missed!
-              Text(
-                'Welcome back you\'ve been missed!',
-                style: Theme.of(context).textTheme.labelMedium,
-              ),
+              Text('Welcome back you\'ve been missed!',
+                  style: TextStyle(
+                    color: Theme.of(context).textTheme.labelSmall!.color,
+                  )),
 
               const SizedBox(height: 25),
 
@@ -78,7 +79,16 @@ class LoginPage extends StatelessWidget {
 
               // sign in button
               MyButton(
-                onTap: signUserIn,
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const NavBar();
+                      },
+                    ),
+                  );
+                },
               ),
 
               const SizedBox(height: 50),
@@ -114,9 +124,9 @@ class LoginPage extends StatelessWidget {
               const SizedBox(height: 50),
 
               // google + apple sign in buttons
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   // google button
                   SquareTile(imagePath: 'assets/google.png'),
 
@@ -142,14 +152,14 @@ class LoginPage extends StatelessWidget {
                   const SizedBox(width: 4),
                   GestureDetector(
                     onTap: () {
-                         Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return SignUpPage();
-                              },
-                            ),
-                          );
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return SignUpPage();
+                          },
+                        ),
+                      );
                     },
                     child: const Text(
                       'Register now',
@@ -157,7 +167,6 @@ class LoginPage extends StatelessWidget {
                         color: Color.fromARGB(255, 45, 29, 87),
                         fontWeight: FontWeight.bold,
                       ),
-                      
                     ),
                   ),
                 ],

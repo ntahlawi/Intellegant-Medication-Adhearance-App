@@ -1,7 +1,7 @@
-// ignore_for_file: unused_local_variable
-
 import 'package:flutter/material.dart';
-class MessageBubble extends StatelessWidget {
+import 'package:markdown_widget/markdown_widget.dart';
+
+class MessageBubble extends StatefulWidget {
   const MessageBubble({
     required this.content,
     required this.isUserMessage,
@@ -10,16 +10,21 @@ class MessageBubble extends StatelessWidget {
 
   final String content;
   final bool isUserMessage;
-  
-  get myP => null;
 
+  @override
+  State<MessageBubble> createState() => _MessageBubbleState();
+}
+
+class _MessageBubbleState extends State<MessageBubble> {
   @override
   Widget build(BuildContext context) {
     final themeData = Theme.of(context);
     return Container(
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: isUserMessage ? myP : Colors.blueAccent[100],
+        color: widget.isUserMessage
+            ? themeData.colorScheme.secondary
+            : themeData.colorScheme.primary,
         borderRadius: const BorderRadius.all(Radius.circular(12)),
       ),
       child: Padding(
@@ -30,14 +35,14 @@ class MessageBubble extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  isUserMessage ? 'You' : 'AI',
-                  style: const TextStyle(fontWeight: FontWeight.bold, color:  Color.fromRGBO(217, 217, 217, 1),),
+                  widget.isUserMessage ? 'You' : 'AI',
+                  style: Theme.of(context).textTheme.headlineMedium,
                 ),
               ],
             ),
             const SizedBox(height: 8),
             MarkdownWidget(
-              data: content,
+              data: widget.content,
               shrinkWrap: true,
             ),
           ],
@@ -45,6 +50,4 @@ class MessageBubble extends StatelessWidget {
       ),
     );
   }
-  
-  MarkdownWidget({required String data, required bool shrinkWrap}) {}
 }
