@@ -3,7 +3,8 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:medappfv/components/category_card.dart';
+import 'package:medappfv/components/Widgets/Pie_Chart.dart';
+import 'package:medappfv/components/Widgets/category_card.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -15,6 +16,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
@@ -70,6 +72,7 @@ class _HomeState extends State<Home> {
             ),
 
             //card
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: Container(
@@ -80,17 +83,21 @@ class _HomeState extends State<Home> {
                 child: Row(
                   children: [
                     //animation + picture
-                    Container(
+
+                    SizedBox(
                       height: 100,
                       width: 100,
-                      child: Lottie.network(
-                          'https://lottie.host/343b0307-0cc8-4a4d-a351-51e0a90fc0d5/0bbG8l9l4D.json'),
+                      child: Lottie.network(isDarkMode
+                          ? 'https://lottie.host/be9947b0-4738-4baf-b18d-36a667dcbb32/3xmsLxc01a.json'
+                          : 'https://lottie.host/416836f1-1622-4d5b-8aca-378b3911a36d/N8ZAZodBz1.json'),
                     ),
 
-                    // your next dose is in :
                     SizedBox(
                       width: 25,
                     ),
+
+                    // your next dose is in :
+
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,9 +135,10 @@ class _HomeState extends State<Home> {
                             ),
                             child: Center(
                               child: Text(
-                                'go to my medications',
+                                'Go to My Medications',
                                 style: TextStyle(
                                     fontSize: 14,
+                                    fontWeight: FontWeight.bold,
                                     color: Theme.of(context)
                                         .textTheme
                                         .labelSmall!
@@ -152,31 +160,26 @@ class _HomeState extends State<Home> {
 
             // horizontal listview --> prbably
 
-            Container(
+            SizedBox(
               height: 90,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
                   categorycard(
-                      imageUrl:
-                          'https://lottie.host/2f2ec972-c3a6-4a22-8195-314d85d0ac37/wJAbWtplSp.json',
+                      imageUrl: 'lib/icons/first-aid-kit.png',
                       categoryname: 'health'),
                   SizedBox(
-                    width: 25,
+                    width: 10,
                   ),
                   categorycard(
-                      imageUrl:
-                          'https://lottie.host/2f2ec972-c3a6-4a22-8195-314d85d0ac37/wJAbWtplSp.json',
-                      categoryname: 'rewards'),
+                      imageUrl: 'lib/icons/gift.png', categoryname: 'rewards'),
                   SizedBox(
-                    width: 25,
+                    width: 10,
                   ),
                   categorycard(
-                      imageUrl:
-                          'https://lottie.host/2f2ec972-c3a6-4a22-8195-314d85d0ac37/wJAbWtplSp.json',
-                      categoryname: 'diet'),
+                      imageUrl: 'lib/icons/diet.png', categoryname: 'diet'),
                   SizedBox(
-                    width: 25,
+                    width: 10,
                   ),
                 ],
               ),
@@ -232,6 +235,10 @@ class _HomeState extends State<Home> {
                           borderRadius: BorderRadius.circular(12)),
                       height: 175,
                       width: 200,
+                      child: Padding(
+                        padding: const EdgeInsets.all(3),
+                        child: mypiechart(),
+                      ),
                     ),
                     SizedBox(
                       width: 25,
@@ -242,6 +249,8 @@ class _HomeState extends State<Home> {
                           borderRadius: BorderRadius.circular(12)),
                       height: 175,
                       width: 200,
+                      child: Lottie.network(
+                          'https://lottie.host/548401de-281b-462f-bd4b-de933850b57f/PmTNZvnDSU.json'),
                     ),
                   ],
                 ),
@@ -257,6 +266,8 @@ class _HomeState extends State<Home> {
                           borderRadius: BorderRadius.circular(12)),
                       height: 175,
                       width: 200,
+                      child: Lottie.network(
+                          'https://lottie.host/42356826-3521-4774-97e2-ad20958673fe/E8LjkNoe7y.json'),
                     ),
                     SizedBox(
                       width: 25,
@@ -267,6 +278,8 @@ class _HomeState extends State<Home> {
                           borderRadius: BorderRadius.circular(12)),
                       height: 175,
                       width: 200,
+                      child: Lottie.network(
+                          'https://lottie.host/954fcca1-9977-4b0a-b310-c97d42c774c4/knkexFTsXT.json'),
                     ),
                   ],
                 )

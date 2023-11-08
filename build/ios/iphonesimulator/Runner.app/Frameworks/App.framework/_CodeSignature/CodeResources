@@ -10,11 +10,11 @@
 		</data>
 		<key>flutter_assets/AssetManifest.bin</key>
 		<data>
-		XLpxu6mkahJMltgYsxRDNLDib5o=
+		5jVvwSZkdwKBiDi+vShJ6BCkAeY=
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		OpsVfNpWDAUJ11wM2VFgArSedOA=
+		KYTuxwoNbjb0VKHQKZkVis/NJhc=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
@@ -42,15 +42,7 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		dvA637CY44b9unusKXeT2pJlqbg=
-		</data>
-		<key>flutter_assets/lib/assets/apple.png</key>
-		<data>
-		pmm7gYq/Y41LFDR7r3nYxF1nHP4=
-		</data>
-		<key>flutter_assets/lib/assets/google.png</key>
-		<data>
-		jkJBOZuu++j4/v+rD+Z2guFA4bE=
+		R5baCpZLzpnqJuT3cDYiNC7uILk=
 		</data>
 		<key>flutter_assets/lib/icons/apple.png</key>
 		<data>
@@ -75,6 +67,10 @@
 		<key>flutter_assets/lib/icons/mental-health.png</key>
 		<data>
 		hdT+MRvsx3mJDWG/CjJJlvjju/c=
+		</data>
+		<key>flutter_assets/lib/icons/pill.json</key>
+		<data>
+		I7Bn1rEnbi16VpXmVFtnFyGB/+Q=
 		</data>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -111,14 +107,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			MlsrqHqpUpadCoU3Ovy+EctMHZgHudRMVroRLdJkBHY=
+			pdZzey3CckZOEBqzUMeDTRIkX5c9v/xZOl/ZtNqK3ik=
 			</data>
 		</dict>
 		<key>flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			wGdPv4dSF6n6uooGnSZgiTzPDTIE47RaR1Op+KSmKAQ=
+			YrKKT2xlHz0y53tyMENnByiZwW1VBDvOqpoL5DMbuT4=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
@@ -167,21 +163,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			g3OrZ++ZdA9GAfNVenxxGe16YEZ2YxS8vMGb9lXE7vk=
-			</data>
-		</dict>
-		<key>flutter_assets/lib/assets/apple.png</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			uYdKnSaHB0+cIqjSJ2M5uQOIyN/KzVpPH4elY/y/yO0=
-			</data>
-		</dict>
-		<key>flutter_assets/lib/assets/google.png</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			1l2Jwr4szzt28KG8MCwqV4gFs5Qk+YH6VIMHZgMv7bA=
+			cKdYt2soPCTax+NHJ1WqnuN8KBQCHUi7oMpfK3pXVHs=
 			</data>
 		</dict>
 		<key>flutter_assets/lib/icons/apple.png</key>
@@ -224,6 +206,13 @@
 			<key>hash2</key>
 			<data>
 			qAed+VWvAt9Rq3Zq46N8ZhRx1Ob4XjUdFFHPJQKziKc=
+			</data>
+		</dict>
+		<key>flutter_assets/lib/icons/pill.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			vWhmrxZq4Yhuv76bMmuzoc0JONWlLfunaawWOf5n7ww=
 			</data>
 		</dict>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>

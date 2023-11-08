@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:medappfv/Pages/login_signup/login_page.dart';
-import 'package:medappfv/components/my_textfield.dart';
+import 'package:medappfv/components/Widgets/my_textfield.dart';
 
-import '../../components/my_button.dart';
-import '../../components/square_tile.dart';
+import '../../components/Widgets/my_button.dart';
+import '../../components/Widgets/square_tile.dart';
 
 class SignUpPage extends StatelessWidget {
   SignUpPage({super.key});
@@ -108,7 +108,7 @@ class SignUpPage extends StatelessWidget {
               const SizedBox(height: 50),
 
               // google + apple sign in buttons
-               Row(
+               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // google button

@@ -47,24 +47,31 @@ class MessageComposer extends StatelessWidget {
                                   .headlineSmall!
                                   .color,
                               fontSize: 14),
-                          prefixIcon: Icon(EvaIcons.search),
+                          prefixIcon: const Icon(EvaIcons.search),
                           prefixIconColor: Theme.of(context).iconTheme.color,
                           border: InputBorder.none,
-                          contentPadding: const EdgeInsets.all(8),
+                          contentPadding: const EdgeInsets.symmetric(vertical: 8),
                         ),
                       ),
                     )
-                  : const Row(
+                  : Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 24,
                           width: 24,
                           child: CircularProgressIndicator(),
                         ),
                         Padding(
-                          padding: EdgeInsets.all(16),
-                          child: Text('Getting An Answer Right Away'),
+                          padding: const EdgeInsets.all(16),
+                          child: Text(
+                            'Getting An Answer Right Away!',
+                            style: TextStyle(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .color),
+                          ),
                         ),
                       ],
                     ),

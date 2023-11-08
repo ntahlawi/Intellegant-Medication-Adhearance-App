@@ -3,8 +3,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:medappfv/Pages/IntroScreens/OnBoarding.dart';
-import 'package:medappfv/Themes/darktheme.dart';
-import 'package:medappfv/Themes/lighttheme.dart';
+import 'package:medappfv/components/Themes/darktheme.dart';
+import 'package:medappfv/components/Themes/lighttheme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Pages/login_signup/login_page.dart';
 

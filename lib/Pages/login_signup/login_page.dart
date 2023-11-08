@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:medappfv/Pages/login_signup/signup.dart';
-import 'package:medappfv/components/NavBar.dart';
-import 'package:medappfv/components/my_textfield.dart';
-import '../../components/my_button.dart';
-import '../../components/square_tile.dart';
+import 'package:medappfv/components/Widgets/NavBar.dart';
+import 'package:medappfv/components/Widgets/my_textfield.dart';
+import '../../components/Widgets/my_button.dart';
+import '../../components/Widgets/square_tile.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});

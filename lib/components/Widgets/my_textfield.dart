@@ -1,0 +1,39 @@
+import 'package:flutter/material.dart';
+
+class MyTextField extends StatelessWidget {
+  // ignore: prefer_typing_uninitialized_variables
+  final controller;
+  final String hintText;
+  final bool obscureText;
+
+  const MyTextField({
+    super.key,
+    required this.controller,
+    required this.hintText,
+    required this.obscureText,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+      child: TextField(
+        controller: controller,
+        obscureText: obscureText,
+        decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide:
+                  BorderSide(color: Theme.of(context).colorScheme.primary),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey.shade400),
+            ),
+            fillColor: Theme.of(context).colorScheme.primary.withOpacity(0.75),
+            filled: true,
+            hintText: hintText, 
+            hintStyle: Theme.of(context).textTheme.headlineSmall),
+      ),
+    );
+  }
+}
