@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:medappfv/Pages/Journal%20/MainJournal.dart';
+import 'package:medappfv/Pages/Journal/MainJournal.dart';
 import 'package:medappfv/Pages/MedicationHealthandDiet/DietPlanner.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
 import 'package:medappfv/components/Widgets/Pie_Chart.dart';
