@@ -8,14 +8,14 @@ ThemeData lightTheme = ThemeData(
     backgroundColor: Colors.transparent,
     elevation: 0,
     titleTextStyle: TextStyle(
-      color: Color.fromRGBO(38, 38, 38, 1),
+      color: Color.fromRGBO(0, 0, 0, 1),
     ),
   ),
   colorScheme: const ColorScheme.light(
       background: Color.fromRGBO(247, 247, 247, 1),
       primary: Color.fromRGBO(20, 24, 57, 1),
       secondary: Color.fromRGBO(90, 98, 140, 1),
-      primaryContainer: Colors.black),
+      primaryContainer: Colors.white),
   iconTheme: const IconThemeData(color: Colors.white),
   textTheme: const TextTheme(
     labelSmall: TextStyle(
@@ -30,9 +30,7 @@ ThemeData lightTheme = ThemeData(
     bodyLarge: TextStyle(
       color: Color.fromRGBO(217, 217, 217, 1),
     ),
-    bodySmall: TextStyle(
-      color: Color.fromRGBO(217, 217, 217, 1),
-    ),
+    bodySmall: TextStyle(color: Colors.white),
     bodyMedium: TextStyle(
       color: Color.fromRGBO(217, 217, 217, 1),
     ),

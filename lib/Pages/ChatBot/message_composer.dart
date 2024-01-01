@@ -1,5 +1,6 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:medappfv/components/Themes/Sizing.dart';
 
 class MessageComposer extends StatelessWidget {
   MessageComposer({
@@ -15,11 +16,10 @@ class MessageComposer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
     return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.transparent,
-        borderRadius: BorderRadius.circular(20), // Adjust the radius as needed
       ),
       child: SafeArea(
         child: Row(
@@ -50,20 +50,22 @@ class MessageComposer extends StatelessWidget {
                           prefixIcon: const Icon(EvaIcons.search),
                           prefixIconColor: Theme.of(context).iconTheme.color,
                           border: InputBorder.none,
-                          contentPadding: const EdgeInsets.symmetric(vertical: 8),
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: SizeConfig.pointFifteenHeight),
                         ),
                       ),
                     )
                   : Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const SizedBox(
-                          height: 24,
-                          width: 24,
-                          child: CircularProgressIndicator(),
+                        SizedBox(
+                          height: SizeConfig.screenHeight * 0.03,
+                          width: SizeConfig.screenHeight * 0.03,
+                          child: const CircularProgressIndicator(),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(16),
+                          padding:
+                              EdgeInsets.all(SizeConfig.screenHeight * 0.015),
                           child: Text(
                             'Getting An Answer Right Away!',
                             style: TextStyle(

@@ -8,14 +8,14 @@ ThemeData darkTheme = ThemeData(
     backgroundColor: Colors.transparent,
     elevation: 0,
     titleTextStyle: TextStyle(
-      color: Color.fromRGBO(217, 217, 217, 1),
+      color: Color.fromRGBO(255, 255, 255, 1),
     ),
   ),
   colorScheme: const ColorScheme.dark(
       background: Color.fromRGBO(8, 8, 8, 1),
       primary: Color.fromRGBO(198, 202, 235, 1),
       secondary: Color.fromRGBO(115, 123, 165, 1),
-      primaryContainer: Colors.white),
+      primaryContainer: Colors.black),
   iconTheme: const IconThemeData(color: Colors.black),
   textTheme: const TextTheme(
     labelSmall: TextStyle(

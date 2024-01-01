@@ -1,10 +1,16 @@
 // ignore_for_file: file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:medappfv/Pages/Journal%20/MainJournal.dart';
+import 'package:medappfv/Pages/MedicationHealthandDiet/DietPlanner.dart';
+import 'package:medappfv/components/Themes/Sizing.dart';
 import 'package:medappfv/components/Widgets/Pie_Chart.dart';
-import 'package:medappfv/components/Widgets/category_card.dart';
+import 'package:medappfv/components/Widgets/Cards/category_card.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -14,9 +20,35 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  //random quote genarator
+
+  late String quote = 'Loading...';
+  late String author = '';
+
+  @override
+  void initState() {
+    super.initState();
+    fetchQuote();
+  }
+
+  Future<void> fetchQuote() async {
+    final response =
+        await http.get(Uri.parse('https://api.quotable.io/random'));
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      setState(() {
+        quote = data['content'];
+        author = data['author'];
+      });
+    } else {
+      throw Exception('Failed to load quote');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    SizeConfig.init(context);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
@@ -24,7 +56,8 @@ class _HomeState extends State<Home> {
           children: [
             // app bar
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              padding: EdgeInsets.symmetric(
+                  horizontal: SizeConfig.screenWidth * 0.04),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -32,30 +65,32 @@ class _HomeState extends State<Home> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      AutoSizeText(
                         'Hello,',
                         style: TextStyle(
                             color:
                                 Theme.of(context).textTheme.titleSmall!.color,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w500,
                             fontSize: 18),
+                        maxLines: 1,
                       ),
                       SizedBox(
-                        height: 4,
+                        height: SizeConfig.screenHeight * 0.003,
                       ),
-                      Text(
+                      AutoSizeText(
                         'Nawaf Aljohani',
                         style: TextStyle(
                             color:
                                 Theme.of(context).textTheme.titleSmall!.color,
                             fontSize: 24,
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.w500),
+                        maxLines: 1,
                       ),
                     ],
                   ),
                   //profile pic
                   Container(
-                    padding: EdgeInsets.all(12),
+                    padding: EdgeInsets.all(SizeConfig.pointFifteenHeight),
                     decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.primary,
                         borderRadius: BorderRadius.circular(12)),
@@ -68,82 +103,40 @@ class _HomeState extends State<Home> {
               ),
             ),
             SizedBox(
-              height: 25,
+              height: SizeConfig.screenHeight * 0.03,
             ),
 
             //card
 
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              padding: EdgeInsets.symmetric(
+                  horizontal: SizeConfig.screenWidth * 0.035),
               child: Container(
                 decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.primary,
                     borderRadius: BorderRadius.circular(12)),
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.all(SizeConfig.screenHeight * 0.015),
                 child: Row(
                   children: [
                     //animation + picture
 
-                    SizedBox(
-                      height: 100,
-                      width: 100,
-                      child: Lottie.network(isDarkMode
-                          ? 'https://lottie.host/be9947b0-4738-4baf-b18d-36a667dcbb32/3xmsLxc01a.json'
-                          : 'https://lottie.host/416836f1-1622-4d5b-8aca-378b3911a36d/N8ZAZodBz1.json'),
-                    ),
-
-                    SizedBox(
-                      width: 25,
-                    ),
-
-                    // your next dose is in :
-
                     Expanded(
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          // Display the quote
                           Text(
-                            'How Are You Feeling Today?',
+                            quote,
                             style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 17,
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .labelSmall!
-                                    .color),
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Text(
-                            'Your next dose is in xx hours',
-                            style: TextStyle(
-                                fontSize: 14,
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .labelSmall!
-                                    .color),
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Container(
-                            padding: EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              color: Theme.of(context).colorScheme.secondary,
+                              color:
+                                  Theme.of(context).textTheme.bodyLarge!.color,
                             ),
-                            child: Center(
-                              child: Text(
-                                'Go to My Medications',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .labelSmall!
-                                        .color),
-                              ),
+                          ),
+                          // Display the author after the dash
+                          Text(
+                            '- $author',
+                            style: TextStyle(
+                              color:
+                                  Theme.of(context).textTheme.bodyLarge!.color,
                             ),
                           ),
                         ],
@@ -155,71 +148,38 @@ class _HomeState extends State<Home> {
             ),
 
             SizedBox(
-              height: 25,
+              height: SizeConfig.screenHeight * 0.03,
             ),
 
             // horizontal listview --> prbably
 
             SizedBox(
-              height: 90,
+              height: SizeConfig.screenHeight * 0.08,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
                   categorycard(
-                      imageUrl: 'lib/icons/first-aid-kit.png',
+                      imageUrl1: 'lib/icons/first-aid-kit.png',
                       categoryname: 'health'),
                   SizedBox(
-                    width: 10,
+                    width: SizeConfig.screenWidth * 0.02,
                   ),
                   categorycard(
-                      imageUrl: 'lib/icons/gift.png', categoryname: 'rewards'),
+                      imageUrl1: 'lib/icons/gift.png', categoryname: 'rewards'),
                   SizedBox(
-                    width: 10,
+                    width: SizeConfig.screenWidth * 0.02,
                   ),
                   categorycard(
-                      imageUrl: 'lib/icons/diet.png', categoryname: 'diet'),
+                      imageUrl1: 'lib/icons/diet.png', categoryname: 'diet'),
                   SizedBox(
-                    width: 10,
+                    width: SizeConfig.screenWidth * 0.02,
                   ),
                 ],
               ),
             ),
 
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     Container(
-            //       decoration: BoxDecoration(
-            //           color: Theme.of(context).colorScheme.primary,
-            //           borderRadius: BorderRadius.circular(12)),
-            //       height: 110,
-            //       width: 110,
-            //     ),
-            //     SizedBox(
-            //       width: 25,
-            //     ),
-            //     Container(
-            //       decoration: BoxDecoration(
-            //           color: Theme.of(context).colorScheme.primary,
-            //           borderRadius: BorderRadius.circular(12)),
-            //       height: 110,
-            //       width: 110,
-            //     ),
-            //     SizedBox(
-            //       width: 25,
-            //     ),
-            //     Container(
-            //       decoration: BoxDecoration(
-            //           color: Theme.of(context).colorScheme.primary,
-            //           borderRadius: BorderRadius.circular(12)),
-            //       height: 110,
-            //       width: 110,
-            //     ),
-            //   ],
-            // ),
-
             SizedBox(
-              height: 25,
+              height: SizeConfig.screenHeight * 0.03,
             ),
 
             // // bottom 2 cards
@@ -233,53 +193,77 @@ class _HomeState extends State<Home> {
                       decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.primary,
                           borderRadius: BorderRadius.circular(12)),
-                      height: 175,
-                      width: 200,
+                      height: SizeConfig.screenHeight * 0.19,
+                      width: SizeConfig.screenWidth * 0.45,
                       child: Padding(
                         padding: const EdgeInsets.all(3),
                         child: mypiechart(),
                       ),
                     ),
                     SizedBox(
-                      width: 25,
+                      width: SizeConfig.screenWidth * 0.05,
                     ),
                     Container(
                       decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.primary,
                           borderRadius: BorderRadius.circular(12)),
-                      height: 175,
-                      width: 200,
+                      height: SizeConfig.screenHeight * 0.19,
+                      width: SizeConfig.screenWidth * 0.45,
                       child: Lottie.network(
                           'https://lottie.host/548401de-281b-462f-bd4b-de933850b57f/PmTNZvnDSU.json'),
                     ),
                   ],
                 ),
                 SizedBox(
-                  height: 25,
+                  height: SizeConfig.screenHeight * 0.025,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.primary,
-                          borderRadius: BorderRadius.circular(12)),
-                      height: 175,
-                      width: 200,
-                      child: Lottie.network(
-                          'https://lottie.host/42356826-3521-4774-97e2-ad20958673fe/E8LjkNoe7y.json'),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return DietPage();
+                            },
+                          ),
+                        );
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.primary,
+                            borderRadius: BorderRadius.circular(12)),
+                        height: SizeConfig.screenHeight * 0.19,
+                        width: SizeConfig.screenWidth * 0.45,
+                        child: Lottie.network(
+                            'https://lottie.host/42356826-3521-4774-97e2-ad20958673fe/E8LjkNoe7y.json'),
+                      ),
                     ),
                     SizedBox(
-                      width: 25,
+                      width: SizeConfig.screenWidth * 0.05,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.primary,
-                          borderRadius: BorderRadius.circular(12)),
-                      height: 175,
-                      width: 200,
-                      child: Lottie.network(
-                          'https://lottie.host/954fcca1-9977-4b0a-b310-c97d42c774c4/knkexFTsXT.json'),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return Journal();
+                            },
+                          ),
+                        );
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.primary,
+                            borderRadius: BorderRadius.circular(12)),
+                        height: SizeConfig.screenHeight * 0.19,
+                        width: SizeConfig.screenWidth * 0.45,
+                        child: Lottie.network(
+                            'https://lottie.host/954fcca1-9977-4b0a-b310-c97d42c774c4/knkexFTsXT.json'),
+                      ),
                     ),
                   ],
                 )

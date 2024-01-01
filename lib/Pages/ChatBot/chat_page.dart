@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:medappfv/components/Themes/Sizing.dart';
 import '../ChatBot/chat_message.dart';
 import 'chat_api.dart';
 import 'message_bubble.dart';
@@ -29,10 +30,11 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: EdgeInsets.all(SizeConfig.pointFifteenHeight),
         child: Column(
           children: [
             Expanded(

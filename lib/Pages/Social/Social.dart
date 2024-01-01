@@ -2,7 +2,8 @@
 
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:medappfv/components/Widgets/Feed_Card.dart';
+import 'package:medappfv/components/Themes/Sizing.dart';
+import 'package:medappfv/components/Widgets/Cards/Feed_Card.dart';
 
 class Social extends StatefulWidget {
   const Social({super.key});
@@ -15,6 +16,7 @@ class _SocialState extends State<Social> {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    SizeConfig.init(context);
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -36,8 +38,8 @@ class _SocialState extends State<Social> {
                         style: TextStyle(
                             color:
                                 Theme.of(context).textTheme.titleSmall!.color,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18),
+                            fontWeight: FontWeight.w500,
+                            fontSize: SizeConfig.screenWidth * 0.035),
                       ),
                       const SizedBox(
                         height: 4,
@@ -47,8 +49,8 @@ class _SocialState extends State<Social> {
                         style: TextStyle(
                             color:
                                 Theme.of(context).textTheme.titleSmall!.color,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold),
+                            fontSize: SizeConfig.screenWidth * 0.055,
+                            fontWeight: FontWeight.w500),
                       ),
                     ],
                   ),
@@ -100,7 +102,7 @@ class _SocialState extends State<Social> {
                     style: TextStyle(
                       color: Theme.of(context).textTheme.titleSmall!.color,
                       fontSize: 24,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w300,
                     ),
                   ),
                   Icon(

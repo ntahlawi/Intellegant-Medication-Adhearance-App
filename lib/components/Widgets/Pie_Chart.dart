@@ -15,7 +15,7 @@ class mypiechart extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Excersise Time',
+              'Blood Suger',
               style: TextStyle(
                 color: Theme.of(context).textTheme.labelSmall!.color,
                 fontWeight: FontWeight.bold,
@@ -23,7 +23,7 @@ class mypiechart extends StatelessWidget {
               ),
             ),
             Text(
-              'Per Day',
+              'Levels Today',
               style: TextStyle(
                 color: Theme.of(context).textTheme.labelSmall!.color,
                 fontWeight: FontWeight.bold,

@@ -1,5 +1,7 @@
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:markdown_widget/markdown_widget.dart';
+import 'package:medappfv/components/Themes/Sizing.dart';
 
 class MessageBubble extends StatefulWidget {
   const MessageBubble({
@@ -18,9 +20,10 @@ class MessageBubble extends StatefulWidget {
 class _MessageBubbleState extends State<MessageBubble> {
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
     final themeData = Theme.of(context);
     return Container(
-      margin: const EdgeInsets.all(8),
+      margin: EdgeInsets.all(SizeConfig.screenWidth * 0.02),
       decoration: BoxDecoration(
         color: widget.isUserMessage
             ? themeData.colorScheme.secondary
@@ -28,19 +31,20 @@ class _MessageBubbleState extends State<MessageBubble> {
         borderRadius: const BorderRadius.all(Radius.circular(12)),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: EdgeInsets.all(SizeConfig.screenWidth * 0.03),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                Text(
-                  widget.isUserMessage ? 'You' : 'AI',
-                  style: Theme.of(context).textTheme.headlineMedium,
+                Icon(
+                  widget.isUserMessage
+                      ? EvaIcons.person
+                      : EvaIcons.messageCircle,
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: SizeConfig.pointFifteenHeight),
             MarkdownWidget(
               data: widget.content,
               shrinkWrap: true,

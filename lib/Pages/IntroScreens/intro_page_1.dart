@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medappfv/Pages/IntroScreens/BuildPage.dart';
 
 class IntroPage1 extends StatefulWidget {
   const IntroPage1({super.key});
@@ -10,12 +11,11 @@ class IntroPage1 extends StatefulWidget {
 class _IntroPage1State extends State<IntroPage1> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-          child: Text(
-        "1",
-        style: Theme.of(context).textTheme.labelSmall,
-      )),
+    return const BuildOBpage(
+      subtitle:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore',
+      title: 'Track',
+      urlImage: 'lib/icons/OB1.jpg',
     );
   }
 }

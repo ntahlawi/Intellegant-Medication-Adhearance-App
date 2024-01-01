@@ -13,6 +13,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   final prefs = await SharedPreferences.getInstance();
   final showHome = prefs.getBool('showHome') ?? false;
+  final showRegF = prefs.getBool('showRegF') ?? false;
 
   runApp(
     OBcheck(
@@ -33,6 +34,6 @@ class OBcheck extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: lightTheme,
         darkTheme: darkTheme,
-        home: showHome ? LoginPage() : const OnBoardingScreen(),
+        home: showHome ? const LoginPage() : const OnBoardingScreen(),
       );
 }

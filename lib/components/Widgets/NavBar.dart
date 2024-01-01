@@ -4,7 +4,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:medappfv/Pages/ChatBot/chat_page.dart';
 import 'package:medappfv/Pages/Home.dart';
-import 'package:medappfv/Pages/MedicationTracking/Mtracking.dart';
+import 'package:medappfv/Pages/MedicationHealthandDiet/medicationspage.dart';
 import 'package:medappfv/Pages/Settings/Settings.dart';
 import 'package:medappfv/Pages/Social/Social.dart';
 import 'package:unicons/unicons.dart';
