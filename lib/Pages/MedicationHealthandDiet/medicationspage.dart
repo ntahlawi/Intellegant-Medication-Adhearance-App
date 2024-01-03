@@ -8,6 +8,8 @@ import 'package:medappfv/components/Widgets/Cards/DateCard.dart';
 import 'package:medappfv/components/Widgets/Cards/reminders_card.dart';
 import 'package:medappfv/components/Widgets/Cards/reminders_card_small.dart';
 
+import 'Druginteraction.dart';
+
 class Mtracking extends StatefulWidget {
   const Mtracking({Key? key}) : super(key: key);
 
@@ -35,7 +37,9 @@ class _MtrackingState extends State<Mtracking> {
       floatingActionButton: Padding(
         padding: EdgeInsets.only(bottom: SizeConfig.screenHeight * 0.03),
         child: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context)=> DrugInteractionPage()));
+          },
           backgroundColor: Theme.of(context).colorScheme.primary,
           splashColor: Colors.white,
           child: Icon(
@@ -129,7 +133,7 @@ class _MtrackingState extends State<Mtracking> {
                                               .color),
                                     ),
                                   ),
-                                ),
+                                ), 
                               ],
                             ),
                           ),
@@ -137,9 +141,9 @@ class _MtrackingState extends State<Mtracking> {
                       ],
                     ),
                   ),
-                ),
-              ],
-            ),
+                ), 
+              ], 
+            ), 
 
             //sized
             SizedBox(
@@ -302,7 +306,6 @@ class _MtrackingState extends State<Mtracking> {
               height: SizeConfig.screenHeight * 0.015,
             ),
             // Planned meals for the day card
-
             Container(
               decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.primary,
