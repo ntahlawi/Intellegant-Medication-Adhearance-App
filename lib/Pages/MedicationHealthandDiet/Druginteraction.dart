@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:medappfv/components/Themes/Sizing.dart';
 
 class DrugInteractionPage extends StatefulWidget {
   @override
@@ -17,27 +16,24 @@ class _DrugInteractionPageState extends State<DrugInteractionPage> {
   Future<void> checkDrugInteraction(
       String medication1, String medication2) async {
     const apiKey = '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';
-    const orgId = 'org-IHxAD2PIKvWvM4T5VJOGmPNK';
-    const model = 'gpt-3.5-turbo';
-    const apiUrl = 'https://api.openai.com/v1/engines/$model/completions';
+    const apiUrl = 'https://api.openai.com/v1/engines/text-davinci-003/completions';
 
     final response = await http.post(
       Uri.parse(apiUrl),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $apiKey',
-        'Openai-Org': orgId,
       },
       body: jsonEncode({
         'prompt':
-            'side effects of the Interaction between $medication1 and $medication2',
+            'Side effects of the interaction between $medication1 and $medication2',
         'max_tokens': 150,
       }),
     );
 
     if (response.statusCode == 200) {
       setState(() {
-        result = jsonDecode(response.body)['choices'][0]['text'];
+        result = jsonDecode(response.body)['choices'][0]['text'].replaceAll('\n', ' ');
       });
     } else {
       setState(() {
@@ -49,13 +45,11 @@ class _DrugInteractionPageState extends State<DrugInteractionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        title: Text('Drug Interaction',
-            style: TextStyle(
-                color: Theme.of(context).textTheme.titleSmall!.color,
-                fontWeight: FontWeight.w500,
-                fontSize: SizeConfig.screenWidth * 0.04)),
+        title: const Text(
+          'Drug Interaction',
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -63,20 +57,16 @@ class _DrugInteractionPageState extends State<DrugInteractionPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(
-              style: TextStyle(
-                  fontSize: SizeConfig.screenWidth * 0.05,
-                  color: Theme.of(context).textTheme.titleSmall!.color),
               controller: medication1Controller,
+              style: const TextStyle(color: Colors.black),
               decoration: const InputDecoration(
                 labelText: 'Enter Medication 1',
               ),
             ),
             const SizedBox(height: 16),
             TextField(
-              style: TextStyle(
-                  fontSize: SizeConfig.screenWidth * 0.05,
-                  color: Theme.of(context).textTheme.titleSmall!.color),
               controller: medication2Controller,
+              style: const TextStyle(color: Colors.black),
               decoration: const InputDecoration(
                 labelText: 'Enter Medication 2',
               ),
@@ -88,19 +78,18 @@ class _DrugInteractionPageState extends State<DrugInteractionPage> {
                 String medication2 = medication2Controller.text;
                 checkDrugInteraction(medication1, medication2);
               },
-              child: Text('Check Interaction',
-                  style: TextStyle(
-                      color: Theme.of(context).textTheme.titleSmall!.color,
-                      fontWeight: FontWeight.w500,
-                      fontSize: SizeConfig.screenWidth * 0.05)),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black,
+              ),
+              child: const Text(
+                'Check Interaction',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
             const SizedBox(height: 16),
             Text(
               'Interaction Result: $result',
-              style: TextStyle(
-                  color: Theme.of(context).textTheme.titleSmall!.color,
-                  fontWeight: FontWeight.w500,
-                  fontSize: SizeConfig.screenWidth * 0.04),
+              style: const TextStyle(color: Colors.black),
             ),
           ],
         ),

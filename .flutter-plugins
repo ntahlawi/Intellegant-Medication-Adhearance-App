@@ -1,8 +1,10 @@
 # This is a generated file; do not edit or check into version control.
+cloud_firestore=/Users/nawafaljohani/.pub-cache/hosted/pub.dev/cloud_firestore-4.14.0/
+cloud_firestore_web=/Users/nawafaljohani/.pub-cache/hosted/pub.dev/cloud_firestore_web-3.9.0/
 firebase_auth=/Users/nawafaljohani/.pub-cache/hosted/pub.dev/firebase_auth-4.12.1/
 firebase_auth_web=/Users/nawafaljohani/.pub-cache/hosted/pub.dev/firebase_auth_web-5.8.6/
-firebase_core=/Users/nawafaljohani/.pub-cache/hosted/pub.dev/firebase_core-2.21.0/
-firebase_core_web=/Users/nawafaljohani/.pub-cache/hosted/pub.dev/firebase_core_web-2.8.1/
+firebase_core=/Users/nawafaljohani/.pub-cache/hosted/pub.dev/firebase_core-2.24.2/
+firebase_core_web=/Users/nawafaljohani/.pub-cache/hosted/pub.dev/firebase_core_web-2.10.0/
 flutter_native_splash=/Users/nawafaljohani/.pub-cache/hosted/pub.dev/flutter_native_splash-2.3.5/
 path_provider=/Users/nawafaljohani/.pub-cache/hosted/pub.dev/path_provider-2.1.1/
 path_provider_android=/Users/nawafaljohani/.pub-cache/hosted/pub.dev/path_provider_android-2.2.1/
