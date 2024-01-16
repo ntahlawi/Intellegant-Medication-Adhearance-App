@@ -21,7 +21,6 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   google_fonts: ^6.1.0
   firebase_auth: ^4.12.1
-  dart_openai: ^4.0.0
   markdown_widget: ^2.3.1
   curved_navigation_bar: ^1.0.3
   unicons: ^2.1.1
@@ -29,13 +28,14 @@ dependencies:
   fl_chart: ^0.64.0
   auto_size_text: ^3.0.0
   timeline_tile: ^2.0.0
-  rich_readmore: ^1.0.6
+  rich_readmore: ^1.1.1
   http: ^1.1.0
   flutter_carousel_slider: ^1.1.0
   numberpicker: ^2.1.2
   get: ^4.6.6
   iconoir_flutter: ^7.3.0
   cloud_firestore: ^4.14.0
+  dart_openai: ^5.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

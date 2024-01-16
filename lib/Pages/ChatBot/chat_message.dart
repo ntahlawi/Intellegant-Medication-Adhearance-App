@@ -1,6 +1,6 @@
-class ChatMessage {
-  ChatMessage(this.content, this.isUserMessage);
+// class ChatMessage {
+//   ChatMessage(this.content, this.isUserMessage);
 
-  final String content;
-  final bool isUserMessage;
-}
+//   final String content;
+//   final bool isUserMessage;
+// }

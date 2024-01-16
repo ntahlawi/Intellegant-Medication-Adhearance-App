@@ -1,6 +1,7 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 import 'package:medappfv/components/TextField.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
 import 'package:numberpicker/numberpicker.dart';

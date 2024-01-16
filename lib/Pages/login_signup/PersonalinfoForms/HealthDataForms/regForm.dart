@@ -1,9 +1,7 @@
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
-import 'package:medappfv/components/TextField.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
-import 'package:medappfv/components/Widgets/NavBar.dart';
-import 'package:medappfv/components/Widgets/TextBtn.dart';
 // ignore_for_file: file_names, camel_case_types
 
 class regF extends StatefulWidget {

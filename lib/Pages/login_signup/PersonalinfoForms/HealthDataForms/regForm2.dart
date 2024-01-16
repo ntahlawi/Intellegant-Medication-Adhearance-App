@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:medappfv/components/TextField.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
 // ignore_for_file: file_names, camel_case_types

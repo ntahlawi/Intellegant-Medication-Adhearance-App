@@ -2,6 +2,7 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:medappfv/FireBase/auth_signupin.dart';
 import 'package:medappfv/Pages/IntroScreens/OnBoarding.dart';
 import 'package:medappfv/components/Themes/darktheme.dart';
 import 'package:medappfv/components/Themes/lighttheme.dart';
@@ -34,6 +35,6 @@ class OBcheck extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: lightTheme,
         darkTheme: darkTheme,
-        home: showHome ? const LoginPage() : const OnBoardingScreen(),
+        home: showHome ? const AuthPage() : const OnBoardingScreen(),
       );
 }

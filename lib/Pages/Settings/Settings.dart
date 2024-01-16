@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medappfv/Pages/login_signup/login_page.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
@@ -8,6 +9,10 @@ import 'package:medappfv/components/Widgets/Cards/settingscard.dart';
 
 class Settings extends StatelessWidget {
   const Settings({super.key});
+//sign user out
+  void signUserOut() {
+    FirebaseAuth.instance.signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +25,7 @@ class Settings extends StatelessWidget {
         padding: EdgeInsets.only(bottom: SizeConfig.screenHeight * 0.1),
         child: FloatingActionButton.extended(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return const LoginPage();
-                },
-              ),
-            );
+            signUserOut();
           },
           backgroundColor: Theme.of(context).colorScheme.primary,
           splashColor: isDarkMode ? Colors.black.withOpacity(.3) : null,

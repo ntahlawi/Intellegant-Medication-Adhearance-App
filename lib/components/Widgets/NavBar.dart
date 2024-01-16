@@ -3,6 +3,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:medappfv/Pages/ChatBot/chat_page.dart';
+import 'package:medappfv/Pages/ChatBot/plchlder.dart';
 import 'package:medappfv/Pages/Home.dart';
 import 'package:medappfv/Pages/MedicationHealthandDiet/medicationspage.dart';
 import 'package:medappfv/Pages/Settings/Settings.dart';
@@ -21,7 +22,8 @@ class _NavBarState extends State<NavBar> {
   int sindex = 0;
   List Screens = [
     const Home(),
-    ChatPage(chatApi: ChatApi()),
+    const plchld(),
+    // ChatPage(chatApi: ChatApi()),
     const Social(),
     const Mtracking(),
     const Settings(),
