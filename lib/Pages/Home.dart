@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:medappfv/Pages/Journal/MainJournal.dart';
 import 'package:medappfv/Pages/MedicationHealthandDiet/DietPlanner.dart';
+import 'package:medappfv/Pages/Rewardspage/RewardPage.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
 import 'package:medappfv/components/Widgets/Pie_Chart.dart';
 import 'package:medappfv/components/Widgets/Cards/category_card.dart';
@@ -226,7 +227,7 @@ class _HomeState extends State<Home> {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return DietPage();
+                              return PointPage();
                             },
                           ),
                         );
