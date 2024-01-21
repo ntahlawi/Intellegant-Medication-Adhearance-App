@@ -1,7 +1,11 @@
 // ignore_for_file: unused_local_variable
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:medappfv/Pages/login_signup/PersonalinfoForms/HealthDataForms/regForm1.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
+import 'package:medappfv/components/Widgets/TextBtn.dart';
 // ignore_for_file: file_names, camel_case_types
 
 class regF extends StatefulWidget {
@@ -14,9 +18,20 @@ class regF extends StatefulWidget {
 class _regFState extends State<regF> {
   @override
   Widget build(BuildContext context) {
-    final emailtextcontroller = TextEditingController();
-    final passwordextcontroller = TextEditingController();
-    final confirmpasswordextcontroller = TextEditingController();
+    const int splashScreenDuration = 3;
+
+    // Start the timer
+    Timer(Duration(seconds: splashScreenDuration), () {
+      // Navigate to another page when the timer is up
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => regF1(),
+        ),
+      );
+    });
+    // track if user is in last page
+    bool showRegF = false;
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
@@ -38,7 +53,13 @@ class _regFState extends State<regF> {
                     fontSize: SizeConfig.screenWidth * 0.05,
                     fontWeight: FontWeight.bold),
               ),
-            )
+            ),
+            // txtbtn(
+            //   Highet: SizeConfig.screenHeight * 0.05,
+            //   width: SizeConfig.screenWidth * 0.8,
+            //   txt: 'Next',
+            //   newLocation: regF1(),
+            // ),
           ],
         ),
       ),

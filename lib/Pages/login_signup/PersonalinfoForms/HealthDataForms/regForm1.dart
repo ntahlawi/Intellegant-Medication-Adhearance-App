@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:medappfv/Pages/login_signup/PersonalinfoForms/HealthDataForms/regForm2.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
 
 class regF1 extends StatefulWidget {
@@ -128,6 +129,16 @@ class _regF1State extends State<regF1> {
                     height: SizeConfig.screenHeight * 0.06,
                   ),
                   InkWell(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return const regF2();
+                          },
+                        ),
+                      );
+                    },
                     splashColor: Theme.of(context).colorScheme.primaryContainer,
                     splashFactory: InkSplash.splashFactory,
                     borderRadius: BorderRadius.circular(12),

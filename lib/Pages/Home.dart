@@ -21,6 +21,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  
   //random quote genarator
 
   late String quote = 'Loading...';
@@ -49,6 +50,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    //add a check if the showRegF bool is false then go to the page named regF() if true then do nothing 
     SizeConfig.init(context);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,

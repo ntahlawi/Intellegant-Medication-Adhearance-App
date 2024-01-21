@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:medappfv/Pages/login_signup/login_page.dart';
 import 'package:medappfv/components/Widgets/NavBar.dart';
 
-class AuthPage extends StatelessWidget {
+class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
 
+  @override
+  State<AuthPage> createState() => _AuthPageState();
+}
+
+class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

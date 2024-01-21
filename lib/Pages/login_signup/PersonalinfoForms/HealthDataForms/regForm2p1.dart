@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:medappfv/components/TextField.dart';
+import 'package:medappfv/components/Widgets/TextField.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
 import 'package:numberpicker/numberpicker.dart';
 // ignore_for_file: file_names, camel_case_types
@@ -173,21 +173,7 @@ class _regF2p1State extends State<regF2p1> {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding:
-                        EdgeInsets.only(left: SizeConfig.screenWidth * 0.075),
-                    child: Row(
-                      children: [
-                        Text(
-                          '(if you\'re pre diabetic please select "i\'m pre-diabetic")',
-                          style: TextStyle(
-                              fontSize: SizeConfig.screenWidth * 0.035,
-                              color:
-                                  Theme.of(context).textTheme.bodySmall!.color),
-                        ),
-                      ],
-                    ),
-                  ),
+
                   SizedBox(
                     height: SizeConfig.pointThreeHeight,
                   ),
@@ -251,7 +237,7 @@ class _regF2p1State extends State<regF2p1> {
                           width: SizeConfig.screenWidth * 0.25,
                           child: const Center(
                             child: Text(
-                              'i\'m pre-diabetic',
+                              'pre-diabetic',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),

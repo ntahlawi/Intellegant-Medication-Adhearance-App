@@ -1,9 +1,9 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:medappfv/Pages/login_signup/PersonalinfoForms/PersonalInfo.dart';
+import 'package:medappfv/Pages/login_signup/PersonalinfoForms/HealthDataForms/regForm.dart';
 import 'package:medappfv/Pages/login_signup/login_page.dart';
-import 'package:medappfv/components/TextField.dart';
+import 'package:medappfv/components/Widgets/TextField.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
 import 'package:medappfv/components/Widgets/TextBtn.dart';
 
@@ -37,7 +37,7 @@ class _SignUpPageState extends State<SignUpPage> {
         password: passwordextcontroller.text,
       );
     } else {
-      print('Wrong Password');
+      print('Passwords Don\'t Match');
     }
 
     //pop circle indicator
@@ -130,6 +130,9 @@ class _SignUpPageState extends State<SignUpPage> {
                           hintText: "Password",
                           IconName: Icons.key_outlined,
                           obscuretext: true),
+                      SizedBox(
+                        height: SizeConfig.pointFifteenHeight,
+                      ),
                       //confirm password
                       CustomTextField(
                           controller: confirmpasswordextcontroller,
@@ -148,6 +151,14 @@ class _SignUpPageState extends State<SignUpPage> {
                         borderRadius: BorderRadius.circular(24),
                         onTap: () {
                           signUserUp();
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return const regF();
+                              },
+                            ),
+                          );
                         },
                         child: Center(
                           child: Container(

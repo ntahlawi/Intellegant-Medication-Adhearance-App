@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:medappfv/components/TextField.dart';
+import 'package:medappfv/Pages/login_signup/PersonalinfoForms/HealthDataForms/regForm2p1.dart';
+import 'package:medappfv/components/Widgets/TextField.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
 // ignore_for_file: file_names, camel_case_types
 
@@ -134,6 +135,16 @@ class _regF2State extends State<regF2> {
                     height: SizeConfig.screenHeight * 0.02,
                   ),
                   InkWell(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return const regF2p1();
+                          },
+                        ),
+                      );
+                    },
                     splashColor: Theme.of(context).colorScheme.primaryContainer,
                     splashFactory: InkSplash.splashFactory,
                     borderRadius: BorderRadius.circular(12),

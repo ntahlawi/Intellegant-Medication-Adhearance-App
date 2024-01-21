@@ -22,6 +22,18 @@ Future<void> main() async {
     ),
   );
 }
+class SharedPreferencesUtil {
+  static Future<bool> getShowHome() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('showHome') ?? false;
+  }
+
+  static Future<bool> getShowRegF() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('showRegF') ?? false;
+  }
+}
+
 
 class OBcheck extends StatelessWidget {
   final bool showHome;

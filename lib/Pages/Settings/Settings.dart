@@ -3,6 +3,8 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:medappfv/Pages/login_signup/PersonalinfoForms/HealthDataForms/regForm.dart';
+import 'package:medappfv/Pages/login_signup/PersonalinfoForms/HealthDataForms/test.dart';
 import 'package:medappfv/Pages/login_signup/login_page.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
 import 'package:medappfv/components/Widgets/Cards/settingscard.dart';
@@ -128,8 +130,21 @@ class Settings extends StatelessWidget {
               ),
 
               //edit Profile card
-              const settingscard(
-                  cardtext: 'Edit Profile', icon: EvaIcons.chevronRightOutline),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return testForm();
+                      },
+                    ),
+                  );
+                },
+                child: const settingscard(
+                    cardtext: 'Edit Profile',
+                    icon: EvaIcons.chevronRightOutline),
+              ),
 
               SizedBox(
                 height: SizeConfig.screenHeight * 0.005,
