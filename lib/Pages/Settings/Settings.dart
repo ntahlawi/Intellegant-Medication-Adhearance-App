@@ -272,7 +272,7 @@ class Settings extends StatelessWidget {
                 height: SizeConfig.screenHeight * 0.005,
               ),
               //Language Selection card
-              const settingscard(
+               settingscard(
                   cardtext: 'Language selection', icon: EvaIcons.globe2Outline)
             ],
           ),

@@ -143,11 +143,12 @@ class _testFormState extends State<testForm> {
                         onTap: () {
                           //create a new file in the collection named userData and add all the fields needed with the user id as a primary key
                           submitUserData({
-                            'name': Nametextcntrlr.text,
-                            'height': Height.text,
-                            'weight': weight.text,
-                            'bloodslvl': bloodslvl.text,
-                            'targetweight': targetweight.text,
+                            'Name': Nametextcntrlr.text,
+                            'Height': Height.text,
+                            'Weight': weight.text,
+                            'Bloodslvl': bloodslvl.text,
+                            'Targetweight': targetweight.text,
+                            'Mas': targetweight.text,
                           });
                         },
                         child: Center(

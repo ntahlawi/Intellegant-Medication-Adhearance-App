@@ -10,28 +10,15 @@ Future<void> submitUserData(Map<String, String> userData) async {
       // User is signed in, so you can get the user ID
       String userId = user.uid;
 
-      // Access the Firestore collection named "UserInfo"
-      CollectionReference userInfoCollection =
-          FirebaseFirestore.instance.collection('UserInfo');
+      // Directly create or update the document with the user ID as its name
+      DocumentReference userInfoDoc =
+          FirebaseFirestore.instance.collection('UserInfo').doc(userId);
 
-      // Query for documents with the same user ID
-      QuerySnapshot querySnapshot =
-          await userInfoCollection.where('userId', isEqualTo: userId).get();
+      await userInfoDoc.set({
+        ...userData, // Spread the contents of the userData map
+      });
 
-      if (querySnapshot.docs.isNotEmpty) {
-        // Document already exists, update the fields
-        await userInfoCollection.doc(querySnapshot.docs[0].id).update(userData);
-
-        print('Document updated for user with ID: $userId');
-      } else {
-        // Document doesn't exist, create a new one
-        await userInfoCollection.add({
-          'userId': userId,
-          ...userData, // Spread the contents of the userData map
-        });
-
-        print('Document added for user with ID: $userId');
-      }
+      print('User data submitted for user with ID: $userId');
     } else {
       // User is not signed in, handle accordingly
       print('User is not signed in');
@@ -41,7 +28,6 @@ Future<void> submitUserData(Map<String, String> userData) async {
     // Handle the error as needed
   }
 }
-
 //EXAMPLE
 // submitUserData({
 //   'name': Nametextcntrlr.text,

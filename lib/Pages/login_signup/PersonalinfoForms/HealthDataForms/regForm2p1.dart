@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:medappfv/Pages/login_signup/PersonalinfoForms/HealthDataForms/test.dart';
 import 'package:medappfv/components/Widgets/TextField.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -291,6 +292,16 @@ class _regF2p1State extends State<regF2p1> {
                     height: SizeConfig.screenHeight * 0.02,
                   ),
                   InkWell(
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return const testForm();
+                          },
+                        ),
+                      );
+                    },
                     splashColor: Theme.of(context).colorScheme.primaryContainer,
                     splashFactory: InkSplash.splashFactory,
                     borderRadius: BorderRadius.circular(12),

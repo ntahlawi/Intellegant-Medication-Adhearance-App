@@ -5,10 +5,13 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:http/http.dart' as http;
+import 'package:medappfv/Pages/Diet/DIetpage.dart';
+import 'package:medappfv/Pages/Exercise/exercisePage.dart';
 import 'dart:convert';
 import 'package:medappfv/Pages/Journal/MainJournal.dart';
 import 'package:medappfv/Pages/MedicationHealthandDiet/DietPlanner.dart';
 import 'package:medappfv/Pages/Rewardspage/RewardPage.dart';
+import 'package:medappfv/Pages/login_signup/PersonalinfoForms/HealthDataForms/test.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
 import 'package:medappfv/components/Widgets/Pie_Chart.dart';
 import 'package:medappfv/components/Widgets/Cards/category_card.dart';
@@ -21,36 +24,35 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  
   //random quote genarator
 
   late String quote = 'Loading...';
   late String author = '';
 
   @override
-  void initState() {
-    super.initState();
-    fetchQuote();
-  }
+  // void initState() {
+  //   super.initState();
+  //   fetchQuote();
+  // }
 
-  Future<void> fetchQuote() async {
-    final response =
-        await http.get(Uri.parse('https://api.quotable.io/random'));
+  // Future<void> fetchQuote() async {
+  //   final response =
+  //       await http.get(Uri.parse('https://api.quotable.io/random'));
 
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> data = json.decode(response.body);
-      setState(() {
-        quote = data['content'];
-        author = data['author'];
-      });
-    } else {
-      throw Exception('Failed to load quote');
-    }
-  }
+  //   if (response.statusCode == 200) {
+  //     final Map<String, dynamic> data = json.decode(response.body);
+  //     setState(() {
+  //       quote = data['content'];
+  //       author = data['author'];
+  //     });
+  //   } else {
+  //     throw Exception('Failed to load quote');
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
-    //add a check if the showRegF bool is false then go to the page named regF() if true then do nothing 
+    //add a check if the showRegF bool is false then go to the page named regF() if true then do nothing
     SizeConfig.init(context);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -161,14 +163,39 @@ class _HomeState extends State<Home> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  categorycard(
-                      imageUrl1: 'lib/icons/first-aid-kit.png',
-                      categoryname: 'health'),
+                  GestureDetector(
+                    child: categorycard(
+                        imageUrl1: 'lib/icons/first-aid-kit.png',
+                        categoryname: 'health'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return testForm();
+                          },
+                        ),
+                      );
+                    },
+                  ),
                   SizedBox(
                     width: SizeConfig.screenWidth * 0.02,
                   ),
-                  categorycard(
-                      imageUrl1: 'lib/icons/gift.png', categoryname: 'rewards'),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return PointPage();
+                          },
+                        ),
+                      );
+                    },
+                    child: categorycard(
+                        imageUrl1: 'lib/icons/gift.png',
+                        categoryname: 'rewards'),
+                  ),
                   SizedBox(
                     width: SizeConfig.screenWidth * 0.02,
                   ),
@@ -206,14 +233,26 @@ class _HomeState extends State<Home> {
                     SizedBox(
                       width: SizeConfig.screenWidth * 0.05,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.primary,
-                          borderRadius: BorderRadius.circular(12)),
-                      height: SizeConfig.screenHeight * 0.19,
-                      width: SizeConfig.screenWidth * 0.45,
-                      child: Lottie.network(
-                          'https://lottie.host/548401de-281b-462f-bd4b-de933850b57f/PmTNZvnDSU.json'),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return DietTracking();
+                            },
+                          ),
+                        );
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.primary,
+                            borderRadius: BorderRadius.circular(12)),
+                        height: SizeConfig.screenHeight * 0.19,
+                        width: SizeConfig.screenWidth * 0.45,
+                        child: Lottie.network(
+                            'https://lottie.host/548401de-281b-462f-bd4b-de933850b57f/PmTNZvnDSU.json'),
+                      ),
                     ),
                   ],
                 ),
@@ -229,7 +268,7 @@ class _HomeState extends State<Home> {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return PointPage();
+                              return Extracking();
                             },
                           ),
                         );

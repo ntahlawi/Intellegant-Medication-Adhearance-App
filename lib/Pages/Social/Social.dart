@@ -2,8 +2,11 @@
 
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:medappfv/Pages/Social/QuestionScreen.dart';
+import 'package:medappfv/Pages/Social/Questions.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
 import 'package:medappfv/components/Widgets/Cards/Feed_Card.dart';
+import 'package:medappfv/components/Widgets/TextBtn.dart';
 
 class Social extends StatefulWidget {
   const Social({super.key});
@@ -29,7 +32,6 @@ class _SocialState extends State<Social> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   //appbar
-
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -41,8 +43,8 @@ class _SocialState extends State<Social> {
                             fontWeight: FontWeight.w500,
                             fontSize: SizeConfig.screenWidth * 0.035),
                       ),
-                      const SizedBox(
-                        height: 4,
+                      SizedBox(
+                        height: SizeConfig.screenHeight * 0.0075,
                       ),
                       Text(
                         'Ask and Socialize and be Healthy!',
@@ -65,9 +67,10 @@ class _SocialState extends State<Social> {
             //search field
 
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              padding:
+                  EdgeInsets.symmetric(horizontal: SizeConfig.pointThreeWidth),
               child: Container(
-                padding: const EdgeInsets.only(left: 10),
+                padding: EdgeInsets.only(left: SizeConfig.pointFifteenWidth),
                 decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.primary,
                     borderRadius: BorderRadius.circular(12)),
@@ -80,96 +83,32 @@ class _SocialState extends State<Social> {
                         color: Theme.of(context).textTheme.bodyLarge!.color),
                     prefixIcon: const Icon(EvaIcons.search),
                     prefixIconColor: Theme.of(context).iconTheme.color,
-                    contentPadding: const EdgeInsets.symmetric(
-                      vertical: 15, //align hint text with icon
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: SizeConfig
+                          .pointFifteenHeight, //align hint text with icon
                     ),
                   ),
                 ),
               ),
             ),
 
-            const SizedBox(
-              height: 25,
+            SizedBox(
+              height: SizeConfig.pointThreeHeight,
             ),
 
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Feed',
-                    style: TextStyle(
-                      color: Theme.of(context).textTheme.titleSmall!.color,
-                      fontSize: 24,
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
-                  Icon(
-                    EvaIcons.menuArrowOutline,
-                    color: isDarkMode ? Colors.white : Colors.black,
-                  )
-                ],
-              ),
+            txtbtn(
+                Highet: SizeConfig.screenHeight * 0.05,
+                width: SizeConfig.screenWidth * 0.5,
+                txt: "click here to post a question",
+                newLocation: PostQuestionScreen()),
+            SizedBox(
+              height: SizeConfig.pointThreeHeight,
             ),
-
-            const SizedBox(
-              height: 25,
-            ),
-
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: ListView(
-                  scrollDirection: Axis.vertical,
-                  children: const [
-                    FeedCard(
-                        LottieAssetUrl: 'lib/icons/av1.json',
-                        titleText: 'My First Post, Need Your Opinions!',
-                        bodyText:
-                            'i haven\'t been feeling well lately and i think that my mental health is not at its best ....'),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    FeedCard(
-                      LottieAssetUrl: 'lib/icons/av2.json',
-                      titleText: 'I need help !',
-                      bodyText:
-                          'Where can i find the best doctor to treat my sickness....',
-                    ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    FeedCard(
-                      LottieAssetUrl: 'lib/icons/av3.json',
-                      titleText: 'i need tips!',
-                      bodyText:
-                          'whats the best way to use the journal in this app?....',
-                    ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    FeedCard(
-                      LottieAssetUrl: 'lib/icons/av2.json',
-                      titleText: 'I need help !',
-                      bodyText:
-                          'Where can i find the best doctor to treat my sickness....',
-                    ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    FeedCard(
-                      LottieAssetUrl: 'lib/icons/av2.json',
-                      titleText: 'I need help !',
-                      bodyText:
-                          'Where can i find the best doctor to treat my sickness....',
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            //cards
+            txtbtn(
+                Highet: SizeConfig.screenHeight * 0.05,
+                width: SizeConfig.screenWidth * 0.5,
+                txt: "click here to view a question",
+                newLocation: QuestionListScreen()),
           ],
         ),
       ),

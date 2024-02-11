@@ -15,6 +15,7 @@ class _regF2State extends State<regF2> {
   @override
   Widget build(BuildContext context) {
     final nametextcontroller = TextEditingController();
+    
     // final passwordextcontroller = TextEditingController();
     // final confirmpasswordextcontroller = TextEditingController();
     return Scaffold(
