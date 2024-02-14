@@ -14,18 +14,13 @@ class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
+      body: StreamBuilder<User?>( // Core authentication logic
+        stream: FirebaseAuth.instance.authStateChanges(), // Stream of auth changes
         builder: (context, snapshot) {
-          //user is signed in
-
-          if (snapshot.hasData) {
-            return NavBar();
-          }
-
-          //user is not logged in
-          else {
-            return LoginPage();
+          if (snapshot.hasData) { // If user data exists (User is signed in)
+            return NavBar(); // Show the main app (or a loading indicator while fetching additional data)
+          } else { 
+            return LoginPage(); // User signed out - show login
           }
         },
       ),

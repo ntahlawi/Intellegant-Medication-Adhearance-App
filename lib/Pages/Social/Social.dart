@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:medappfv/Pages/Social/QuestionScreen.dart';
 import 'package:medappfv/Pages/Social/Questions.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
-import 'package:medappfv/components/Widgets/Cards/Feed_Card.dart';
 import 'package:medappfv/components/Widgets/TextBtn.dart';
 
 class Social extends StatefulWidget {

@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
-import 'package:medappfv/components/Widgets/Cards/DateCard.dart';
+import 'package:medappfv/components/Widgets/Cards/date_card.dart';
 
-import '../../components/Widgets/Cards/ExerciseCard.dart';
+import '../../components/Widgets/Cards/exercise_card.dart';
 
 class Extracking extends StatefulWidget {
   const Extracking({Key? key}) : super(key: key);
@@ -43,9 +43,9 @@ class _ExtrackingState extends State<Extracking> {
         String exerciseId = entry.key;
         Map<String, dynamic> exerciseData = entry.value;
         return ExerciseCard(
-          ExerciseName: exerciseData['exerciseName'],
-          Time: exerciseData['time'],
-          exBurnedCalories: exerciseData['burnedCalories'],
+          exerciseName: exerciseData['exerciseName'],
+          duration: exerciseData['time'],
+          caloriesBurned: exerciseData['burnedCalories'],
         );
       }).toList();
 
@@ -197,7 +197,7 @@ class _ExtrackingState extends State<Extracking> {
       int month = nextDate.month;
 
       DateCard dateCard = DateCard(
-        Date: day.toString(),
+        date: day.toString(),
         month: getMonthAbbreviation(month),
         isSelected: selectedDates[i],
         onTap: () {
@@ -288,9 +288,9 @@ class _ExtrackingState extends State<Extracking> {
       // Create the new ExerciseCard and add it to the list
       setState(() {
         exerciseCards.add(ExerciseCard(
-          ExerciseName: exerciseName,
-          Time: time,
-          exBurnedCalories: calories,
+          exerciseName: exerciseName,
+          duration: time,
+          caloriesBurned: calories,
         ));
       });
       print('Exercise added successfully!');

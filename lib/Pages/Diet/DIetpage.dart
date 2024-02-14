@@ -1,10 +1,10 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
-import 'package:medappfv/components/Widgets/Cards/DateCard.dart';
-
-import '../../components/Widgets/Cards/DietCard.dart';
+import 'package:medappfv/components/Widgets/Cards/date_card.dart';
+import 'package:medappfv/components/Widgets/Cards/diet_card.dart';
 
 class DietTracking extends StatefulWidget {
   const DietTracking({Key? key}) : super(key: key);
@@ -12,24 +12,31 @@ class DietTracking extends StatefulWidget {
   @override
   _DietTrackingState createState() => _DietTrackingState();
 }
-
-final User? user = FirebaseAuth.instance.currentUser;
-final String? userId = user?.uid;
-
+ // Firebase references
+  final User? user = FirebaseAuth.instance.currentUser;
+  final String? userId = user?.uid;
+  final CollectionReference userInfoCollection = 
+      FirebaseFirestore.instance.collection('UserInfo'); 
 class _DietTrackingState extends State<DietTracking> {
+  // Controllers for form fields
   TextEditingController mealController = TextEditingController();
   TextEditingController portionController = TextEditingController();
   TextEditingController caloriesController = TextEditingController();
 
-  List<bool> selectedDates = List.filled(90, false);
-  List<DietCard> dietCards = [];
+  // State variables
+  List<bool> selectedDates = List.filled(90, false); 
+  List<DietCard> dietCards = []; 
+
+ 
+
 
   @override
   void initState() {
     super.initState();
-    fetchDiet();
+    fetchDiet(); // Load diet on screen initialization
   }
 
+  // Fetch diet for the user from Firestore
   Future<void> fetchDiet() async {
     try {
       DocumentReference userDoc = userInfoCollection.doc(userId);
@@ -38,33 +45,29 @@ class _DietTrackingState extends State<DietTracking> {
       Map<String, dynamic> data = snapshot.data() as Map<String, dynamic> ?? {};
       Map<String, dynamic> dietData = data['Diet'] as Map<String, dynamic> ?? {};
 
-      dietCards = dietData.entries.map((entry) {
-        String dietId = entry.key;
-        Map<String, dynamic> dietInfo = entry.value;
-        return DietCard(
-          Meal: dietInfo['Meal'],
-          Portion: dietInfo['Portion'],
-          Calories: dietInfo['Calories'],
-        );
-      }).toList();
-
-      setState(() {}); // Trigger UI update
+      setState(() {
+        dietCards = dietData.entries.map((entry) {
+          return DietCard(
+            meal: entry.value['Meal'],
+            portion: entry.value['Portion'],
+            calories: entry.value['Calories'],
+          );
+        }).toList();
+      }); 
     } catch (error) {
       print('Error fetching diet: $error');
     }
   }
 
+  // UI Build Method
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    SizeConfig.init(context);
+    SizeConfig.init(context); 
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Show the diet form dialog
-          _showDietForm();
-        },
+        onPressed: _showDietForm, 
         child: Icon(Icons.add),
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
@@ -77,7 +80,7 @@ class _DietTrackingState extends State<DietTracking> {
           ),
           child: Column(
             children: [
-              // cards display for each day
+              // Date Cards
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
@@ -85,10 +88,9 @@ class _DietTrackingState extends State<DietTracking> {
                   children: generateDateCards(),
                 ),
               ),
-              SizedBox(
-                height: SizeConfig.pointThreeHeight,
-              ),
-              // card
+              SizedBox(height: SizeConfig.pointThreeHeight),
+
+              // Diet Card
               Card(
                 color: Theme.of(context).colorScheme.primary,
                 child: Padding(
@@ -99,30 +101,20 @@ class _DietTrackingState extends State<DietTracking> {
                     scrollDirection: Axis.vertical,
                     child: Column(
                       children: [
-                        SizedBox(
-                          height: SizeConfig.pointFifteenHeight,
-                        ),
-                        // current diet
+                        SizedBox(height: SizeConfig.pointFifteenHeight),
                         Text('Your diet for the day is:'),
-                        SizedBox(
-                          height: SizeConfig.pointFifteenHeight,
-                        ),
-                        // update the page and display the newly generated diet card here
+                        SizedBox(height: SizeConfig.pointFifteenHeight),
+
+                        // Display diet cards here
                         Column(
-                          children: dietCards.map((dietCard) {
-                            return Column(
+                          children: dietCards.map((dietCard) => Column(
                               children: [
-                                dietCard, // Add the DietCard
-                                SizedBox(
-                                  height: SizeConfig.pointThreeHeight,
-                                ), // Add spacing
+                                dietCard,
+                                SizedBox(height: SizeConfig.pointThreeHeight), 
                               ],
-                            );
-                          }).toList(),
+                            )).toList(), 
                         ),
-                        SizedBox(
-                          height: SizeConfig.pointThreeHeight,
-                        ),
+                        SizedBox(height: SizeConfig.pointThreeHeight),
                       ],
                     ),
                   ),
@@ -196,7 +188,7 @@ class _DietTrackingState extends State<DietTracking> {
       int month = nextDate.month;
 
       DateCard dateCard = DateCard(
-        Date: day.toString(),
+        date: day.toString(),
         month: getMonthAbbreviation(month),
         isSelected: selectedDates[i],
         onTap: () {
@@ -287,9 +279,9 @@ class _DietTrackingState extends State<DietTracking> {
       // Create the new DietCard and add it to the list
       setState(() {
         dietCards.add(DietCard(
-          Meal: meal,
-          Portion: portion,
-          Calories: calories,
+          meal: meal,
+          portion: portion,
+          calories: calories,
         ));
       });
       print('Diet added successfully!');

@@ -3,11 +3,9 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:medappfv/Pages/login_signup/PersonalinfoForms/HealthDataForms/regForm.dart';
 import 'package:medappfv/Pages/login_signup/PersonalinfoForms/HealthDataForms/test.dart';
-import 'package:medappfv/Pages/login_signup/login_page.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
-import 'package:medappfv/components/Widgets/Cards/settingscard.dart';
+import 'package:medappfv/components/Widgets/Cards/settings_card.dart';
 
 class Settings extends StatelessWidget {
   const Settings({super.key});
@@ -141,8 +139,8 @@ class Settings extends StatelessWidget {
                     ),
                   );
                 },
-                child: const settingscard(
-                    cardtext: 'Edit Profile',
+                child: const SettingsCard(
+                    cardText: 'Edit Profile',
                     icon: EvaIcons.chevronRightOutline),
               ),
 
@@ -151,8 +149,8 @@ class Settings extends StatelessWidget {
               ),
 
               // Change Password card
-              const settingscard(
-                  cardtext: 'Change password',
+              const SettingsCard(
+                  cardText: 'Change password',
                   icon: EvaIcons.chevronRightOutline),
 
               SizedBox(
@@ -212,12 +210,12 @@ class Settings extends StatelessWidget {
               ),
 
               // Medication notifications
-              const settingscard(
-                  cardtext: 'Medication notifications',
+              const SettingsCard(
+                  cardText: 'Medication notifications',
                   icon: EvaIcons.toggleRightOutline),
               // App notifications
-              const settingscard(
-                  cardtext: 'App notifications',
+              const SettingsCard(
+                  cardText: 'App notifications',
                   icon: EvaIcons.toggleLeftOutline),
 
               SizedBox(
@@ -272,8 +270,8 @@ class Settings extends StatelessWidget {
                 height: SizeConfig.screenHeight * 0.005,
               ),
               //Language Selection card
-               settingscard(
-                  cardtext: 'Language selection', icon: EvaIcons.globe2Outline)
+               SettingsCard(
+                  cardText: 'Language selection', icon: EvaIcons.globe2Outline)
             ],
           ),
         ),

@@ -1,37 +1,38 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, camel_case_types
-
 import 'package:flutter/material.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
 
-class categorycard extends StatelessWidget {
-  final imageUrl1;
-  final String categoryname;
-  const categorycard(
-      {super.key, required this.imageUrl1, required this.categoryname});
+class CategoryCard extends StatelessWidget {
+  final String imageUrl;
+  final String categoryName;
+
+  const CategoryCard({super.key, required this.imageUrl, required this.categoryName});
 
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
+
+    // Responsive margin (Adjust the multiplier as needed)
+    final cardMargin = EdgeInsets.only(left: SizeConfig.screenWidth * 0.06); 
+
+    // Responsive padding (Adjust the multipliers as needed)
+    final double responsivePadding = SizeConfig.screenWidth * 0.015 + SizeConfig.screenHeight * 0.015;
+
     return Padding(
-      padding: EdgeInsets.only(left: SizeConfig.screenWidth * 0.06),
+      padding: cardMargin,
       child: Container(
-        padding: EdgeInsets.all(
-          (SizeConfig.screenWidth * 0.015) + (SizeConfig.screenHeight * 0.015),
-        ),
+        padding: EdgeInsets.all(responsivePadding),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.primary,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12), // Consider relative BorderRadius too
         ),
         child: Row(
           children: [
             Image.asset(
-              imageUrl1,
+              imageUrl,
               color: Theme.of(context).colorScheme.background,
             ),
-            SizedBox(
-              width: SizeConfig.screenWidth * 0.02,
-            ),
-            Text(categoryname),
+            SizedBox(width: SizeConfig.screenWidth * 0.02), // Responsive spacing
+            Text(categoryName),
           ],
         ),
       ),

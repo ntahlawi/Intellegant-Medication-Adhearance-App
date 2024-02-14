@@ -164,9 +164,9 @@ class _HomeState extends State<Home> {
                 scrollDirection: Axis.horizontal,
                 children: [
                   GestureDetector(
-                    child: categorycard(
-                        imageUrl1: 'lib/icons/first-aid-kit.png',
-                        categoryname: 'health'),
+                    child: CategoryCard(
+                        imageUrl: 'lib/icons/first-aid-kit.png',
+                        categoryName: 'health'),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -192,15 +192,17 @@ class _HomeState extends State<Home> {
                         ),
                       );
                     },
-                    child: categorycard(
-                        imageUrl1: 'lib/icons/gift.png',
-                        categoryname: 'rewards'),
+                    child: CategoryCard(
+                        imageUrl: 'lib/icons/gift.png',
+                        categoryName: 'rewards'),
                   ),
                   SizedBox(
                     width: SizeConfig.screenWidth * 0.02,
                   ),
-                  categorycard(
-                      imageUrl1: 'lib/icons/diet.png', categoryname: 'diet'),
+                  CategoryCard(
+                    imageUrl: 'lib/icons/diet.png',
+                    categoryName: 'diet',
+                  ),
                   SizedBox(
                     width: SizeConfig.screenWidth * 0.02,
                   ),

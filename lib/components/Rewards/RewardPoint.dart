@@ -26,39 +26,49 @@ class RewardsPage extends StatefulWidget {
 }
 
 class _RewardsPageState extends State<RewardsPage> {
-  late FirebaseAuth _auth;
-  late int _currentPoints;
+  late FirebaseAuth _auth; // Firebase authentication instance
+  late int _currentPoints; // Current points displayed in the UI
 
   @override
   void initState() {
     super.initState();
-    FirebaseService.initializeFirebase();
-    _auth = FirebaseAuth.instance;
-    _currentPoints = 0;
-    _loadCurrentPoints();
+    FirebaseService.initializeFirebase(); // Initializes Firebase
+    _auth = FirebaseAuth.instance; // Gets the active authentication instance
+    _loadCurrentPoints(); // Loads initial points for the user
   }
 
+  // Loads the current points for the logged-in user
   Future<void> _loadCurrentPoints() async {
-    User? user = await _getCurrentUser();
-    if (user != null) {
-      final userId = user.uid;
-      final cachedPoints = _getCachedPoints(userId);
-      setState(() {
-        _currentPoints = cachedPoints;
-      });
+    try {
+      final user = await _getCurrentUser();
+      if (user != null) {
+        final userId = user.uid; // User is logged in:
+        final points = await FirebaseService.getCurrentPoints(
+            userId); // Retrieve points from Firebase
+        _updatePointsInPrefs(
+            userId, points); // Update local cache for faster subsequent access
+
+        setState(() {
+          _currentPoints = points; //Update points displayed in the UI
+        });
+      }
+    } catch (error) {
+      // Add error handling here (e.g., display a message to the user)
     }
   }
+
+  //Returns the currently logged-in Firebase user, or null if not signed in
 
   Future<User?> _getCurrentUser() async {
     return _auth.currentUser;
   }
-
+  //Retrieves cached points from SharedPreferences (if available)
   int _getCachedPoints(String userId) {
     SharedPreferences prefs =
         SharedPreferences.getInstance() as SharedPreferences;
     return prefs.getInt(userId) ?? 0;
   }
-
+  //Increments the user's points and updates the UI
   void _incrementPoints() async {
     User? user = await _getCurrentUser();
     if (user != null) {
@@ -68,7 +78,7 @@ class _RewardsPageState extends State<RewardsPage> {
       _updatePointsInPrefs(userId, newPoints);
     }
   }
-
+  // deducts the user's points and updates the UI
   void _deductPoints(int deductionAmount) async {
     User? user = await _getCurrentUser();
     if (user != null) {
@@ -80,7 +90,7 @@ class _RewardsPageState extends State<RewardsPage> {
       _updatePointsInPrefs(userId, newPoints);
     }
   }
-
+  // updates the cached points in SharedPreferences
   void _updatePointsInPrefs(String userId, int newPoints) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setInt(userId, newPoints);
