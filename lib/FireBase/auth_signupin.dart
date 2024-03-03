@@ -18,9 +18,9 @@ class _AuthPageState extends State<AuthPage> {
         stream: FirebaseAuth.instance.authStateChanges(), // Stream of auth changes
         builder: (context, snapshot) {
           if (snapshot.hasData) { // If user data exists (User is signed in)
-            return NavBar(); // Show the main app (or a loading indicator while fetching additional data)
+            return const NavBar(); // Show the main app (or a loading indicator while fetching additional data)
           } else { 
-            return LoginPage(); // User signed out - show login
+            return const LoginPage(); // User signed out - show login
           }
         },
       ),

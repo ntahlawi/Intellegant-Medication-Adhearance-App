@@ -1,278 +1,490 @@
 // ignore_for_file: file_names
 
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:medappfv/Pages/login_signup/PersonalinfoForms/HealthDataForms/test.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:medappfv/FireBase/addingData.dart';
+import 'package:medappfv/Pages/PersonalinfoForms/HealthDataForms/regForm.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
-import 'package:medappfv/components/Widgets/Cards/settings_card.dart';
+import 'package:medappfv/components/Cards/settings_card.dart';
+import 'package:medappfv/components/Widgets/dialougecard.dart';
 
-class Settings extends StatelessWidget {
+class Settings extends StatefulWidget {
   const Settings({super.key});
+
+  @override
+  State<Settings> createState() => _SettingsState();
+}
+
+String points = '';
+String realName = '';
+String userName = '';
+
+final User? user = FirebaseAuth.instance.currentUser;
+final String? userId = user?.uid;
+final CollectionReference userInfoCollection =
+    FirebaseFirestore.instance.collection('UserInfo');
+String email = FirebaseAuth.instance.currentUser!.email!;
+String? downloadedImageUrl;
+bool uploadWasSuccessful = false;
+
+class _SettingsState extends State<Settings> {
 //sign user out
+
   void signUserOut() {
     FirebaseAuth.instance.signOut();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserData(); // Fetch data on initialization
+  }
+
+  void changePassword() {
+    FirebaseAuth.instance.sendPasswordResetEmail(email: '$email');
+  }
+
+  void _fetchUserData() async {
+    if (userId != null) {
+      final CollectionReference userInfoCollection =
+          FirebaseFirestore.instance.collection('UserInfo');
+
+      userInfoCollection.doc(userId).get().then((DocumentSnapshot snapshot) {
+        if (snapshot.exists) {
+          Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+          points = data['points'] as String;
+          realName = data['Name'] as String;
+          userName = data['Username'] as String;
+          setState(() {
+            points = data['points'] as String;
+            realName = data['Name'] as String;
+            userName = data['Username'] as String;
+          });
+        } else {
+          print('User document does not exist');
+        }
+      }).catchError((error) {
+        print('Error retrieving points: $error');
+      });
+    } else {
+      print('User is not logged in');
+    }
+    // Update variables and trigger UI update
+  }
+
+  //uplaoding pfp
+  Future<void> uploadProfilePicture(BuildContext context) async {
+    final ImagePicker picker = ImagePicker();
+
+    // 1. Pick an image
+    final XFile? image =
+        await picker.pickImage(source: ImageSource.gallery, imageQuality: 85);
+    if (image == null) return;
+
+    // 2. Upload to Firebase Storage
+    final storageRef =
+        FirebaseStorage.instance.ref().child('profile_pictures/$userId.jpg');
+    final File imageFile = File(image.path);
+    try {
+      await storageRef.putFile(imageFile);
+    } on FirebaseException catch (e) {
+      print('Upload failed: $e');
+      // Handle upload errors appropriately
+      return;
+    }
+
+    // 3. Get Download URL
+    final downloadURL = await storageRef.getDownloadURL();
+
+    // 4. Update Firestore (Placeholder)
+    await userInfoCollection
+        .doc(userId)
+        .update({'profilePictureURL': downloadURL});
+
+    // 5. Update State
+    setState(() {
+      downloadedImageUrl = downloadURL;
+      uploadWasSuccessful = true;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
+    final newusernametxtcntrlr = TextEditingController();
     return Scaffold(
-      //Logout button start
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: SizeConfig.screenHeight * 0.1),
-        child: FloatingActionButton.extended(
-          onPressed: () {
-            signUserOut();
-          },
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          splashColor: isDarkMode ? Colors.black.withOpacity(.3) : null,
-          label: Text(
-            'Logout',
-            style: TextStyle(
-                color: Theme.of(context).textTheme.titleMedium!.color,
-                fontSize: SizeConfig.screenWidth * 0.033,
-                fontWeight: FontWeight.w500),
-          ),
-          icon: Icon(
-            EvaIcons.logOutOutline,
-            color: Theme.of(context).iconTheme.color,
-          ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-
-      //Logout button finish
-
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            children: [
-              SizedBox(
-                height: SizeConfig.screenHeight * 0.045,
-              ),
-
-              //Settings header
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: SizeConfig.screenWidth * 0.075),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: SafeArea(
+          child: Center(
+            child: Column(
+              children: [
+                //editable profile picture logic
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'Settings',
-                      style: TextStyle(
-                          color: Theme.of(context).textTheme.titleSmall!.color,
-                          fontSize: SizeConfig.screenWidth * 0.099,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: SizeConfig.screenHeight * 0.025,
-              ),
-              //Account
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: SizeConfig.screenWidth * 0.065),
-                child: Row(
-                  children: [
-                    Icon(
-                      EvaIcons.personOutline,
-                      color: Theme.of(context).textTheme.titleSmall!.color,
-                      size: SizeConfig.screenWidth * 0.08,
-                    ),
-                    SizedBox(
-                      width: SizeConfig.screenWidth * 0.015,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: SizeConfig.screenHeight * 0.00525),
-                      child: Text(
-                        'Account',
-                        style: TextStyle(
-                            color:
-                                Theme.of(context).textTheme.titleSmall!.color,
-                            fontSize: SizeConfig.screenWidth * 0.05,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              SizedBox(
-                height: SizeConfig.screenHeight * 0.005,
-              ),
-              // Dividor
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: SizeConfig.screenWidth * 0.06),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        thickness: 2,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withOpacity(.2),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-
-              //edit Profile card
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return testForm();
+                    //adding outline to profile picture
+                    GestureDetector(
+                      onTap: () async {
+                        await uploadProfilePicture(context);
                       },
-                    ),
-                  );
-                },
-                child: const SettingsCard(
-                    cardText: 'Edit Profile',
-                    icon: EvaIcons.chevronRightOutline),
-              ),
+                      //function to replce the profile picture and save it to the database
 
-              SizedBox(
-                height: SizeConfig.screenHeight * 0.005,
-              ),
-
-              // Change Password card
-              const SettingsCard(
-                  cardText: 'Change password',
-                  icon: EvaIcons.chevronRightOutline),
-
-              SizedBox(
-                height: SizeConfig.screenHeight * 0.025,
-              ),
-              //Notifications
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: SizeConfig.screenWidth * 0.065),
-                child: Row(
-                  children: [
-                    Icon(
-                      EvaIcons.bellOutline,
-                      color: Theme.of(context).textTheme.titleSmall!.color,
-                      size: SizeConfig.screenWidth * 0.08,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: SizeConfig.screenHeight * 0.00525),
-                      child: Text(
-                        'Notifications',
-                        style: TextStyle(
-                            color:
-                                Theme.of(context).textTheme.titleSmall!.color,
-                            fontSize: SizeConfig.screenWidth * 0.05,
-                            fontWeight: FontWeight.bold),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Colors.black, // Adjust the outline color
+                            width: 2.0, // Adjust the outline thickness
+                          ),
+                        ),
+                        child: CircleAvatar(
+                          radius: SizeConfig.screenWidth * 0.20,
+                          backgroundImage: uploadWasSuccessful
+                              ? NetworkImage(downloadedImageUrl ?? '')
+                              : const AssetImage('lib/icons/diet.png')
+                                  as ImageProvider<Object>,
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ),
-
-              SizedBox(
-                height: SizeConfig.screenHeight * 0.005,
-              ),
-              // Dividor
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: SizeConfig.screenWidth * 0.06),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        thickness: 2,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withOpacity(.2),
-                      ),
-                    )
-                  ],
+                //  given points and name
+                Text(
+                  realName,
+                  style: TextStyle(
+                      fontSize: SizeConfig.screenWidth * 0.075,
+                      color: Theme.of(context).textTheme.titleSmall!.color),
                 ),
-              ),
+                Text(
+                  points,
+                  style: TextStyle(
+                      fontSize: SizeConfig.screenWidth * 0.05,
+                      color: Theme.of(context).textTheme.titleSmall!.color),
+                ),
 
-              SizedBox(
-                height: SizeConfig.screenHeight * 0.005,
-              ),
+                //edit your name
+                //Username + can be changed by adding a dialog box when the username is pressed
+                SizedBox(
+                  height: SizeConfig.screenHeight * 0.01,
+                ),
 
-              // Medication notifications
-              const SettingsCard(
-                  cardText: 'Medication notifications',
-                  icon: EvaIcons.toggleRightOutline),
-              // App notifications
-              const SettingsCard(
-                  cardText: 'App notifications',
-                  icon: EvaIcons.toggleLeftOutline),
+                //Account
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: SizeConfig.screenWidth * 0.065),
+                  child: Row(
+                    children: [
+                      Icon(
+                        EvaIcons.personOutline,
+                        color: Theme.of(context).textTheme.titleSmall!.color,
+                        size: SizeConfig.screenWidth * 0.08,
+                      ),
+                      SizedBox(
+                        width: SizeConfig.screenWidth * 0.015,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: SizeConfig.screenHeight * 0.00525),
+                        child: Text(
+                          'Account',
+                          style: TextStyle(
+                              color:
+                                  Theme.of(context).textTheme.titleSmall!.color,
+                              fontSize: SizeConfig.screenWidth * 0.05,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
 
-              SizedBox(
-                height: SizeConfig.screenHeight * 0.025,
-              ),
+                SizedBox(
+                  height: SizeConfig.screenHeight * 0.005,
+                ),
+                // Dividor
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: SizeConfig.screenWidth * 0.06),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Divider(
+                          thickness: 2,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withOpacity(.2),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
 
-              // More
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: SizeConfig.screenWidth * 0.065),
-                child: Row(
-                  children: [
-                    Icon(
-                      EvaIcons.personAddOutline,
-                      color: Theme.of(context).textTheme.titleSmall!.color,
-                      size: SizeConfig.screenWidth * 0.08,
+                //edit Profile card
+                InkWell(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext dialogContext) {
+                        return AlertDialog(
+                          title: Text(
+                            "Change your username",
+                            style: TextStyle(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .color,
+                                fontSize: SizeConfig.screenWidth * 0.05,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'Your current username is: $userName',
+                                style: TextStyle(
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall!
+                                      .color,
+                                  fontSize: SizeConfig.screenWidth * 0.035,
+                                ),
+                              ),
+                              TextField(
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .color),
+                                decoration: InputDecoration(
+                                  hintText: "New Username",
+                                ),
+                                controller: newusernametxtcntrlr,
+                              ),
+                            ],
+                          ),
+                          actions: [
+                            TextButton(
+                              child: Text("Cancel"),
+                              onPressed: () => Navigator.pop(dialogContext),
+                            ),
+                            TextButton(
+                              child: Text("Submit"),
+                              onPressed: () {
+                                if (newusernametxtcntrlr.text == userName) {
+                                  showErrorDialog(
+                                      context: context,
+                                      title: 'Oops!',
+                                      content:
+                                          'You are trying to use the same username! Try another name',
+                                      style: TextStyle(
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .color,
+                                        fontSize: SizeConfig.screenWidth * 0.05,
+                                      ),
+                                      btncolor: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall!
+                                          .color);
+                                } else {
+                                  submitUserData({
+                                    'Username': newusernametxtcntrlr.text,
+                                  });
+                                  setState(() {
+                                    userName = newusernametxtcntrlr.text;
+                                  });
+                                  Navigator.pop(
+                                      dialogContext); // Close the dialog
+                                }
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: SettingsCard(
+                      cardText: 'Change username',
+                      icon: EvaIcons.chevronRightOutline),
+                ),
+
+                SizedBox(
+                  height: SizeConfig.screenHeight * 0.005,
+                ),
+
+                // Change Password card
+                InkWell(
+                  onTap: () {
+                    changePassword();
+                  },
+                  child: SettingsCard(
+                      cardText: 'Change password',
+                      icon: EvaIcons.chevronRightOutline),
+                ),
+
+                SizedBox(
+                  height: SizeConfig.screenHeight * 0.025,
+                ),
+                //Notifications
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: SizeConfig.screenWidth * 0.065),
+                  child: Row(
+                    children: [
+                      Icon(
+                        EvaIcons.bellOutline,
+                        color: Theme.of(context).textTheme.titleSmall!.color,
+                        size: SizeConfig.screenWidth * 0.08,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: SizeConfig.screenHeight * 0.00525),
+                        child: Text(
+                          'Notifications',
+                          style: TextStyle(
+                              color:
+                                  Theme.of(context).textTheme.titleSmall!.color,
+                              fontSize: SizeConfig.screenWidth * 0.05,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                SizedBox(
+                  height: SizeConfig.screenHeight * 0.005,
+                ),
+                // Dividor
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: SizeConfig.screenWidth * 0.06),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Divider(
+                          thickness: 2,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withOpacity(.2),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+
+                SizedBox(
+                  height: SizeConfig.screenHeight * 0.005,
+                ),
+
+                // Medication notifications
+                const SettingsCard(
+                    cardText: 'Medication notifications',
+                    icon: EvaIcons.toggleRightOutline),
+                // App notifications
+                const SettingsCard(
+                    cardText: 'App notifications',
+                    icon: EvaIcons.toggleLeftOutline),
+
+                SizedBox(
+                  height: SizeConfig.screenHeight * 0.025,
+                ),
+
+                // More
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: SizeConfig.screenWidth * 0.065),
+                  child: Row(
+                    children: [
+                      Icon(
+                        EvaIcons.personAddOutline,
+                        color: Theme.of(context).textTheme.titleSmall!.color,
+                        size: SizeConfig.screenWidth * 0.08,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: SizeConfig.screenHeight * 0.00525),
+                        child: Text(
+                          'More',
+                          style: TextStyle(
+                              color:
+                                  Theme.of(context).textTheme.titleSmall!.color,
+                              fontSize: SizeConfig.screenWidth * 0.05,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // Dividor
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: SizeConfig.screenWidth * 0.06),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Divider(
+                          thickness: 2,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withOpacity(.2),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: SizeConfig.screenHeight * 0.005,
+                ),
+                //Language Selection card
+                const SettingsCard(
+                    cardText: 'Language selection',
+                    icon: EvaIcons.globe2Outline),
+                SizedBox(
+                  height: SizeConfig.screenHeight * 0.015,
+                ),
+                SizedBox(
+                  height: SizeConfig.screenHeight * 0.05,
+                  width: SizeConfig.screenWidth * 0.5,
+                  //Logout button start
+
+                  child: TextButton(
+                    child: Text(
+                      'Logout',
+                      style: TextStyle(
+                          color: Theme.of(context).textTheme.titleMedium!.color,
+                          fontSize: SizeConfig.screenWidth * 0.033,
+                          fontWeight: FontWeight.w500),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: SizeConfig.screenHeight * 0.00525),
-                      child: Text(
-                        'More',
-                        style: TextStyle(
-                            color:
-                                Theme.of(context).textTheme.titleSmall!.color,
-                            fontSize: SizeConfig.screenWidth * 0.05,
-                            fontWeight: FontWeight.bold),
-                      ),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(
+                          Theme.of(context).colorScheme.primary),
                     ),
-                  ],
+                    onPressed: () {
+                      signUserOut();
+                    },
+                  ),
                 ),
-              ),
-              // Dividor
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: SizeConfig.screenWidth * 0.06),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        thickness: 2,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withOpacity(.2),
-                      ),
-                    )
-                  ],
+                //Logout button finish
+
+                SizedBox(
+                  height: SizeConfig.screenHeight * 0.025,
                 ),
-              ),
-              SizedBox(
-                height: SizeConfig.screenHeight * 0.005,
-              ),
-              //Language Selection card
-               SettingsCard(
-                  cardText: 'Language selection', icon: EvaIcons.globe2Outline)
-            ],
+              ],
+            ),
           ),
         ),
       ),

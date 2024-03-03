@@ -1,10 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medappfv/Pages/login_signup/signup.dart';
 import 'package:medappfv/components/Widgets/TextField.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
-import 'package:medappfv/components/Widgets/NavBar.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -16,6 +17,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final emailtextcontroller = TextEditingController();
   final passwordextcontroller = TextEditingController();
+  String userName = '';
 
   // sign in try
   void signUserIn() async {
@@ -33,6 +35,7 @@ class _LoginPageState extends State<LoginPage> {
         email: emailtextcontroller.text,
         password: passwordextcontroller.text,
       );
+
       //pop loading circle
       Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
@@ -44,8 +47,7 @@ class _LoginPageState extends State<LoginPage> {
       }
       //Wrong Password
       else if (e.code == 'wrong-password') {
-      //show a dialog displaying 'Wrong password'
-
+        //show a dialog displaying 'Wrong password'
       }
     }
   }
@@ -157,7 +159,7 @@ class _LoginPageState extends State<LoginPage> {
                             color: Theme.of(context).colorScheme.secondary,
                             borderRadius: BorderRadius.circular(24),
                           ),
-                          child: Center(
+                          child: const Center(
                             child: Text('Sign In'),
                           ),
                         ),

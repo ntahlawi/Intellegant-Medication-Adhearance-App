@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, non_constant_identifier_names
+// ignore_for_file: file_names, non_constant_identifier_names, unused_import
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';

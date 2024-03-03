@@ -1,20 +1,21 @@
-// ignore_for_file: file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_print
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:http/http.dart' as http;
 import 'package:medappfv/Pages/Diet/DIetpage.dart';
+import 'package:medappfv/Pages/Diet/dailychallanges.dart';
 import 'package:medappfv/Pages/Exercise/exercisePage.dart';
-import 'dart:convert';
 import 'package:medappfv/Pages/Journal/MainJournal.dart';
-import 'package:medappfv/Pages/MedicationHealthandDiet/DietPlanner.dart';
+import 'package:medappfv/Pages/Profilepage/pfp.dart';
 import 'package:medappfv/Pages/Rewardspage/RewardPage.dart';
-import 'package:medappfv/Pages/login_signup/PersonalinfoForms/HealthDataForms/test.dart';
+import 'package:medappfv/Pages/PersonalinfoForms/HealthDataForms/regForm.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
 import 'package:medappfv/components/Widgets/Pie_Chart.dart';
-import 'package:medappfv/components/Widgets/Cards/category_card.dart';
+import 'package:medappfv/components/Cards/category_card.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -23,13 +24,23 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
+String realName = '';
+final User? user = FirebaseAuth.instance.currentUser;
+final String? userId = user?.uid;
+final CollectionReference userInfoCollection =
+    FirebaseFirestore.instance.collection('UserInfo');
+
 class _HomeState extends State<Home> {
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserData(); // Fetch data on initialization
+  }
   //random quote genarator
 
   late String quote = 'Loading...';
   late String author = '';
 
-  @override
   // void initState() {
   //   super.initState();
   //   fetchQuote();
@@ -49,6 +60,29 @@ class _HomeState extends State<Home> {
   //     throw Exception('Failed to load quote');
   //   }
   // }
+  void _fetchUserData() async {
+    if (userId != null) {
+      final CollectionReference userInfoCollection =
+          FirebaseFirestore.instance.collection('UserInfo');
+
+      userInfoCollection.doc(userId).get().then((DocumentSnapshot snapshot) {
+        if (snapshot.exists) {
+          Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+          realName = data['Name'] as String;
+          setState(() {
+            realName = data['Name'] as String;
+          });
+        } else {
+          print('User document does not exist');
+        }
+      }).catchError((error) {
+        print('Error retrieving points: $error');
+      });
+    } else {
+      print('User is not logged in');
+    }
+    // Update variables and trigger UI update
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +117,7 @@ class _HomeState extends State<Home> {
                         height: SizeConfig.screenHeight * 0.003,
                       ),
                       AutoSizeText(
-                        'Nawaf Aljohani',
+                        realName,
                         style: TextStyle(
                             color:
                                 Theme.of(context).textTheme.titleSmall!.color,
@@ -93,15 +127,27 @@ class _HomeState extends State<Home> {
                       ),
                     ],
                   ),
-                  //profile pic
-                  Container(
-                    padding: EdgeInsets.all(SizeConfig.pointFifteenHeight),
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary,
-                        borderRadius: BorderRadius.circular(12)),
-                    child: Icon(
-                      EvaIcons.personOutline,
-                      color: Theme.of(context).iconTheme.color,
+                  //profile picture
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return pfp();
+                          },
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(SizeConfig.pointFifteenHeight),
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary,
+                          borderRadius: BorderRadius.circular(12)),
+                      child: Icon(
+                        EvaIcons.personOutline,
+                        color: Theme.of(context).iconTheme.color,
+                      ),
                     ),
                   )
                 ],
@@ -172,7 +218,7 @@ class _HomeState extends State<Home> {
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return testForm();
+                            return regF();
                           },
                         ),
                       );
@@ -199,9 +245,21 @@ class _HomeState extends State<Home> {
                   SizedBox(
                     width: SizeConfig.screenWidth * 0.02,
                   ),
-                  CategoryCard(
-                    imageUrl: 'lib/icons/diet.png',
-                    categoryName: 'diet',
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return dailychllange();
+                          },
+                        ),
+                      );
+                    },
+                    child: CategoryCard(
+                      imageUrl: 'lib/icons/diet.png',
+                      categoryName: 'challanges',
+                    ),
                   ),
                   SizedBox(
                     width: SizeConfig.screenWidth * 0.02,

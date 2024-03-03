@@ -1,10 +1,12 @@
 
+// ignore_for_file: unused_local_variable, file_names, library_private_types_in_public_api, empty_catches
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
-import 'package:medappfv/components/Widgets/Cards/date_card.dart';
-import 'package:medappfv/components/Widgets/Cards/diet_card.dart';
+import 'package:medappfv/components/Cards/date_card.dart';
+import 'package:medappfv/components/Cards/diet_card.dart';
 
 class DietTracking extends StatefulWidget {
   const DietTracking({Key? key}) : super(key: key);
@@ -42,8 +44,8 @@ class _DietTrackingState extends State<DietTracking> {
       DocumentReference userDoc = userInfoCollection.doc(userId);
       DocumentSnapshot snapshot = await userDoc.get();
 
-      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic> ?? {};
-      Map<String, dynamic> dietData = data['Diet'] as Map<String, dynamic> ?? {};
+      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+      Map<String, dynamic> dietData = data['Diet'] as Map<String, dynamic>;
 
       setState(() {
         dietCards = dietData.entries.map((entry) {
@@ -55,7 +57,6 @@ class _DietTrackingState extends State<DietTracking> {
         }).toList();
       }); 
     } catch (error) {
-      print('Error fetching diet: $error');
     }
   }
 
@@ -67,9 +68,9 @@ class _DietTrackingState extends State<DietTracking> {
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: _showDietForm, 
-        child: Icon(Icons.add),
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        onPressed: _showDietForm,
+        backgroundColor: Theme.of(context).colorScheme.primary, 
+        child: const Icon(Icons.add),
       ),
       body: SafeArea(
         child: Padding(
@@ -102,7 +103,7 @@ class _DietTrackingState extends State<DietTracking> {
                     child: Column(
                       children: [
                         SizedBox(height: SizeConfig.pointFifteenHeight),
-                        Text('Your diet for the day is:'),
+                        const Text('Your diet for the day is:'),
                         SizedBox(height: SizeConfig.pointFifteenHeight),
 
                         // Display diet cards here
@@ -133,21 +134,21 @@ class _DietTrackingState extends State<DietTracking> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Add Diet'),
+          title: const Text('Add Diet'),
           content: Form(
             child: Column(
               children: [
                 TextFormField(
                   controller: mealController,
-                  decoration: InputDecoration(labelText: 'Meal'),
+                  decoration: const InputDecoration(labelText: 'Meal'),
                 ),
                 TextFormField(
                   controller: portionController,
-                  decoration: InputDecoration(labelText: 'Portion'),
+                  decoration: const InputDecoration(labelText: 'Portion'),
                 ),
                 TextFormField(
                   controller: caloriesController,
-                  decoration: InputDecoration(labelText: 'Calories'),
+                  decoration: const InputDecoration(labelText: 'Calories'),
                   keyboardType: TextInputType.number,
                 ),
               ],
@@ -158,7 +159,7 @@ class _DietTrackingState extends State<DietTracking> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
@@ -170,7 +171,7 @@ class _DietTrackingState extends State<DietTracking> {
                 );
                 Navigator.of(context).pop();
               },
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
           ],
         );
@@ -195,7 +196,6 @@ class _DietTrackingState extends State<DietTracking> {
           setState(() {
             for (int j = 0; j < selectedDates.length; j++) {
               selectedDates[j] = (j == i);
-              print("Tapped DateCard Index: $i");
             }
           });
         },
@@ -249,7 +249,7 @@ class _DietTrackingState extends State<DietTracking> {
 
       // Ensure a Diet map exists, create it if necessary
       final snapshot = await userDoc.get();
-      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic> ?? {};
+      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
       if (!data.containsKey('Diet')) {
         data['Diet'] = {};
       }
@@ -284,9 +284,7 @@ class _DietTrackingState extends State<DietTracking> {
           calories: calories,
         ));
       });
-      print('Diet added successfully!');
     } catch (error) {
-      print('Error adding diet: $error');
     }
   }
 }

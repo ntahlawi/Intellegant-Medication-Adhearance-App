@@ -1,10 +1,12 @@
+// ignore_for_file: unused_local_variable, file_names, library_private_types_in_public_api, avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
-import 'package:medappfv/components/Widgets/Cards/date_card.dart';
+import 'package:medappfv/components/Cards/date_card.dart';
 
-import '../../components/Widgets/Cards/exercise_card.dart';
+import '../../components/Cards/exercise_card.dart';
 
 class Extracking extends StatefulWidget {
   const Extracking({Key? key}) : super(key: key);
@@ -35,9 +37,9 @@ class _ExtrackingState extends State<Extracking> {
       DocumentReference userDoc = userInfoCollection.doc(userId);
       DocumentSnapshot snapshot = await userDoc.get();
 
-      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic> ?? {};
+      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
       Map<String, dynamic> exercisesData =
-          data['Exercises'] as Map<String, dynamic> ?? {};
+          data['Exercises'] as Map<String, dynamic>;
 
       exerciseCards = exercisesData.entries.map((entry) {
         String exerciseId = entry.key;
@@ -66,8 +68,8 @@ class _ExtrackingState extends State<Extracking> {
           // Show the exercise form dialog
           _showExerciseForm();
         },
-        child: Icon(Icons.add),
         backgroundColor: Theme.of(context).colorScheme.primary,
+        child: const Icon(Icons.add),
       ),
       body: SafeArea(
         child: Padding(
@@ -104,7 +106,7 @@ class _ExtrackingState extends State<Extracking> {
                           height: SizeConfig.pointFifteenHeight,
                         ),
                         // current exercises
-                        Text('Your exercises for the day are:'),
+                        const Text('Your exercises for the day are:'),
                         SizedBox(
                           height: SizeConfig.pointFifteenHeight,
                         ),
@@ -142,21 +144,21 @@ class _ExtrackingState extends State<Extracking> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Add Exercise'),
+          title: const Text('Add Exercise'),
           content: Form(
             child: Column(
               children: [
                 TextFormField(
                   controller: exerciseNameController,
-                  decoration: InputDecoration(labelText: 'Exercise Name'),
+                  decoration: const InputDecoration(labelText: 'Exercise Name'),
                 ),
                 TextFormField(
                   controller: timeController,
-                  decoration: InputDecoration(labelText: 'Time'),
+                  decoration: const InputDecoration(labelText: 'Time'),
                 ),
                 TextFormField(
                   controller: caloriesController,
-                  decoration: InputDecoration(labelText: 'Burned Calories'),
+                  decoration: const InputDecoration(labelText: 'Burned Calories'),
                   keyboardType: TextInputType.number,
                 ),
               ],
@@ -167,7 +169,7 @@ class _ExtrackingState extends State<Extracking> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
@@ -179,7 +181,7 @@ class _ExtrackingState extends State<Extracking> {
                 );
                 Navigator.of(context).pop();
               },
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
           ],
         );
@@ -258,7 +260,7 @@ class _ExtrackingState extends State<Extracking> {
 
       // Ensure an Exercises map exists, create it if necessary
       final snapshot = await userDoc.get();
-      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic> ?? {};
+      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
       if (!data.containsKey('Exercises')) {
         data['Exercises'] = {};
       }

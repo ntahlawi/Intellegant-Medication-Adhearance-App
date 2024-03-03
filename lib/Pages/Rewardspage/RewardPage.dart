@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, file_names
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -39,21 +41,19 @@ class _RewardsPageState extends State<RewardsPage> {
   }
 
   Future<void> _loadCurrentPoints() async {
-  User? user = await _getCurrentUser();
-  if (user != null) {
-    final userId = user.uid;
-    final currentPoints = await FirebaseService.getCurrentPoints(userId);
-    setState(() {
-      _currentPoints = currentPoints;
-    });
+    User? user = await _getCurrentUser();
+    if (user != null) {
+      final userId = user.uid;
+      final currentPoints = await FirebaseService.getCurrentPoints(userId);
+      setState(() {
+        _currentPoints = currentPoints;
+      });
+    }
   }
-}
-
 
   Future<User?> _getCurrentUser() async {
     return _auth.currentUser;
   }
-
 
   void _incrementPoints() async {
     User? user = await _getCurrentUser();
@@ -70,7 +70,8 @@ class _RewardsPageState extends State<RewardsPage> {
     if (user != null) {
       final userId = user.uid;
       final currentPoints = await FirebaseService.getCurrentPoints(userId);
-      final newPoints = (currentPoints - deductionAmount).clamp(0, currentPoints);
+      final newPoints =
+          (currentPoints - deductionAmount).clamp(0, currentPoints);
       await FirebaseService.deductPoints(userId, newPoints);
       _updatePointsInPrefs(userId, newPoints);
     }
@@ -116,10 +117,8 @@ class FirebaseService {
   }
 
   static Future<int> getCurrentPoints(String userId) async {
-    final snapshot = await FirebaseFirestore.instance
-        .collection('Info')
-        .doc(userId)
-        .get();
+    final snapshot =
+        await FirebaseFirestore.instance.collection('UserInfo').doc(userId).get();
 
     if (snapshot.exists) {
       final data = snapshot.data();
@@ -132,14 +131,14 @@ class FirebaseService {
 
   static Future<void> updatePoints(String userId, int newPoints) async {
     await FirebaseFirestore.instance
-        .collection('Info')
+        .collection('UserInfo')
         .doc(userId)
         .set({'points': newPoints}, SetOptions(merge: true));
   }
 
   static Future<void> deductPoints(String userId, int newPoints) async {
     await FirebaseFirestore.instance
-        .collection('Info')
+        .collection('UserInfo')
         .doc(userId)
         .set({'points': newPoints});
   }

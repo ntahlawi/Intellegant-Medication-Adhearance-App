@@ -1,13 +1,13 @@
+// ignore_for_file: avoid_print, use_build_context_synchronously
+
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:medappfv/Pages/login_signup/PersonalinfoForms/HealthDataForms/regForm.dart';
-import 'package:medappfv/Pages/login_signup/PersonalinfoForms/HealthDataForms/regForm1.dart';
+import 'package:medappfv/FireBase/addingData.dart';
+import 'package:medappfv/Pages/PersonalinfoForms/HealthDataForms/regForm1.dart';
 import 'package:medappfv/Pages/login_signup/login_page.dart';
-import 'package:medappfv/components/Widgets/NavBar.dart';
 import 'package:medappfv/components/Widgets/TextField.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
-import 'package:medappfv/components/Widgets/TextBtn.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -26,7 +26,7 @@ class _SignUpPageState extends State<SignUpPage> {
     showDialog(
       context: context,
       builder: (context) {
-        return Center(
+        return const Center(
           child: CircularProgressIndicator(),
         );
       },
@@ -38,6 +38,11 @@ class _SignUpPageState extends State<SignUpPage> {
         email: emailtextcontroller.text,
         password: passwordextcontroller.text,
       );
+
+      submitUserData({
+        'Email': emailtextcontroller.text,
+        'points': '0',
+      });
     } else {
       print('Passwords Don\'t Match');
     }
@@ -174,7 +179,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               color: Theme.of(context).colorScheme.secondary,
                               borderRadius: BorderRadius.circular(24),
                             ),
-                            child: Center(
+                            child: const Center(
                               child: Text('Sign up'),
                             ),
                           ),

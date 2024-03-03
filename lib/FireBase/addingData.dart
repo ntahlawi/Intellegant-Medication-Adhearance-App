@@ -1,33 +1,29 @@
+// ignore_for_file: avoid_print, file_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 Future<void> submitUserData(Map<String, String> userData) async {
   try {
-    // Get the current user
     User? user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
-      // User is signed in, so you can get the user ID
       String userId = user.uid;
 
-      // Directly create or update the document with the user ID as its name
-      DocumentReference userInfoDoc =
-          FirebaseFirestore.instance.collection('UserInfo').doc(userId);
+      DocumentReference userInfoDoc = FirebaseFirestore.instance.collection('UserInfo').doc(userId);
 
-      await userInfoDoc.set({
-        ...userData, // Spread the contents of the userData map
-      });
+      // Use set(merge: true) for creation + update
+      await userInfoDoc.set(userData, SetOptions(merge: true)); 
 
-      print('User data submitted for user with ID: $userId');
+      print('User data set (or updated) for user with ID: $userId');
     } else {
-      // User is not signed in, handle accordingly
       print('User is not signed in');
     }
   } catch (e) {
-    print('Error submitting user data: $e');
-    // Handle the error as needed
+    print('Error setting user data: $e');
   }
 }
+
 //EXAMPLE
 // submitUserData({
 //   'name': Nametextcntrlr.text,

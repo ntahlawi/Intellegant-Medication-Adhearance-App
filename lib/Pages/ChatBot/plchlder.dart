@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
@@ -36,7 +38,7 @@ class plchld extends StatelessWidget {
               fontSize: SizeConfig.screenWidth * 0.04),
         ),
       ),
-      body: Column(
+      body: const Column(
         children: [],
       ),
     );

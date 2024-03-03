@@ -1,11 +1,12 @@
+// ignore_for_file: unused_local_variable, library_private_types_in_public_api, avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
-import 'package:medappfv/components/Widgets/Cards/date_card.dart';
+import 'package:medappfv/components/Cards/date_card.dart';
 
-import '../../components/Widgets/Cards/medication_card.dart';
+import '../../components/Cards/medication_card.dart';
 
 class Mtracking extends StatefulWidget {
   const Mtracking({Key? key}) : super(key: key);
@@ -37,9 +38,9 @@ class _MtrackingState extends State<Mtracking> {
       DocumentReference userDoc = userInfoCollection.doc(userId);
       DocumentSnapshot snapshot = await userDoc.get();
 
-      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic> ?? {};
+      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
       Map<String, dynamic> medicationsData =
-          data['Medications'] as Map<String, dynamic> ?? {};
+          data['Medications'] as Map<String, dynamic>;
 
       medicationCards = medicationsData.entries.map((entry) {
         String medicationId = entry.key;
@@ -58,6 +59,7 @@ class _MtrackingState extends State<Mtracking> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     SizeConfig.init(context);
@@ -68,8 +70,8 @@ class _MtrackingState extends State<Mtracking> {
           // Show the medication form dialog
           _showMedicationForm();
         },
-        child: Icon(Icons.add),
         backgroundColor: Theme.of(context).colorScheme.primary,
+        child: const Icon(Icons.add),
       ),
       body: SafeArea(
         child: Padding(
@@ -105,7 +107,7 @@ class _MtrackingState extends State<Mtracking> {
                           height: SizeConfig.pointFifteenHeight,
                         ),
                         // current medications
-                        Text('Your medications for the day are:'),
+                        const Text('Your medications for the day are:'),
                         SizedBox(
                           height: SizeConfig.pointFifteenHeight,
                         ),
@@ -155,13 +157,13 @@ class _MtrackingState extends State<Mtracking> {
                   style: TextStyle(
                       color: Theme.of(context).textTheme.titleSmall!.color),
                   controller: medNameController,
-                  decoration: InputDecoration(labelText: 'Medication Name'),
+                  decoration: const InputDecoration(labelText: 'Medication Name'),
                 ),
                 TextFormField(
                   style: TextStyle(
                       color: Theme.of(context).textTheme.titleSmall!.color),
                   controller: dosageController,
-                  decoration: InputDecoration(labelText: 'Dosage'),
+                  decoration: const InputDecoration(labelText: 'Dosage'),
                   keyboardType: TextInputType.number,
                 ),
                 TextFormField(
@@ -169,7 +171,7 @@ class _MtrackingState extends State<Mtracking> {
                       color: Theme.of(context).textTheme.titleSmall!.color),
                   controller: timeController,
                   decoration:
-                      InputDecoration(labelText: 'Intervals (e.g., 8 hours)'),
+                      const InputDecoration(labelText: 'Intervals (e.g., 8 hours)'),
                   keyboardType: TextInputType.number,
                 ),
               ],
@@ -180,7 +182,7 @@ class _MtrackingState extends State<Mtracking> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
@@ -193,7 +195,7 @@ class _MtrackingState extends State<Mtracking> {
                 Navigator.of(context).pop();
                 print(userId);
               },
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
           ],
         );
@@ -273,7 +275,7 @@ class _MtrackingState extends State<Mtracking> {
 
       // Ensure a Medications map exists, create it if necessary
       final snapshot = await userDoc.get();
-      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic> ?? {};
+      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
       if (!data.containsKey('Medications')) {
         data['Medications'] = {};
       }
