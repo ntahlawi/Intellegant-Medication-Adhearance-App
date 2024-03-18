@@ -9,10 +9,11 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:medappfv/FireBase/addingData.dart';
-import 'package:medappfv/Pages/PersonalinfoForms/HealthDataForms/regForm.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
 import 'package:medappfv/components/Cards/settings_card.dart';
 import 'package:medappfv/components/Widgets/dialougecard.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -21,7 +22,7 @@ class Settings extends StatefulWidget {
   State<Settings> createState() => _SettingsState();
 }
 
-String points = '';
+String points = ''.toString();
 String realName = '';
 String userName = '';
 
@@ -34,6 +35,8 @@ String? downloadedImageUrl;
 bool uploadWasSuccessful = false;
 
 class _SettingsState extends State<Settings> {
+  String? _profilePictureURL; // To hold the URL
+
 //sign user out
 
   void signUserOut() {
@@ -44,6 +47,16 @@ class _SettingsState extends State<Settings> {
   void initState() {
     super.initState();
     _fetchUserData(); // Fetch data on initialization
+    fetchProfilePictureURL();
+    _loadProfilePicture(); // Load URL on initialization
+  }
+
+  Future<void> _loadProfilePicture() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedUrl = prefs.getString('profilePictureURL');
+    setState(() {
+      _profilePictureURL = savedUrl;
+    });
   }
 
   void changePassword() {
@@ -78,6 +91,24 @@ class _SettingsState extends State<Settings> {
     // Update variables and trigger UI update
   }
 
+  Future<String?> fetchProfilePictureURL() async {
+    final userId = FirebaseAuth.instance.currentUser?.uid;
+    if (userId == null) return null; // User not logged in
+
+    try {
+      final documentSnapshot = await userInfoCollection.doc(userId).get();
+      if (documentSnapshot.exists) {
+        final data = documentSnapshot.data() as Map<String, dynamic>;
+        return data['profilePictureURL'] as String?;
+      } else {
+        return null; // No profile picture found
+      }
+    } on FirebaseException catch (e) {
+      print('Error fetching profile picture URL: $e');
+      return null;
+    }
+  }
+
   //uplaoding pfp
   Future<void> uploadProfilePicture(BuildContext context) async {
     final ImagePicker picker = ImagePicker();
@@ -87,31 +118,44 @@ class _SettingsState extends State<Settings> {
         await picker.pickImage(source: ImageSource.gallery, imageQuality: 85);
     if (image == null) return;
 
-    // 2. Upload to Firebase Storage
-    final storageRef =
-        FirebaseStorage.instance.ref().child('profile_pictures/$userId.jpg');
-    final File imageFile = File(image.path);
+    // 2. Save to persistent storage
     try {
+      final appDocDir = await getApplicationDocumentsDirectory();
+      final savedImage =
+          await File(image.path).copy('${appDocDir.path}/profile_image.jpg');
+      final imageFile = File(savedImage.path);
+
+      // 3. Upload to Firebase Storage
+      final storageRef =
+          FirebaseStorage.instance.ref().child('profile_pictures/$userId.jpg');
       await storageRef.putFile(imageFile);
+
+      // 4. Get Download URL
+      final downloadURL = await storageRef.getDownloadURL();
+
+      // 5. Update Firestore
+      await userInfoCollection
+          .doc(userId)
+          .update({'profilePictureURL': downloadURL});
+
+      // 6. Update State
+      setState(() {
+        downloadedImageUrl = downloadURL;
+        uploadWasSuccessful = true;
+      });
+      //save the url to the shared preferences
+      final prefs = await SharedPreferences.getInstance(); // Get instance
+      await prefs.setString('profilePictureURL', downloadURL); // Store URL
     } on FirebaseException catch (e) {
       print('Upload failed: $e');
-      // Handle upload errors appropriately
+      print(e.message);
+      // Handle upload errors gracefully
+      return;
+    } catch (e) {
+      print('Error saving image or during upload: $e');
+      // Handle other potential exceptions
       return;
     }
-
-    // 3. Get Download URL
-    final downloadURL = await storageRef.getDownloadURL();
-
-    // 4. Update Firestore (Placeholder)
-    await userInfoCollection
-        .doc(userId)
-        .update({'profilePictureURL': downloadURL});
-
-    // 5. Update State
-    setState(() {
-      downloadedImageUrl = downloadURL;
-      uploadWasSuccessful = true;
-    });
   }
 
   @override
@@ -148,10 +192,10 @@ class _SettingsState extends State<Settings> {
                         ),
                         child: CircleAvatar(
                           radius: SizeConfig.screenWidth * 0.20,
-                          backgroundImage: uploadWasSuccessful
-                              ? NetworkImage(downloadedImageUrl ?? '')
+                          backgroundImage: _profilePictureURL != null
+                              ? NetworkImage(_profilePictureURL!)
                               : const AssetImage('lib/icons/diet.png')
-                                  as ImageProvider<Object>,
+                                  as ImageProvider,
                         ),
                       ),
                     ),

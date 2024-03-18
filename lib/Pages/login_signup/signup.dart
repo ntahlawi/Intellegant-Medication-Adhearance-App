@@ -41,7 +41,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
       submitUserData({
         'Email': emailtextcontroller.text,
-        'points': '0',
+        'points': 0.toString(),
       });
     } else {
       print('Passwords Don\'t Match');

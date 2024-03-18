@@ -196,7 +196,10 @@ class _regF2p1State extends State<regF2p1> {
                         onTap: () {
                           setState(() {
                             selectedChoice = DiabeticStatus.diabetic;
+                            isDiabetic = true;
                           });
+                          print(isDiabetic);
+                          print(isPreDiabetic);
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -228,6 +231,10 @@ class _regF2p1State extends State<regF2p1> {
                         onTap: () {
                           setState(() {
                             selectedChoice = DiabeticStatus.preDiabetic;
+                            isPreDiabetic = true;
+                            isDiabetic = false;
+                            print(isDiabetic);
+                            print(isPreDiabetic);
                           });
                         },
                         borderRadius: BorderRadius.circular(12),
@@ -259,7 +266,11 @@ class _regF2p1State extends State<regF2p1> {
                         onTap: () {
                           setState(() {
                             selectedChoice = DiabeticStatus.notDiabetic;
+                            isPreDiabetic = false;
+                            isDiabetic = false;
                           });
+                          print(isDiabetic);
+                          print(isPreDiabetic);
                         },
                         borderRadius: BorderRadius.circular(12),
                         child: Container(
@@ -302,20 +313,37 @@ class _regF2p1State extends State<regF2p1> {
                   ),
                   InkWell(
                     onTap: () {
-                      DiabeticStatus selectedStatus = selectedChoice;
-                      submitUserData({
-                        'Hieght': _currvalueH.toString(),
-                        'Weight': _currvalueV.toString(),
-                        'DiabeticStatus': selectedStatus.toString(),
-                      });
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return const NavBar();
-                          },
-                        ),
-                      );
+                      if (isDiabetic == true || isPreDiabetic == true) {
+                        DiabeticStatus selectedStatus = selectedChoice;
+                        submitUserData({
+                          'Hieght': _currvalueH.toString(),
+                          'Weight': _currvalueV.toString(),
+                          'DiabeticStatus': selectedStatus.toString(),
+                        });
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const NavBar();
+                            },
+                          ),
+                        );
+                      } else {
+                        DiabeticStatus selectedStatus = selectedChoice;
+                        submitUserData({
+                          'Hieght': _currvalueH.toString(),
+                          'Weight': _currvalueV.toString(),
+                          'DiabeticStatus': selectedStatus.toString(),
+                        });
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const NavBar();
+                            },
+                          ),
+                        );
+                      }
                     },
                     splashColor: Theme.of(context).colorScheme.primaryContainer,
                     splashFactory: InkSplash.splashFactory,
