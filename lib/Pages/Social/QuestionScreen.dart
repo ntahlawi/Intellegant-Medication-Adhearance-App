@@ -1,38 +1,32 @@
-// ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:medappfv/Pages/Social/screens/Replies.dart';
 
 class QuestionListScreen extends StatelessWidget {
-  const QuestionListScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('All Questions'),
+        title: Text('All Questions'),
         leading: BackButton(
           onPressed: () {
             Navigator.pop(context);
           },
         ),
       ),
-      body: const AllQuestionsList(),
+      body: AllQuestionsList(),
     );
   }
 }
 
 class AllQuestionsList extends StatelessWidget {
-  const AllQuestionsList({super.key});
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: FirebaseFirestore.instance.collection('questions').snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return const CircularProgressIndicator();
+          return CircularProgressIndicator();
         }
 
         var questions = snapshot.data?.docs;
@@ -41,7 +35,7 @@ class AllQuestionsList extends StatelessWidget {
           itemBuilder: (context, index) {
             var question = questions?[index].data() as Map<String, dynamic>;
             return Card(
-              margin: const EdgeInsets.all(10),
+              margin: EdgeInsets.all(10),
               child: ListTile(
                 title: Text(question['title']),
                 subtitle: Text(question['content']),

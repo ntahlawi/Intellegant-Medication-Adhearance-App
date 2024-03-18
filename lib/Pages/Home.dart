@@ -13,6 +13,7 @@ import 'package:medappfv/Pages/Journal/MainJournal.dart';
 import 'package:medappfv/Pages/Profilepage/pfp.dart';
 import 'package:medappfv/Pages/Rewardspage/RewardPage.dart';
 import 'package:medappfv/Pages/PersonalinfoForms/HealthDataForms/regForm.dart';
+import 'package:medappfv/Pages/Social/GetterOfStats.dart';
 import 'package:medappfv/Pages/stepscounter/stepscounter.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
 import 'package:medappfv/components/Widgets/Pie_Chart.dart';
@@ -288,7 +289,18 @@ class _HomeState extends State<Home> {
                       width: SizeConfig.screenWidth * 0.45,
                       child: Padding(
                         padding: const EdgeInsets.all(3),
-                        child: mypiechart(),
+                        child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return UserInfoPage();
+                            },
+                      ),
+                        );
+                      },
+                        ),
                       ),
                     ),
                     SizedBox(
