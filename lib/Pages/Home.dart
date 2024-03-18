@@ -13,6 +13,7 @@ import 'package:medappfv/Pages/Journal/MainJournal.dart';
 import 'package:medappfv/Pages/Profilepage/pfp.dart';
 import 'package:medappfv/Pages/Rewardspage/RewardPage.dart';
 import 'package:medappfv/Pages/PersonalinfoForms/HealthDataForms/regForm.dart';
+import 'package:medappfv/Pages/stepscounter/stepscounter.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
 import 'package:medappfv/components/Widgets/Pie_Chart.dart';
 import 'package:medappfv/components/Cards/category_card.dart';
@@ -233,7 +234,7 @@ class _HomeState extends State<Home> {
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return PointPage();
+                            return Scounter();
                           },
                         ),
                       );

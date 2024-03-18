@@ -560,6 +560,12 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "pedometer",
+      "rootUri": "file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/pedometer-4.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "petitparser",
       "rootUri": "file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/petitparser-6.0.2",
       "packageUri": "lib/",
@@ -836,7 +842,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2024-03-18T10:01:41.267357Z",
+  "generated": "2024-03-18T10:16:48.520102Z",
   "generator": "pub",
   "generatorVersion": "3.3.1"
 }

@@ -61,19 +61,19 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           fontSize: SizeConfig.screenWidth * 0.045),
                     ),
                   ),
-      
+
                   SmoothPageIndicator(
                     controller: _controller,
                     count: 3,
                   ),
-      
+
                   // next or done
                   isLastPage
                       ? GestureDetector(
                           onTap: () async {
                             final prefs = await SharedPreferences.getInstance();
                             prefs.setBool('showHome', true);
-      
+
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
@@ -89,7 +89,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                       .textTheme
                                       .titleSmall!
                                       .color,
-                                  fontSize: SizeConfig.screenWidth * 0.045)),
+                                  fontSize: SizeConfig.screenWidth * 0.45)),
                         )
                       : GestureDetector(
                           onTap: () {
@@ -100,8 +100,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           child: Text(
                             'Next',
                             style: TextStyle(
-                                color:
-                                    Theme.of(context).textTheme.titleSmall!.color,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .color,
                                 fontSize: SizeConfig.screenWidth * 0.045),
                           ),
                         )

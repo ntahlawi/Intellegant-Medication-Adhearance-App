@@ -193,7 +193,7 @@ class _regF1p1State extends State<regF1p1> {
                           'Name': _nameController.text,
                           'Username': _userNameController.text
                         });
-                     
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(
