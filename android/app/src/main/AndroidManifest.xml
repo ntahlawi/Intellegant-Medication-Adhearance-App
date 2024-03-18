@@ -1,4 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+            <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+
     <application
         android:label="medappfv"
         android:name="${applicationName}"
@@ -29,7 +31,6 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-            <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
 
     </application>
 </manifest>

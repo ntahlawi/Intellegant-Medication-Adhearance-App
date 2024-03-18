@@ -327,7 +327,7 @@
     },
     {
       "name": "google_fonts",
-      "rootUri": "file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/google_fonts-6.2.1",
+      "rootUri": "file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/google_fonts-6.1.0",
       "packageUri": "lib/",
       "languageVersion": "2.14"
     },
@@ -842,7 +842,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2024-03-18T10:16:48.520102Z",
+  "generated": "2024-03-18T20:03:21.714682Z",
   "generator": "pub",
   "generatorVersion": "3.3.1"
 }
