@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, unused_local_variable
 
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
@@ -107,7 +107,7 @@ class _SocialState extends State<Social> {
                 Highet: SizeConfig.screenHeight * 0.05,
                 width: SizeConfig.screenWidth * 0.5,
                 txt: "click here to view a question",
-                newLocation: QuestionListScreen()),
+                newLocation: const QuestionListScreen()),
           ],
         ),
       ),

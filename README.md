@@ -9,3 +9,4 @@
 - v0.1.3 - Added exercise, diet, and health pages  and many more
 - v0.1.4 - flushed out regestration completly, finished pfp and many more
 - v0.1.5 - fixed android sim problems 
+- v0.1.6 - fixed chatbot 

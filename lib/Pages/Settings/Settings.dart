@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, avoid_print
 
 import 'dart:io';
 
@@ -60,7 +60,7 @@ class _SettingsState extends State<Settings> {
   }
 
   void changePassword() {
-    FirebaseAuth.instance.sendPasswordResetEmail(email: '$email');
+    FirebaseAuth.instance.sendPasswordResetEmail(email: email);
   }
 
   void _fetchUserData() async {
@@ -161,7 +161,6 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final newusernametxtcntrlr = TextEditingController();
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -309,7 +308,7 @@ class _SettingsState extends State<Settings> {
                                         .textTheme
                                         .titleSmall!
                                         .color),
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   hintText: "New Username",
                                 ),
                                 controller: newusernametxtcntrlr,
@@ -318,11 +317,11 @@ class _SettingsState extends State<Settings> {
                           ),
                           actions: [
                             TextButton(
-                              child: Text("Cancel"),
+                              child: const Text("Cancel"),
                               onPressed: () => Navigator.pop(dialogContext),
                             ),
                             TextButton(
-                              child: Text("Submit"),
+                              child: const Text("Submit"),
                               onPressed: () {
                                 if (newusernametxtcntrlr.text == userName) {
                                   showErrorDialog(
@@ -358,7 +357,7 @@ class _SettingsState extends State<Settings> {
                       },
                     );
                   },
-                  child: SettingsCard(
+                  child: const SettingsCard(
                       cardText: 'Change username',
                       icon: EvaIcons.chevronRightOutline),
                 ),
@@ -372,7 +371,7 @@ class _SettingsState extends State<Settings> {
                   onTap: () {
                     changePassword();
                   },
-                  child: SettingsCard(
+                  child: const SettingsCard(
                       cardText: 'Change password',
                       icon: EvaIcons.chevronRightOutline),
                 ),
@@ -506,13 +505,6 @@ class _SettingsState extends State<Settings> {
                   //Logout button start
 
                   child: TextButton(
-                    child: Text(
-                      'Logout',
-                      style: TextStyle(
-                          color: Theme.of(context).textTheme.titleMedium!.color,
-                          fontSize: SizeConfig.screenWidth * 0.033,
-                          fontWeight: FontWeight.w500),
-                    ),
                     style: ButtonStyle(
                       backgroundColor: MaterialStatePropertyAll(
                           Theme.of(context).colorScheme.primary),
@@ -520,6 +512,13 @@ class _SettingsState extends State<Settings> {
                     onPressed: () {
                       signUserOut();
                     },
+                    child: Text(
+                      'Logout',
+                      style: TextStyle(
+                          color: Theme.of(context).textTheme.titleMedium!.color,
+                          fontSize: SizeConfig.screenWidth * 0.033,
+                          fontWeight: FontWeight.w500),
+                    ),
                   ),
                 ),
                 //Logout button finish

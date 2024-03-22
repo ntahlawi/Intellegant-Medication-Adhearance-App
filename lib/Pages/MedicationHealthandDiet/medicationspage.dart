@@ -17,6 +17,8 @@ class Mtracking extends StatefulWidget {
 
 final User? user = FirebaseAuth.instance.currentUser;
 final String? userId = user?.uid;
+double? selectedDosage; // Initialize as null
+int? selectedInterval; // Initialize as null
 
 class _MtrackingState extends State<Mtracking> {
   TextEditingController medNameController = TextEditingController();
@@ -140,6 +142,7 @@ class _MtrackingState extends State<Mtracking> {
   }
 
 // Function to show a dialog for adding medications
+
   void _showMedicationForm() {
     showDialog(
       context: context,
@@ -157,22 +160,45 @@ class _MtrackingState extends State<Mtracking> {
                   style: TextStyle(
                       color: Theme.of(context).textTheme.titleSmall!.color),
                   controller: medNameController,
-                  decoration: const InputDecoration(labelText: 'Medication Name'),
-                ),
-                TextFormField(
-                  style: TextStyle(
-                      color: Theme.of(context).textTheme.titleSmall!.color),
-                  controller: dosageController,
-                  decoration: const InputDecoration(labelText: 'Dosage'),
-                  keyboardType: TextInputType.number,
-                ),
-                TextFormField(
-                  style: TextStyle(
-                      color: Theme.of(context).textTheme.titleSmall!.color),
-                  controller: timeController,
                   decoration:
-                      const InputDecoration(labelText: 'Intervals (e.g., 8 hours)'),
-                  keyboardType: TextInputType.number,
+                      const InputDecoration(labelText: 'Medication Name'),
+                ),
+
+                // Dosage Dropdown
+                DropdownButtonFormField<double>(
+                  decoration: const InputDecoration(labelText: 'Dosage'),
+                  items:
+                      [0.5, 1.0, 1.5, 2.0, 2.5 /* Add more values as needed */]
+                          .map((double value) => DropdownMenuItem<double>(
+                                value: value,
+                                child: Text(value.toString()),
+                              ))
+                          .toList(),
+                  onChanged: (newValue) {
+                    // Update dosageController if needed
+                    setState(() {
+                      // Assuming you are in a StatefulWidget
+                      selectedDosage = newValue;
+                    });
+                  },
+                ),
+
+                // Interval Dropdown
+                DropdownButtonFormField<int>(
+                  decoration:
+                      const InputDecoration(labelText: 'Intervals (hours)'),
+                  items: List.generate(24, (i) => i + 1) // Generates 1 to 24
+                      .map((int value) => DropdownMenuItem<int>(
+                            value: value,
+                            child: Text(value.toString()),
+                          ))
+                      .toList(),
+                  onChanged: (newValue) {
+                    // Update timeController if needed
+                    setState(() {
+                      selectedInterval = newValue;
+                    });
+                  },
                 ),
               ],
             ),
@@ -189,8 +215,8 @@ class _MtrackingState extends State<Mtracking> {
                 // Save the medication details and update UI
                 addMedicationToFirestore(
                   medNameController.text,
-                  dosageController.text,
-                  timeController.text,
+                  selectedDosage.toString(),
+                  selectedInterval.toString(),
                 );
                 Navigator.of(context).pop();
                 print(userId);
@@ -315,5 +341,4 @@ class _MtrackingState extends State<Mtracking> {
       print('Error adding medication: $error');
     }
   }
-
 }

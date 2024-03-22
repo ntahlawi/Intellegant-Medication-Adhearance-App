@@ -1,9 +1,11 @@
+// ignore_for_file: file_names, library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 
 class DownvoteButton extends StatefulWidget {
   final String answerId;
 
-  DownvoteButton({required this.answerId, required String questionId});
+  const DownvoteButton({super.key, required this.answerId, required String questionId});
 
   @override
   _DownvoteButtonState createState() => _DownvoteButtonState();

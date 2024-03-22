@@ -2,14 +2,13 @@
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:medappfv/Pages/ChatBot/chat_page.dart';
-import 'package:medappfv/Pages/ChatBot/plchlder.dart';
+import 'package:medappfv/Pages/chatbotnew/chatbotpage.dart';
+import 'package:medappfv/Pages/chatbotnew/keyp.dart';
 import 'package:medappfv/Pages/Home.dart';
 import 'package:medappfv/Pages/MedicationHealthandDiet/medicationspage.dart';
 import 'package:medappfv/Pages/Settings/Settings.dart';
 import 'package:medappfv/Pages/Social/Social.dart';
 import 'package:unicons/unicons.dart';
-import '../../Pages/ChatBot/chat_api.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
@@ -22,7 +21,7 @@ class _NavBarState extends State<NavBar> {
   int sindex = 0;
   List Screens = [
     const Home(),
-    const plchld(),
+    const ChatWidget(apiKey: key),
     // ChatPage(chatApi: ChatApi()),
     const Social(),
     const Mtracking(),

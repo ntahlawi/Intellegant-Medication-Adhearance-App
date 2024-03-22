@@ -290,6 +290,12 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "flutter_markdown",
+      "rootUri": "file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/flutter_markdown-0.6.22",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
       "name": "flutter_native_splash",
       "rootUri": "file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/flutter_native_splash-2.4.0",
       "packageUri": "lib/",
@@ -330,6 +336,12 @@
       "rootUri": "file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/google_fonts-6.1.0",
       "packageUri": "lib/",
       "languageVersion": "2.14"
+    },
+    {
+      "name": "google_generative_ai",
+      "rootUri": "file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/google_generative_ai-0.2.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "health",
@@ -842,7 +854,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2024-03-18T20:03:21.714682Z",
+  "generated": "2024-03-21T19:05:45.784513Z",
   "generator": "pub",
   "generatorVersion": "3.3.1"
 }

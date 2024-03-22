@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:medappfv/FireBase/addingData.dart';
 import 'dart:async';
@@ -9,7 +11,10 @@ String formatDate(DateTime d) {
 }
 
 class Scounter extends StatefulWidget {
+  const Scounter({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _ScounterState createState() => _ScounterState();
 }
 
@@ -77,20 +82,20 @@ class _ScounterState extends State<Scounter> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
+              const Text(
                 'Steps Taken',
                 style: TextStyle(fontSize: 30),
               ),
               Text(
                 _steps,
-                style: TextStyle(fontSize: 60),
+                style: const TextStyle(fontSize: 60),
               ),
-              Divider(
+              const Divider(
                 height: 100,
                 thickness: 0,
                 color: Colors.white,
               ),
-              Text(
+              const Text(
                 'Pedestrian Status',
                 style: TextStyle(fontSize: 30),
               ),
@@ -106,8 +111,8 @@ class _ScounterState extends State<Scounter> {
                 child: Text(
                   _status,
                   style: _status == 'walking' || _status == 'stopped'
-                      ? TextStyle(fontSize: 30)
-                      : TextStyle(fontSize: 20, color: Colors.red),
+                      ? const TextStyle(fontSize: 30)
+                      : const TextStyle(fontSize: 20, color: Colors.red),
                 ),
               )
             ],

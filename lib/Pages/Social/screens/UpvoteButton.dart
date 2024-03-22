@@ -1,11 +1,14 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
 class UpvoteButton extends StatefulWidget {
   final String questionId;
 
-  UpvoteButton({required this.questionId, required String answerId});
+  const UpvoteButton({super.key, required this.questionId, required String answerId});
 
   @override
+  // ignore: library_private_types_in_public_api
   _UpvoteButtonState createState() => _UpvoteButtonState();
 }
 

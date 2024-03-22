@@ -186,6 +186,10 @@ flutter_lints
 2.19
 file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/flutter_lints-2.0.3/
 file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/flutter_lints-2.0.3/lib/
+flutter_markdown
+3.3
+file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/flutter_markdown-0.6.22/
+file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/flutter_markdown-0.6.22/lib/
 flutter_native_splash
 3.0
 file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/flutter_native_splash-2.4.0/
@@ -206,6 +210,10 @@ google_fonts
 2.14
 file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/google_fonts-6.1.0/
 file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/google_fonts-6.1.0/lib/
+google_generative_ai
+3.0
+file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/google_generative_ai-0.2.2/
+file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/google_generative_ai-0.2.2/lib/
 health
 2.17
 file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/health-9.0.1/

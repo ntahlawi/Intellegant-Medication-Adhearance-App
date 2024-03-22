@@ -1,27 +1,28 @@
+// ignore_for_file: file_names, avoid_print, use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
-import 'package:medappfv/components/Themes/Sizing.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/material.dart';
 import 'dart:async';
-import 'dart:math';
-import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/material.dart';
 
 class UserInfoPage extends StatelessWidget {
+  const UserInfoPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('User Details'),
       ),
-      body: UserInfo(),
+      body: const UserInfo(),
     );
   }
 }
 class UserInfo extends StatelessWidget {
+  const UserInfo({super.key});
+
   @override
   Widget build(BuildContext context) {
     User? currentUser = FirebaseAuth.instance.currentUser;
@@ -66,8 +67,8 @@ class UserInfo extends StatelessWidget {
         ],
       ),
     ),
-    LineChartSample2(),
-    BarChartSample1(),
+    const LineChartSample2(),
+    const BarChartSample1(),
  
   ],
 ),
@@ -130,7 +131,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(16),
+      margin: const EdgeInsets.all(16),
       child: SizedBox(
         width: double.infinity,
         height: 200,
@@ -181,12 +182,12 @@ class _LineChartSample2State extends State<LineChartSample2> {
 Widget bottomTitleWidgets(double value, TitleMeta meta) {
   final now = DateTime.now();
   final lastThreeMonths = [
-    DateFormat('MMM').format(now.subtract(Duration(days: 30 * 2))),
-    DateFormat('MMM').format(now.subtract(Duration(days: 30))),
+    DateFormat('MMM').format(now.subtract(const Duration(days: 30 * 2))),
+    DateFormat('MMM').format(now.subtract(const Duration(days: 30))),
     DateFormat('MMM').format(now),
   ];
 
-  final style = TextStyle(
+  const style = TextStyle(
     fontWeight: FontWeight.bold,
     fontSize: 16,
     color: Colors.black,
@@ -427,7 +428,7 @@ Widget bottomTitleWidgets(double value, TitleMeta meta) {
 }
 
 class BarChartSample1 extends StatefulWidget {
-  BarChartSample1({Key? key});
+  const BarChartSample1({Key? key});
 
   List<Color> get availableColors => const <Color>[
         AppColors.contentColorPurple,
@@ -713,7 +714,7 @@ class BarChartSample1State extends State<BarChartSample1> {
             });
           },
           keyboardType: TextInputType.number,
-          style: TextStyle(color: Colors.black),
+          style: const TextStyle(color: Colors.black),
         decoration: const InputDecoration(
           labelText: 'New Capacity',
           labelStyle: TextStyle(color: Colors.black),

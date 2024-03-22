@@ -89,7 +89,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                                       .textTheme
                                       .titleSmall!
                                       .color,
-                                  fontSize: SizeConfig.screenWidth * 0.45)),
+                                  fontSize: SizeConfig.screenWidth * 0.045)),
                         )
                       : GestureDetector(
                           onTap: () {

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,13 +11,13 @@ import 'UpvoteButton.dart';
 class QuestionDetailScreen extends StatelessWidget {
   final String questionId;
 
-  QuestionDetailScreen({required this.questionId});
+  const QuestionDetailScreen({super.key, required this.questionId});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Question Details'),
+        title: const Text('Question Details'),
       ),
       body: Column(
         children: [
@@ -34,7 +36,7 @@ class QuestionDetailScreen extends StatelessWidget {
 class QuestionDetail extends StatelessWidget {
   final String questionId;
 
-  QuestionDetail({required this.questionId});
+  const QuestionDetail({super.key, required this.questionId});
 
   @override
   Widget build(BuildContext context) {
@@ -45,12 +47,12 @@ class QuestionDetail extends StatelessWidget {
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         }
 
         var questionData = snapshot.data?.data() as Map<String, dynamic>;
         return Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Card(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -59,7 +61,7 @@ class QuestionDetail extends StatelessWidget {
                   title: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Question',
                         style: TextStyle(
                           fontSize: 18,
@@ -69,7 +71,7 @@ class QuestionDetail extends StatelessWidget {
                       ),
                       Text(
                         questionData['title'],
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
@@ -79,10 +81,10 @@ class QuestionDetail extends StatelessWidget {
                   ),
                   subtitle: Text(
                     questionData['content'],
-                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    style: const TextStyle(fontSize: 16, color: Colors.black),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -90,7 +92,7 @@ class QuestionDetail extends StatelessWidget {
                     DownvoteButton(questionId: questionId, answerId: ''), // Pass empty answerId for question-level downvotes
                     Text(
                       'Votes: ${calculateUpvotes(questionId)}',
-                      style: TextStyle(fontSize: 14, color: Colors.black),
+                      style: const TextStyle(fontSize: 14, color: Colors.black),
                     ),
                   ],
                 ),
@@ -116,7 +118,7 @@ int calculateUpvotes(String questionId) {
 class AnswerForm extends StatefulWidget {
   final String questionId;
 
-  AnswerForm({required this.questionId});
+  const AnswerForm({super.key, required this.questionId});
 
   @override
   _AnswerFormState createState() => _AnswerFormState();
@@ -128,21 +130,21 @@ class _AnswerFormState extends State<AnswerForm> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       child: Card(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextField(
               controller: _answerController,
-              decoration: InputDecoration(labelText: 'Your Answer'),
+              decoration: const InputDecoration(labelText: 'Your Answer'),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
                 _submitAnswer(widget.questionId, _answerController.text);
               },
-              child: Text('Submit Answer'),
+              child: const Text('Submit Answer'),
             ),
           ],
         ),
@@ -168,7 +170,7 @@ class AnswerList extends StatelessWidget {
   final String questionId;
   final String sortBy;
 
-  AnswerList({required this.questionId, required this.sortBy});
+  const AnswerList({super.key, required this.questionId, required this.sortBy});
 
   @override
   Widget build(BuildContext context) {
@@ -181,7 +183,7 @@ class AnswerList extends StatelessWidget {
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         }
 
         var answers = snapshot.data?.docs;
@@ -191,12 +193,12 @@ class AnswerList extends StatelessWidget {
           itemBuilder: (context, index) {
             var answerData = answers?[index].data() as Map<String, dynamic>;
             return Card(
-              margin: EdgeInsets.all(10.0),
+              margin: const EdgeInsets.all(10.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ListTile(
-                    title: Text(
+                    title: const Text(
                       'Answer', // Placeholder for displaying user info
                       style: TextStyle(
                           fontSize: 16,
@@ -205,28 +207,28 @@ class AnswerList extends StatelessWidget {
                     ),
                     subtitle: Text(
                       answerData['content'],
-                      style: TextStyle(fontSize: 16, color: Colors.black),
+                      style: const TextStyle(fontSize: 16, color: Colors.black),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       UpvoteButton(answerId: answers![index].id, questionId: questionId,),
-                      DownvoteButton(answerId: answers![index].id, questionId: questionId,),
+                      DownvoteButton(answerId: answers[index].id, questionId: questionId,),
                       Text(
                         'Votes: ${calculateUpvotes(answers[index].id)}', // Pass answerId for upvote calculation
-                        style: TextStyle(fontSize: 14, color: Colors.black),
+                        style: const TextStyle(fontSize: 14, color: Colors.black),
                       ),
                       IconButton(
-                        icon: Icon(Icons.reply),
+                        icon: const Icon(Icons.reply),
                         onPressed: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => ReplyForm(
                                 questionId: questionId,
-                                answerId: answers![index].id,
+                                answerId: answers[index].id,
                               ),
                             ),
                           );
@@ -260,10 +262,10 @@ class AnswerList extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('User ID: ${replyData['userId']}',
-                  style: TextStyle(fontSize: 12, color: Colors.black)),
+                  style: const TextStyle(fontSize: 12, color: Colors.black)),
               ListTile(
                 title: Text(replyData['content'],
-                    style: TextStyle(fontSize: 18, color: Colors.black)),
+                    style: const TextStyle(fontSize: 18, color: Colors.black)),
               ),
               _buildReplyTree(replyData['replies'],
                   level + 1), // Recursive call for nested replies
@@ -280,8 +282,8 @@ class ReplyForm extends StatefulWidget {
   final String questionId;
   final String? parentReplyId;
 
-  ReplyForm(
-      {required this.answerId, required this.questionId, this.parentReplyId});
+  const ReplyForm(
+      {super.key, required this.answerId, required this.questionId, this.parentReplyId});
 
   @override
   _ReplyFormState createState() => _ReplyFormState();
@@ -293,16 +295,16 @@ class _ReplyFormState extends State<ReplyForm> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       child: Card(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextField(
               controller: _replyController,
-              decoration: InputDecoration(labelText: 'Your Reply'),
+              decoration: const InputDecoration(labelText: 'Your Reply'),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () async {
                 User? user = await _getCurrentUser();
@@ -312,7 +314,7 @@ class _ReplyFormState extends State<ReplyForm> {
                       _replyController.text, userId);
                 }
               },
-              child: Text('Submit Reply'),
+              child: const Text('Submit Reply'),
             ),
           ],
         ),
