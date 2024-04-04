@@ -2,15 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
 
 class MedCard extends StatefulWidget {
+  final Function(String) onDelete; // Add this line
+
   final String medName;
   final String dosage;
   final String time;
+  final String medId; // Add this line
 
   const MedCard({
     super.key,
+    required this.medId, // Require medId
     required this.medName,
     required this.dosage,
     required this.time,
+    required this.onDelete,
   });
 
   @override
@@ -18,64 +23,6 @@ class MedCard extends StatefulWidget {
 }
 
 class _MedCardState extends State<MedCard> {
-  void showerrorDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            "Are you sure?!",
-            style: TextStyle(
-              color: Theme.of(context)
-                  .textTheme
-                  .titleSmall!
-                  .color!
-                  .withOpacity(0.8),
-            ),
-          ),
-          content: Text(
-            "Are you sure that you want to delete?!",
-            style: TextStyle(
-              color: Theme.of(context)
-                  .textTheme
-                  .titleSmall!
-                  .color!
-                  .withOpacity(0.8),
-            ),
-          ),
-          actions: [
-            TextButton(
-              child: Text(
-                "Yes",
-                style: TextStyle(
-                  color: Theme.of(context)
-                      .textTheme
-                      .titleSmall!
-                      .color!
-                      .withOpacity(0.8),
-                ),
-              ),
-              onPressed: () => Navigator.pop(context),
-            ),
-            TextButton(
-              child: Text(
-                "No",
-                style: TextStyle(
-                  color: Theme.of(context)
-                      .textTheme
-                      .titleSmall!
-                      .color!
-                      .withOpacity(0.8),
-                ),
-              ),
-              onPressed: () => Navigator.pop(context),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -125,7 +72,7 @@ class _MedCardState extends State<MedCard> {
           right: SizeConfig.screenWidth * 0.0000001,
           child: GestureDetector(
             onTap: () {
-              showerrorDialog();
+              widget.onDelete(widget.medId); 
             },
             child: Icon(
               Icons.remove_circle_outline,

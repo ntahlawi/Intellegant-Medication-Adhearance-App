@@ -6,11 +6,34 @@
 	<dict>
 		<key>Info.plist</key>
 		<data>
-		piSKWn/7l0KcOlpAngTNOjB1jSU=
+		pFtWkYiUNcEQuup00964elql8Lc=
+		</data>
+		<key>grpc.bundle/Info.plist</key>
+		<data>
+		otx++QRzrnpKT6jhLwJtLiChFkQ=
+		</data>
+		<key>grpc.bundle/PrivacyInfo.xcprivacy</key>
+		<data>
+		U7WM6H59FffP9Htm/es+F6Fe4q4=
 		</data>
 	</dict>
 	<key>files2</key>
-	<dict/>
+	<dict>
+		<key>grpc.bundle/Info.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			gveF96O9i1oO4tk9MnbRYl+X+BTIsLQsxEHsOMYIk3A=
+			</data>
+		</dict>
+		<key>grpc.bundle/PrivacyInfo.xcprivacy</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			SMwLNyeKt9zx4V4Bagi8Dg1kPZyuLQYcTZQlPy1SyIo=
+			</data>
+		</dict>
+	</dict>
 	<key>rules</key>
 	<dict>
 		<key>^.*</key>

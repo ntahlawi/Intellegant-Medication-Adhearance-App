@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medappfv/Pages/Home.dart';
 import 'package:medappfv/Pages/login_signup/signup.dart';
-import 'package:medappfv/components/Widgets/NavBar.dart';
 import 'package:medappfv/components/Widgets/TextField.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
 

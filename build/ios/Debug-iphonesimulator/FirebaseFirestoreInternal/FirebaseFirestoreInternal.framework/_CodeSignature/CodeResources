@@ -6,7 +6,7 @@
 	<dict>
 		<key>FirebaseFirestoreInternal_Privacy.bundle/Info.plist</key>
 		<data>
-		tM2rpXewAxd8U7cn7tVUfkW0p2I=
+		S9a5Xfz9yLsmMiUN1/tfpjAObNA=
 		</data>
 		<key>FirebaseFirestoreInternal_Privacy.bundle/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -38,7 +38,7 @@
 		</data>
 		<key>Headers/FIRDocumentReference.h</key>
 		<data>
-		gAc3T/qc9XNkYHvqIrdGsrljIlQ=
+		YY6kYfI+KMZ4V+7FaIvjpv/OMd4=
 		</data>
 		<key>Headers/FIRDocumentSnapshot.h</key>
 		<data>
@@ -94,11 +94,15 @@
 		</data>
 		<key>Headers/FIRQuery.h</key>
 		<data>
-		QC+FWTvMEiQxr0xo2rAWI87YZEA=
+		0CUZPCA1GgdN/7wPzXt1RlYsxbI=
 		</data>
 		<key>Headers/FIRQuerySnapshot.h</key>
 		<data>
 		4hU88j5uyoj0t4/Ka608V9G+zrA=
+		</data>
+		<key>Headers/FIRSnapshotListenOptions.h</key>
+		<data>
+		KNWAuelyspw8lCri6Gme/Xk63U8=
 		</data>
 		<key>Headers/FIRSnapshotMetadata.h</key>
 		<data>
@@ -122,15 +126,15 @@
 		</data>
 		<key>Headers/FirebaseFirestore.h</key>
 		<data>
-		zMsCHn+lB3oCQl57OkgT70swpfA=
+		xQqn+7VYLkJwt38xv6OGnSjF2TQ=
 		</data>
 		<key>Headers/FirebaseFirestoreInternal-umbrella.h</key>
 		<data>
-		gThBWXrJGoNZcMfvIiK56oXyguM=
+		FhmA06vEIClsemyiHeKVUNjERPg=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		FrjhnDu3HrQMFSoa4sdlEDcIkBw=
+		/oaVA9vND7JKzcFu6GKn5DV1HSo=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -143,7 +147,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			juNHfW+rFA/0SptMwcYmEb+NYWhCgnfpJ+eihnBOE24=
+			EGJhK05pD00Qs2Q5Q7Sl4jN2F5rzQFbQncSxE+hkkAA=
 			</data>
 		</dict>
 		<key>FirebaseFirestoreInternal_Privacy.bundle/PrivacyInfo.xcprivacy</key>
@@ -199,7 +203,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			cf+zSqsoYmzn/B7AXBubp4mp2WPNqfQkNl+4Z2Xf/dY=
+			zAAKDetlAp394hak4CmI3iQqK4zWwPJ8ETl1eKel+f4=
 			</data>
 		</dict>
 		<key>Headers/FIRDocumentSnapshot.h</key>
@@ -297,7 +301,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			zaaUt8cRIgaS6H5/h3mAA89dBuCPhyGEroQK9j7dNew=
+			ueytjwHn9Q6AndSlJMm/VU7f9sOQqzqEwP962xe98ro=
 			</data>
 		</dict>
 		<key>Headers/FIRQuerySnapshot.h</key>
@@ -305,6 +309,13 @@
 			<key>hash2</key>
 			<data>
 			6At8yzx2G7omO5itWiQI9h4SWoiYpX06l6H6GcTgOZ4=
+			</data>
+		</dict>
+		<key>Headers/FIRSnapshotListenOptions.h</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			XBdhmhI9JcJi6k8DYMWZ55bQYJEvN4j//6mMI9RxYDc=
 			</data>
 		</dict>
 		<key>Headers/FIRSnapshotMetadata.h</key>
@@ -346,14 +357,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			EoW0J5gTKHPL+dK7P+vB5VlrGCyOpQYz34gn9Kx2HdU=
+			djiBcg34uT9vbJghXYtB9leZTNnesnwUM607e4OEfCE=
 			</data>
 		</dict>
 		<key>Headers/FirebaseFirestoreInternal-umbrella.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			k3mrim0OS3dylIXVLeMgg0lLXbBycCgzQaWTG1tuR6U=
+			TVri6vTuRWxY9dzSJpWyy+TZkPm4aNmboPzxrp2jzOw=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

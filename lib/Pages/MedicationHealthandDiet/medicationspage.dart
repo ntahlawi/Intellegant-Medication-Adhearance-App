@@ -45,12 +45,14 @@ class _MtrackingState extends State<Mtracking> {
           data['Medications'] as Map<String, dynamic>;
 
       medicationCards = medicationsData.entries.map((entry) {
-        String medicationId = entry.key;
+        String medicationId = entry.key; // Extract the ID
         Map<String, dynamic> medicationData = entry.value;
         return MedCard(
+          medId: medicationId, // Pass the medId
           medName: medicationData['medicationName'],
           dosage: medicationData['dosage'],
           time: medicationData['time'],
+          onDelete: _deleteMedication, // Pass the function
         );
       }).toList();
 
@@ -58,6 +60,109 @@ class _MtrackingState extends State<Mtracking> {
     } catch (error) {
       print('Error fetching medications: $error');
       // Handle errors appropriately, e.g., display an error message to the user
+    }
+  }
+
+  CollectionReference userInfoCollection =
+      FirebaseFirestore.instance.collection('UserInfo');
+  Future<void> addMedicationToFirestore(
+      String medicationName, String dosage, String time) async {
+    try {
+      DocumentReference userDoc = userInfoCollection.doc(userId);
+
+      // Ensure a Medications map exists, create it if necessary
+      final snapshot = await userDoc.get();
+      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
+      if (!data.containsKey('Medications')) {
+        data['Medications'] = {};
+      }
+
+      // Get next medication index
+      int medicationIndex = 1;
+      String medicationId = "Medication $medicationIndex";
+      while (data['Medications'].containsKey(medicationId)) {
+        medicationIndex++;
+        medicationId = "Medication $medicationIndex";
+      }
+      String firestoreDocId = userDoc.collection('Medications').doc().id;
+
+      // Create medication map
+      Map<String, dynamic> medicationData = {
+        'medicationName': medicationName,
+        'dosage': dosage,
+        'time': time,
+        'medId': firestoreDocId // Unique ID for updates/deletion
+      };
+
+      // Update the document with the new medication map within the Medications map
+      await userDoc.update({
+        'Medications': {
+          ...data['Medications'],
+          medicationId: medicationData,
+        },
+      });
+      // Create the new MedCard and add it to the list
+      setState(() {
+        medicationCards.add(MedCard(
+          medName: medicationName,
+          dosage: dosage,
+          time: time,
+          medId: firestoreDocId,
+          onDelete: _deleteMedication, // Pass the function
+        ));
+      });
+      print('Medication added successfully!');
+    } catch (error) {
+      print('Error adding medication: $error');
+    }
+  }
+
+  void _deleteMedication(String medId) async {
+    try {
+      // 1. Show Confirmation Dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext ctx) {
+          return AlertDialog(
+            title: const Text('Confirm Deletion'),
+            content:
+                const Text('Are you sure you want to delete this medication?'),
+            actions: [
+              TextButton(
+                onPressed: () =>
+                    Navigator.pop(ctx), // Close dialog without deletion
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  try {
+                    await FirebaseFirestore.instance
+                        .collection('UserInfo')
+                        .doc(FirebaseAuth.instance.currentUser?.uid)
+                        .update({
+                      'Medications.$medId': FieldValue.delete(),
+                    });
+                    await fetchMedications();
+
+                  } catch (e) {
+                    print('Failed to delete medication: $e');
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                            'Failed to delete medication. Please try again.'),
+                      ),
+                    );
+                  }
+                },
+                child: const Text('Delete'),
+              ),
+            ],
+          );
+        },
+      );
+    } catch (error) {
+      print('Error deleting medication: $error');
+      // Handle the error appropriately (e.g., display an error message)
     }
   }
 
@@ -289,56 +394,6 @@ class _MtrackingState extends State<Mtracking> {
         return 'DEC';
       default:
         return '';
-    }
-  }
-
-  CollectionReference userInfoCollection =
-      FirebaseFirestore.instance.collection('UserInfo');
-  Future<void> addMedicationToFirestore(
-      String medicationName, String dosage, String time) async {
-    try {
-      DocumentReference userDoc = userInfoCollection.doc(userId);
-
-      // Ensure a Medications map exists, create it if necessary
-      final snapshot = await userDoc.get();
-      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
-      if (!data.containsKey('Medications')) {
-        data['Medications'] = {};
-      }
-
-      // Get the next available medication ID (e.g., "Medication1", "Medication2")
-      int medicationIndex = 1;
-      String medicationId = "Medication $medicationIndex";
-      while (data['Medications'].containsKey(medicationId)) {
-        medicationIndex++;
-        medicationId = "Medication $medicationIndex";
-      }
-
-      // Create a new medication map
-      Map<String, dynamic> medicationData = {
-        'medicationName': medicationName,
-        'dosage': dosage,
-        'time': time,
-      };
-
-      // Update the document with the new medication map within the Medications map
-      await userDoc.update({
-        'Medications': {
-          ...data['Medications'],
-          medicationId: medicationData,
-        },
-      });
-      // Create the new MedCard and add it to the list
-      setState(() {
-        medicationCards.add(MedCard(
-          medName: medicationName,
-          dosage: dosage,
-          time: time,
-        ));
-      });
-      print('Medication added successfully!');
-    } catch (error) {
-      print('Error adding medication: $error');
     }
   }
 }
