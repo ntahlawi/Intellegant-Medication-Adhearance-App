@@ -170,6 +170,10 @@ fl_chart
 3.0
 file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/fl_chart-0.64.0/
 file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/fl_chart-0.64.0/lib/
+flutter_card_swiper
+3.0
+file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/flutter_card_swiper-7.0.0/
+file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/flutter_card_swiper-7.0.0/lib/
 flutter_carousel_slider
 2.18
 file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/flutter_carousel_slider-1.1.0/
@@ -198,6 +202,10 @@ flutter_plugin_android_lifecycle
 2.19
 file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.17/
 file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.17/lib/
+flutter_ruler_picker
+2.12
+file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/flutter_ruler_picker-1.0.6/
+file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/flutter_ruler_picker-1.0.6/lib/
 flutter_svg
 2.19
 file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/flutter_svg-2.0.10+1/
@@ -208,8 +216,8 @@ file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/get-4.6.6/
 file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/get-4.6.6/lib/
 google_fonts
 2.14
-file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/google_fonts-6.1.0/
-file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/google_fonts-6.1.0/lib/
+file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/google_fonts-6.2.1/
+file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/google_fonts-6.2.1/lib/
 google_generative_ai
 3.0
 file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/google_generative_ai-0.2.2/
@@ -370,6 +378,10 @@ pedometer
 2.17
 file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/pedometer-4.0.1/
 file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/pedometer-4.0.1/lib/
+percent_indicator
+2.12
+file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/percent_indicator-4.2.3/
+file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/percent_indicator-4.2.3/lib/
 petitparser
 3.2
 file:///Users/nawafaljohani/.pub-cache/hosted/pub.dev/petitparser-6.0.2/

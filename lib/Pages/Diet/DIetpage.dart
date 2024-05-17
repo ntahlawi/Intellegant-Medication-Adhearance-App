@@ -1,290 +1,425 @@
+// ignore_for_file: file_names, camel_case_types, non_constant_identifier_names
 
-// ignore_for_file: unused_local_variable, file_names, library_private_types_in_public_api, empty_catches
-
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
-import 'package:medappfv/components/Cards/date_card.dart';
-import 'package:medappfv/components/Cards/diet_card.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
-class DietTracking extends StatefulWidget {
-  const DietTracking({Key? key}) : super(key: key);
+class dietpage extends StatefulWidget {
+  const dietpage({super.key});
 
   @override
-  _DietTrackingState createState() => _DietTrackingState();
+  State<dietpage> createState() => _dietpageState();
 }
- // Firebase references
-  final User? user = FirebaseAuth.instance.currentUser;
-  final String? userId = user?.uid;
-  final CollectionReference userInfoCollection = 
-      FirebaseFirestore.instance.collection('UserInfo'); 
-class _DietTrackingState extends State<DietTracking> {
-  // Controllers for form fields
-  TextEditingController mealController = TextEditingController();
-  TextEditingController portionController = TextEditingController();
-  TextEditingController caloriesController = TextEditingController();
 
-  // State variables
-  List<bool> selectedDates = List.filled(90, false); 
-  List<DietCard> dietCards = []; 
+DateTime now = DateTime.now(); // get the curent date
+String formattedDate =
+    DateFormat('dd MMM yyyy').format(now); // convert to dd/MM/yyyy
 
- 
+// Firebase references
+final User? user = FirebaseAuth.instance.currentUser;
+final String? userId = user?.uid;
+final CollectionReference userInfoCollection =
+    FirebaseFirestore.instance.collection('UserInfo');
 
-
+class _dietpageState extends State<dietpage> {
   @override
   void initState() {
     super.initState();
-    fetchDiet(); // Load diet on screen initialization
+    //initialize the function to check if there is a diet plan or not here
   }
 
-  // Fetch diet for the user from Firestore
-  Future<void> fetchDiet() async {
-    try {
-      DocumentReference userDoc = userInfoCollection.doc(userId);
-      DocumentSnapshot snapshot = await userDoc.get();
-
-      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
-      Map<String, dynamic> dietData = data['Diet'] as Map<String, dynamic>;
-
-      setState(() {
-        dietCards = dietData.entries.map((entry) {
-          return DietCard(
-            meal: entry.value['Meal'],
-            portion: entry.value['Portion'],
-            calories: entry.value['Calories'],
-          );
-        }).toList();
-      }); 
-    } catch (error) {
-    }
-  }
-
-  // UI Build Method
+  //a void function to check if there is a diet plan or not
+  // a void function to fetch all the diet data from fire base ( meals -  carbs consumed / carb goal - protie consumed / protien goal  - fat consumed / fat goal)
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    SizeConfig.init(context); 
-
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: _showDietForm,
-        backgroundColor: Theme.of(context).colorScheme.primary, 
-        child: const Icon(Icons.add),
+      appBar: AppBar(
+        title: AutoSizeText(
+          'Your Daily Meals',
+          style:
+              TextStyle(color: Theme.of(context).textTheme.labelSmall!.color),
+          minFontSize: 12,
+          maxFontSize: 18,
+          maxLines: 1,
+        ),
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: SizeConfig.screenHeight * 0.06,
-            left: SizeConfig.screenWidth * 0.04,
-            right: SizeConfig.screenWidth * 0.04,
-          ),
-          child: Column(
-            children: [
-              // Date Cards
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: generateDateCards(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Center(
+              child: AutoSizeText(
+                'Today, $formattedDate',
+                style: TextStyle(
+                  color: Theme.of(context).textTheme.labelSmall!.color,
                 ),
+                maxFontSize: 24,
+                minFontSize: 16,
+                maxLines: 1,
               ),
-              SizedBox(height: SizeConfig.pointThreeHeight),
+            ),
 
-              // Diet Card
-              Card(
-                color: Theme.of(context).colorScheme.primary,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: SizeConfig.screenWidth * 0.075,
-                  ),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Column(
+            //row for text
+            Center(
+              child: Container(
+                height: SizeConfig.screenHeight * 0.1,
+                width: SizeConfig.screenWidth * 0.9,
+                decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary,
+                    borderRadius: BorderRadius.circular(24)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    //Carbs
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(height: SizeConfig.pointFifteenHeight),
-                        const Text('Your diet for the day is:'),
-                        SizedBox(height: SizeConfig.pointFifteenHeight),
-
-                        // Display diet cards here
-                        Column(
-                          children: dietCards.map((dietCard) => Column(
-                              children: [
-                                dietCard,
-                                SizedBox(height: SizeConfig.pointThreeHeight), 
-                              ],
-                            )).toList(), 
+                        //text
+                        AutoSizeText(
+                          'Carbs',
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .color),
+                          minFontSize: 12,
+                          maxFontSize: 18,
+                          maxLines: 1,
                         ),
-                        SizedBox(height: SizeConfig.pointThreeHeight),
+                        SizedBox(
+                          height: SizeConfig.screenHeight * 0.01,
+                        ),
+                        //progress bar
+                        LinearPercentIndicator(
+                          width: SizeConfig.screenWidth * 0.25,
+                          lineHeight: SizeConfig.pointFifteenHeight,
+                          percent:
+                              0.4444, //<---- plugin the curren progress hear
+                          barRadius: const Radius.circular(12),
+                          backgroundColor: Colors.grey,
+                          progressColor: Colors.blue,
+                        ),
+                        //cuurrent/goal
+                        AutoSizeText(
+                          '21/447g', //<---- plugin the current / goal instead of this static text
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .color),
+                          minFontSize: 12,
+                          maxFontSize: 18,
+                          maxLines: 1,
+                        ),
                       ],
                     ),
-                  ),
+                    //protien
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        //text
+                        AutoSizeText(
+                          'Protien',
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .color),
+                          minFontSize: 12,
+                          maxFontSize: 18,
+                          maxLines: 1,
+                        ),
+                        SizedBox(
+                          height: SizeConfig.screenHeight * 0.01,
+                        ),
+                        //progress bar
+                        LinearPercentIndicator(
+                          width: SizeConfig.screenWidth * 0.25,
+                          lineHeight: SizeConfig.pointFifteenHeight,
+                          percent:
+                              0.4444, //<---- plugin the curren progress hear
+                          barRadius: const Radius.circular(12),
+                          backgroundColor: Colors.grey,
+                          progressColor: Colors.blue,
+                        ),
+                        //cuurrent/goal
+                        AutoSizeText(
+                          '21/447g', //<---- plugin the current / goal instead of this static text
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .color),
+                          minFontSize: 12,
+                          maxFontSize: 18,
+                          maxLines: 1,
+                        ),
+                      ],
+                    ),
+
+                    //Fat
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        //text
+                        AutoSizeText(
+                          'Fat',
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .color),
+                          minFontSize: 12,
+                          maxFontSize: 18,
+                          maxLines: 1,
+                        ),
+                        SizedBox(
+                          height: SizeConfig.screenHeight * 0.01,
+                        ),
+                        //progress bar
+                        LinearPercentIndicator(
+                          width: SizeConfig.screenWidth * 0.25,
+                          lineHeight: SizeConfig.pointFifteenHeight,
+                          percent:
+                              0.4444, //<---- plugin the curren progress hear
+                          barRadius: const Radius.circular(12),
+                          backgroundColor: Colors.grey,
+                          progressColor: Colors.blue,
+                        ),
+                        //cuurrent/goal
+                        AutoSizeText(
+                          '21/447g', //<---- plugin the current / goal instead of this static text
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .color),
+                          minFontSize: 12,
+                          maxFontSize: 18,
+                          maxLines: 1,
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-              )
-            ],
-          ),
+              ),
+            ),
+            SizedBox(
+              height: SizeConfig.pointThreeHeight,
+            ),
+            Center(
+              child: Container(
+                height: SizeConfig.screenHeight * 0.1,
+                width: SizeConfig.screenWidth * 0.9,
+                decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary,
+                    borderRadius: BorderRadius.circular(24)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    //Carbs
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        //text
+                        AutoSizeText(
+                          'Today\'s calorie Intake',
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .color),
+                          minFontSize: 12,
+                          maxFontSize: 18,
+                          maxLines: 1,
+                        ),
+                        SizedBox(
+                          height: SizeConfig.screenHeight * 0.01,
+                        ),
+                        //progress bar
+                        LinearPercentIndicator(
+                          width: SizeConfig.screenWidth * 0.89,
+                          lineHeight: SizeConfig.pointFifteenHeight,
+                          percent:
+                              0.4444, //<---- plugin the current progress here for daily calories intake
+                          barRadius: const Radius.circular(12),
+                          backgroundColor: Colors.grey,
+                          progressColor: Colors.blue,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: SizeConfig.pointThreeHeight,
+            ),
+            Center(
+              child: Container(
+                height: SizeConfig.screenHeight * 0.1,
+                width: SizeConfig.screenWidth * 0.9,
+                decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary,
+                    borderRadius: BorderRadius.circular(24)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    //Carbs
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        //text
+                        AutoSizeText(
+                          'Water Intake',
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .color),
+                          minFontSize: 12,
+                          maxFontSize: 18,
+                          maxLines: 1,
+                        ),
+                        SizedBox(
+                          height: SizeConfig.screenHeight * 0.01,
+                        ),
+                        //progress bar
+                        LinearPercentIndicator(
+                          width: SizeConfig.screenWidth * 0.89,
+                          lineHeight: SizeConfig.pointFifteenHeight,
+                          percent:
+                              0.4444, //<---- plugin the current progress here for water intake
+                          barRadius: const Radius.circular(12),
+                          backgroundColor: Colors.grey,
+                          progressColor: Colors.blue,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: SizeConfig.pointThreeHeight,
+            ),
+            // FoodCard(
+            //   FoodNmae: 'Rice',
+            //   Gm: 50,
+            //   Kcals: 234,
+            //   pic: 'lib/icons/carrot.svg',
+            //   // onprsd: Function,
+            // ),
+          ],
         ),
       ),
     );
   }
+}
 
-  // Function to show a dialog for adding diet
-  void _showDietForm() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Add Diet'),
-          content: Form(
-            child: Column(
-              children: [
-                TextFormField(
-                  controller: mealController,
-                  decoration: const InputDecoration(labelText: 'Meal'),
-                ),
-                TextFormField(
-                  controller: portionController,
-                  decoration: const InputDecoration(labelText: 'Portion'),
-                ),
-                TextFormField(
-                  controller: caloriesController,
-                  decoration: const InputDecoration(labelText: 'Calories'),
-                  keyboardType: TextInputType.number,
-                ),
-              ],
-            ),
+class FoodCard extends StatelessWidget {
+  final String pic;
+  final String FoodNmae;
+  final double Kcals;
+  final double Gm;
+  final bool isEaten = false;
+  final Function onprsd;
+  const FoodCard({
+    super.key,
+    required this.FoodNmae,
+    required this.Gm,
+    required this.Kcals,
+    required this.pic,
+    required this.onprsd,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(left: SizeConfig.screenWidth * 0.02),
+      height: SizeConfig.screenHeight * 0.075,
+      width: SizeConfig.screenWidth * 0.9,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: Theme.of(context).colorScheme.primary),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          // pic
+          SvgPicture.asset(
+            pic,
+            height: SizeConfig.screenWidth * 0.1,
           ),
-          actions: [
-            TextButton(
+          SizedBox(
+            width: SizeConfig.pointThreeWidth,
+          ),
+          //food name
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Row(
+                children: [
+                  AutoSizeText(
+                    FoodNmae,
+                    maxLines: 1,
+                    minFontSize: 12,
+                    maxFontSize: 16,
+                    style: TextStyle(
+                        color: Theme.of(context).textTheme.labelMedium!.color),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  //kcal
+
+                  AutoSizeText(
+                    "${Kcals.toString()} Kcal",
+                    maxLines: 1,
+                    minFontSize: 12,
+                    maxFontSize: 16,
+                    style: TextStyle(
+                        color: Theme.of(context).textTheme.labelMedium!.color),
+                  ),
+                  SizedBox(
+                    width: SizeConfig.pointFifteenWidth,
+                  ),
+                  Icon(
+                    Icons.fiber_manual_record_rounded,
+                    size: SizeConfig.pointFifteenWidth,
+                  ),
+                  SizedBox(
+                    width: SizeConfig.pointFifteenWidth,
+                  ),
+                  //gm
+
+                  AutoSizeText(
+                    '${Gm.toString()} Gm',
+                    maxLines: 1,
+                    minFontSize: 12,
+                    maxFontSize: 16,
+                    style: TextStyle(
+                        color: Theme.of(context).textTheme.labelMedium!.color),
+                  ),
+                ],
+              )
+            ],
+          ),
+          // icon button
+          IconButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                // set the isEaten bool to true in the database
               },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                // Save the diet details and update UI
-                addDietToFirestore(
-                  mealController.text,
-                  portionController.text,
-                  caloriesController.text,
-                );
-                Navigator.of(context).pop();
-              },
-              child: const Text('Save'),
-            ),
-          ],
-        );
-      },
+              icon: Icon(
+                Icons.add_circle_outline_rounded,
+              ))
+        ],
+      ),
     );
-  }
-
-  // Function to generate date cards
-  List<Widget> generateDateCards() {
-    List<Widget> dateCards = [];
-    DateTime currentDate = DateTime.now();
-    for (int i = 0; i < 90; i++) {
-      DateTime nextDate = currentDate.add(Duration(days: i));
-      int day = nextDate.day;
-      int month = nextDate.month;
-
-      DateCard dateCard = DateCard(
-        date: day.toString(),
-        month: getMonthAbbreviation(month),
-        isSelected: selectedDates[i],
-        onTap: () {
-          setState(() {
-            for (int j = 0; j < selectedDates.length; j++) {
-              selectedDates[j] = (j == i);
-            }
-          });
-        },
-      );
-
-      dateCards.add(dateCard);
-    }
-
-    return dateCards;
-  }
-
-  // Function to get the month abbreviation
-  String getMonthAbbreviation(int month) {
-    switch (month) {
-      case 1:
-        return 'JAN';
-      case 2:
-        return 'FEB';
-      case 3:
-        return 'MAR';
-      case 4:
-        return 'APR';
-      case 5:
-        return 'MAY';
-      case 6:
-        return 'JUN';
-      case 7:
-        return 'JUL';
-      case 8:
-        return 'AUG';
-      case 9:
-        return 'SEP';
-      case 10:
-        return 'OCT';
-      case 11:
-        return 'NOV';
-      case 12:
-        return 'DEC';
-      default:
-        return '';
-    }
-  }
-
-  CollectionReference userInfoCollection =
-      FirebaseFirestore.instance.collection('UserInfo');
-
-  Future<void> addDietToFirestore(
-      String meal, String portion, String calories) async {
-    try {
-      DocumentReference userDoc = userInfoCollection.doc(userId);
-
-      // Ensure a Diet map exists, create it if necessary
-      final snapshot = await userDoc.get();
-      Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
-      if (!data.containsKey('Diet')) {
-        data['Diet'] = {};
-      }
-
-      // Get the next available diet ID (e.g., "Diet1", "Diet2")
-      int dietIndex = 1;
-      String dietId = "Diet $dietIndex";
-      while (data['Diet'].containsKey(dietId)) {
-        dietIndex++;
-        dietId = "Diet $dietIndex";
-      }
-
-      // Create a new diet map
-      Map<String, dynamic> dietData = {
-        'Meal': meal,
-        'Portion': portion,
-        'Calories': calories,
-      };
-
-      // Update the document with the new diet map within the Diet map
-      await userDoc.update({
-        'Diet': {
-          ...data['Diet'],
-          dietId: dietData,
-        },
-      });
-      // Create the new DietCard and add it to the list
-      setState(() {
-        dietCards.add(DietCard(
-          meal: meal,
-          portion: portion,
-          calories: calories,
-        ));
-      });
-    } catch (error) {
-    }
   }
 }

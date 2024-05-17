@@ -12,10 +12,11 @@ class _IntroPage3State extends State<IntroPage3> {
   @override
   Widget build(BuildContext context) {
     return const BuildOBpage(
-      subtitle:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore',
+      subtitle: 'Swap your earned points with gifts!',
       title: 'Earn Rewards!',
       urlImage: 'lib/icons/OB3.jpg',
+      
     );
+
   }
 }

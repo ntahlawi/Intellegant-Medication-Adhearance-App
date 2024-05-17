@@ -1,10 +1,12 @@
-// ignore_for_file: unused_local_variable, library_private_types_in_public_api, avoid_print
+// ignore_for_file: unused_local_variable, library_private_types_in_public_api, avoid_print, use_build_context_synchronously, prefer_const_constructors, sized_box_for_whitespace
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:medappfv/components/Themes/Sizing.dart';
-import 'package:medappfv/components/Cards/date_card.dart';
 
 import '../../components/Cards/medication_card.dart';
 
@@ -17,16 +19,20 @@ class Mtracking extends StatefulWidget {
 
 final User? user = FirebaseAuth.instance.currentUser;
 final String? userId = user?.uid;
-double? selectedDosage; // Initialize as null
-int? selectedInterval; // Initialize as null
+late bool isTaken;
+// ignore: non_constant_identifier_names
+String TornotT = 'Not taken';
 
 class _MtrackingState extends State<Mtracking> {
+  int? selectedInterval;
+  double? selectedDosage; // Initialize as null
+  DateTime? selectedStartDate;
+  TimeOfDay? selectedStartTime;
+
   TextEditingController medNameController = TextEditingController();
   TextEditingController dosageController = TextEditingController();
   TextEditingController timeController = TextEditingController();
 
-  List<bool> selectedDates =
-      List.filled(90, false); // Initialize with all false
   List<MedCard> medicationCards = []; // List to store generated MedCards
 
   @override
@@ -47,12 +53,19 @@ class _MtrackingState extends State<Mtracking> {
       medicationCards = medicationsData.entries.map((entry) {
         String medicationId = entry.key; // Extract the ID
         Map<String, dynamic> medicationData = entry.value;
+
+        // Set default value for isTaken based on medicationData (if present)
+        bool isTakenValue = medicationData.containsKey('isTaken')
+            ? medicationData['isTaken'] as bool
+            : false; // Set default to false
+
         return MedCard(
           medId: medicationId, // Pass the medId
           medName: medicationData['medicationName'],
           dosage: medicationData['dosage'],
-          time: medicationData['time'],
           onDelete: _deleteMedication, // Pass the function
+          onArchive: _arcmed,
+          isTaken: isTakenValue, // Pass the initialized isTaken value
         );
       }).toList();
 
@@ -66,8 +79,16 @@ class _MtrackingState extends State<Mtracking> {
   CollectionReference userInfoCollection =
       FirebaseFirestore.instance.collection('UserInfo');
   Future<void> addMedicationToFirestore(
-      String medicationName, String dosage, String time) async {
+    String medicationName,
+    String type,
+    String dosage,
+    String interval,
+    String intervalType,
+    DateTime selectedStartDate,
+    TimeOfDay selectedStartTime,
+  ) async {
     try {
+      bool isTaken = false;
       DocumentReference userDoc = userInfoCollection.doc(userId);
 
       // Ensure a Medications map exists, create it if necessary
@@ -89,16 +110,19 @@ class _MtrackingState extends State<Mtracking> {
       // Create medication map
       Map<String, dynamic> medicationData = {
         'medicationName': medicationName,
+        'type': type,
+        'interval': interval,
         'dosage': dosage,
-        'time': time,
-        'medId': firestoreDocId // Unique ID for updates/deletion
+        'time': selectedStartTime.format(context),
+        'startDate': selectedStartDate.toString(),
+        'medId': firestoreDocId,
+        'isTaken': isTaken,
       };
-
       // Update the document with the new medication map within the Medications map
       await userDoc.update({
         'Medications': {
           ...data['Medications'],
-          medicationId: medicationData,
+          firestoreDocId: medicationData, // Use firestoreDocId as the key
         },
       });
       // Create the new MedCard and add it to the list
@@ -106,9 +130,10 @@ class _MtrackingState extends State<Mtracking> {
         medicationCards.add(MedCard(
           medName: medicationName,
           dosage: dosage,
-          time: time,
           medId: firestoreDocId,
           onDelete: _deleteMedication, // Pass the function
+          onArchive: _arcmed,
+          isTaken: isTaken = false,
         ));
       });
       print('Medication added successfully!');
@@ -119,50 +144,37 @@ class _MtrackingState extends State<Mtracking> {
 
   void _deleteMedication(String medId) async {
     try {
-      // 1. Show Confirmation Dialog
-      showDialog(
-        context: context,
-        builder: (BuildContext ctx) {
-          return AlertDialog(
-            title: const Text('Confirm Deletion'),
-            content:
-                const Text('Are you sure you want to delete this medication?'),
-            actions: [
-              TextButton(
-                onPressed: () =>
-                    Navigator.pop(ctx), // Close dialog without deletion
-                child: const Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () async {
-                  try {
-                    await FirebaseFirestore.instance
-                        .collection('UserInfo')
-                        .doc(FirebaseAuth.instance.currentUser?.uid)
-                        .update({
-                      'Medications.$medId': FieldValue.delete(),
-                    });
-                    await fetchMedications();
-
-                  } catch (e) {
-                    print('Failed to delete medication: $e');
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                            'Failed to delete medication. Please try again.'),
-                      ),
-                    );
-                  }
-                },
-                child: const Text('Delete'),
-              ),
-            ],
-          );
-        },
+      await FirebaseFirestore.instance
+          .collection('UserInfo')
+          .doc(FirebaseAuth.instance.currentUser?.uid)
+          .update({
+        'Medications.$medId': FieldValue.delete(),
+      });
+      await fetchMedications();
+    } catch (e) {
+      print('Failed to delete medication: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Failed to delete medication. Please try again.'),
+        ),
       );
-    } catch (error) {
-      print('Error deleting medication: $error');
-      // Handle the error appropriately (e.g., display an error message)
+    }
+  }
+
+  void _arcmed(String medId) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('UserInfo')
+          .doc(FirebaseAuth.instance.currentUser?.uid)
+          .update({
+        'Medications.$medId.isTaken': true,
+      });
+      await fetchMedications();
+
+      print(
+          "Medication marked as taken successfully!"); // Optional success message
+    } catch (e) {
+      print("Error updating medication taken status: $e"); // Error handling
     }
   }
 
@@ -171,75 +183,133 @@ class _MtrackingState extends State<Mtracking> {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     SizeConfig.init(context);
 
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Show the medication form dialog
-          _showMedicationForm();
-        },
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        child: const Icon(Icons.add),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: SizeConfig.screenHeight * 0.06,
-            left: SizeConfig.screenWidth * 0.04,
-            right: SizeConfig.screenWidth * 0.04,
-          ),
-          child: Column(
-            children: [
-              // cards display for each day
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
+    return SafeArea(
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            // Show the medication form dialog
+            _showMedicationForm();
+          },
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          child: const Icon(Icons.add),
+        ),
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: SizeConfig.screenHeight * 0.02,
+              left: SizeConfig.screenWidth * 0.04,
+              right: SizeConfig.screenWidth * 0.04,
+            ),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: SizeConfig.screenHeight * 0.15,
+                ),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: generateDateCards(),
-                ),
-              ),
-              SizedBox(
-                height: SizeConfig.pointThreeHeight,
-              ),
-              // card
-              Card(
-                color: Theme.of(context).colorScheme.primary,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: SizeConfig.screenWidth * 0.075),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: SizeConfig.pointFifteenHeight,
+                  children: [
+                    //
+                    InkWell(
+                      child: Container(
+                        height: SizeConfig.screenHeight * 0.04,
+                        width: SizeConfig.screenWidth * 0.3,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .secondary, // Main button color
+                          borderRadius: BorderRadius.circular(24),
+                          border: TornotT == 'Not taken'
+                              ? Border.all(
+                                  color: Colors.black,
+                                  width: 2.0, // Adjust outline thickness
+                                )
+                              : null, // No border if not selected
                         ),
-                        // current medications
-                        const Text('Your medications for the day are:'),
-                        SizedBox(
-                          height: SizeConfig.pointFifteenHeight,
+                        child: Center(
+                          child: AutoSizeText(
+                            'Not taken',
+                            style: TextStyle(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .color,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20),
+                            maxLines: 1,
+                          ),
                         ),
-                        // update the page and display the newly generated medcard here
-                        Column(
-                          children: medicationCards.map((medCard) {
-                            return Column(
-                              children: [
-                                medCard, // Add the MedCard
-                                SizedBox(
-                                    height: SizeConfig
-                                        .pointThreeHeight), // Add spacing
-                              ],
-                            );
-                          }).toList(),
-                        ),
-                        SizedBox(
-                          height: SizeConfig.pointThreeHeight,
-                        ),
-                      ],
+                      ),
+                      onTap: () {
+                        setState(() {
+                          TornotT = 'Not taken';
+                        });
+                      },
                     ),
-                  ),
+                    SizedBox(
+                      width: SizeConfig.screenWidth * 0.04,
+                    ),
+                    InkWell(
+                      child: Container(
+                        height: SizeConfig.screenHeight * 0.04,
+                        width: SizeConfig.screenWidth * 0.3,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .secondary, // Main button color
+                          borderRadius: BorderRadius.circular(24),
+                          border: TornotT == 'Taken'
+                              ? Border.all(
+                                  color: Colors.black,
+                                  width: 2.0, // Adjust outline thickness
+                                )
+                              : null, // No border if not selected
+                        ),
+                        child: Center(
+                          child: AutoSizeText(
+                            'Taken',
+                            style: TextStyle(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .color,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 20),
+                            maxLines: 1,
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        setState(() {
+                          TornotT = 'Taken';
+                        });
+                      },
+                    ),
+                  ],
                 ),
-              )
-            ],
+
+                SizedBox(
+                  height: SizeConfig.pointThreeHeight,
+                ),
+                // card
+                Column(
+                  children: medicationCards.where((medCard) {
+                    return (TornotT == 'Not taken' && !medCard.isTaken) ||
+                        (TornotT == 'Taken' && medCard.isTaken);
+                  }).map((medCard) {
+                    return MedCard(
+                      medId: medCard.medId,
+                      medName: medCard.medName,
+                      dosage: medCard.dosage,
+                      onDelete: medCard.onDelete,
+                      onArchive: medCard.onArchive,
+                      isTaken: TornotT == 'Not taken'
+                          ? !medCard.isTaken
+                          : medCard.isTaken, // Set isTaken based on TornotT
+                    );
+                  }).toList(),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -249,151 +319,276 @@ class _MtrackingState extends State<Mtracking> {
 // Function to show a dialog for adding medications
 
   void _showMedicationForm() {
+    String? selectedType = 'Pill';
+    double? selectedDosage;
+    double? selectedInterval;
+    String? selectedIntervalType;
+    DateTime? selectedStartDate;
+    TimeOfDay? selectedStartTime;
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            'Add Medication',
-            style:
-                TextStyle(color: Theme.of(context).textTheme.titleSmall!.color),
-          ),
-          content: Form(
-            child: Column(
-              children: [
-                TextFormField(
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () {
+                FocusScope.of(context).unfocus();
+              },
+              child: AlertDialog(
+                scrollable: true,
+                title: Text(
+                  'Add Medication',
                   style: TextStyle(
-                      color: Theme.of(context).textTheme.titleSmall!.color),
-                  controller: medNameController,
-                  decoration:
-                      const InputDecoration(labelText: 'Medication Name'),
+                    color: Theme.of(context).textTheme.titleSmall!.color,
+                  ),
                 ),
+                content: Form(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextField(
+                        controller: medNameController,
+                        decoration: InputDecoration(),
+                      ),
+                      SizedBox(
+                        height: SizeConfig.screenHeight * 0.025,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          OutlinedButton(
+                            onPressed: () {
+                              setState(() {
+                                selectedType = 'Pill';
+                              });
+                            },
+                            style: ButtonStyle(
+                              side:
+                                  MaterialStateProperty.resolveWith<BorderSide>(
+                                (states) {
+                                  if (selectedType == 'Pill') {
+                                    return BorderSide(
+                                        color: Colors.blue, width: 2);
+                                  } else {
+                                    return BorderSide(
+                                        color: Colors.grey, width: 1);
+                                  }
+                                },
+                              ),
+                            ),
+                            child: Text('Pill'),
+                          ),
+                          SizedBox(width: 10),
+                          OutlinedButton(
+                            onPressed: () {
+                              setState(() {
+                                selectedType = 'Syrup';
+                              });
+                            },
+                            style: ButtonStyle(
+                              side:
+                                  MaterialStateProperty.resolveWith<BorderSide>(
+                                (states) {
+                                  if (selectedType == 'Syrup') {
+                                    return BorderSide(
+                                        color: Colors.blue, width: 2);
+                                  } else {
+                                    return BorderSide(
+                                        color: Colors.grey, width: 1);
+                                  }
+                                },
+                              ),
+                            ),
+                            child: Text('Syrup'),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: SizeConfig.screenHeight * 0.025,
+                      ),
+                      // Dosage Selection
+                      if (selectedType == 'Pill')
+                        Column(
+                          children: [
+                            Text(
+                              'Select Dosage (Pills)',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.white),
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              height: 150,
+                              child: CupertinoPicker(
+                                itemExtent: 50,
+                                onSelectedItemChanged: (index) {
+                                  setState(() {
+                                    selectedDosage = (index + 1) * 0.5;
+                                  });
+                                },
+                                children: List.generate(20, (index) {
+                                  return Center(
+                                    child: Text('${(index + 1) * 0.5}'),
+                                  );
+                                }),
+                              ),
+                            ),
+                          ],
+                        ),
+                      if (selectedType == 'Syrup')
+                        Column(
+                          children: [
+                            Text(
+                              'Select Dosage (ml)',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.white),
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              height: 150,
+                              child: CupertinoPicker(
+                                itemExtent: 50,
+                                onSelectedItemChanged: (index) {
+                                  setState(() {
+                                    selectedDosage = (index + 1) * 5.0;
+                                  });
+                                },
+                                children: List.generate(20, (index) {
+                                  return Center(
+                                    child: Text('${(index + 1) * 5}'),
+                                  );
+                                }),
+                              ),
+                            ),
+                          ],
+                        ),
+                      SizedBox(
+                        height: SizeConfig.screenHeight * 0.05,
+                      ),
+                      // Interval Selection
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 100,
+                            child: CupertinoPicker(
+                              itemExtent: 50,
+                              onSelectedItemChanged: (index) {
+                                setState(() {
+                                  selectedInterval = (index + 1) * 0.5;
+                                });
+                              },
+                              children: List.generate(20, (index) {
+                                return Center(
+                                  child: Text('${(index + 1) * 0.5}'),
+                                );
+                              }),
+                            ),
+                          ),
+                          SizedBox(width: 20),
+                          Center(
+                            child: Container(
+                              width: 100,
+                              child: CupertinoPicker(
+                                itemExtent: 50,
+                                onSelectedItemChanged: (index) {
+                                  setState(() {
+                                    switch (index) {
+                                      case 0:
+                                        selectedIntervalType = 'hours';
+                                        break;
+                                      case 1:
+                                        selectedIntervalType = 'days';
+                                        break;
+                                      case 2:
+                                        selectedIntervalType = 'weeks';
+                                        break;
+                                      default:
+                                        selectedIntervalType = 'hours';
+                                    }
+                                  });
+                                },
+                                children: const [
+                                  Center(child: Text('hours')),
+                                  Center(child: Text('days')),
+                                  Center(child: Text('weeks')),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: SizeConfig.screenHeight * 0.05,
+                      ),
+                      Text(
+                        '${selectedDosage ?? 0.5} ${selectedType == 'Syrup' ? 'ml' : (selectedDosage == 1 || selectedDosage == 0.5 ? 'pill' : 'pills')} every ${selectedInterval ?? 0} ${selectedIntervalType ?? 'interval'}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(
+                        height: SizeConfig.screenHeight * 0.05,
+                      ),
+                      Container(
+                        height: SizeConfig.screenHeight * 0.25,
+                        child: CupertinoDatePicker(
+                          mode: CupertinoDatePickerMode.dateAndTime,
+                          initialDateTime: DateTime.now(),
+                          onDateTimeChanged: (DateTime dateTime) {
+                            setState(() {
+                              selectedStartDate = dateTime;
+                              selectedStartTime =
+                                  TimeOfDay.fromDateTime(dateTime);
+                            });
+                          },
+                        ),
+                      ),
 
-                // Dosage Dropdown
-                DropdownButtonFormField<double>(
-                  decoration: const InputDecoration(labelText: 'Dosage'),
-                  items:
-                      [0.5, 1.0, 1.5, 2.0, 2.5 /* Add more values as needed */]
-                          .map((double value) => DropdownMenuItem<double>(
-                                value: value,
-                                child: Text(value.toString()),
-                              ))
-                          .toList(),
-                  onChanged: (newValue) {
-                    // Update dosageController if needed
-                    setState(() {
-                      // Assuming you are in a StatefulWidget
-                      selectedDosage = newValue;
-                    });
-                  },
+                      SizedBox(
+                        height: SizeConfig.screenHeight * 0.025,
+                      ),
+                    ],
+                  ),
                 ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('Cancel'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      addMedicationToFirestore(
+                        medNameController.text,
+                        selectedType!, // No need to convert to string
+                        selectedDosage!.toStringAsFixed(
+                            2), // Example: Formats to 2 decimal places
+                        selectedInterval!.toStringAsFixed(
+                            1), // Example: Formats to 1 decimal place
+                        selectedIntervalType.toString(),
+                        selectedStartDate!,
+                        selectedStartTime!,
+                      );
 
-                // Interval Dropdown
-                DropdownButtonFormField<int>(
-                  decoration:
-                      const InputDecoration(labelText: 'Intervals (hours)'),
-                  items: List.generate(24, (i) => i + 1) // Generates 1 to 24
-                      .map((int value) => DropdownMenuItem<int>(
-                            value: value,
-                            child: Text(value.toString()),
-                          ))
-                      .toList(),
-                  onChanged: (newValue) {
-                    // Update timeController if needed
-                    setState(() {
-                      selectedInterval = newValue;
-                    });
-                  },
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                // Save the medication details and update UI
-                addMedicationToFirestore(
-                  medNameController.text,
-                  selectedDosage.toString(),
-                  selectedInterval.toString(),
-                );
-                Navigator.of(context).pop();
-                print(userId);
-              },
-              child: const Text('Save'),
-            ),
-          ],
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('Save'),
+                  ),
+                ],
+              ),
+            );
+          },
         );
       },
     );
-  }
-
-  //a function to get the current day and month from the device and generates cards accordingly
-  List<Widget> generateDateCards() {
-    List<Widget> dateCards = [];
-    // Get the current date and time
-    DateTime currentDate = DateTime.now();
-    for (int i = 0; i < 90; i++) {
-      DateTime nextDate = currentDate.add(Duration(days: i));
-      int day = nextDate.day;
-      int month = nextDate.month;
-
-      DateCard dateCard = DateCard(
-        date: day.toString(),
-        month: getMonthAbbreviation(month),
-        isSelected: selectedDates[i],
-        onTap: () {
-          // date selection logic
-          setState(() {
-            for (int j = 0; j < selectedDates.length; j++) {
-              selectedDates[j] = (j == i);
-              print("Tapped DateCard Index: $i");
-            }
-          });
-        },
-      );
-
-      dateCards.add(dateCard);
-    }
-
-    return dateCards;
-  }
-
-  // Function to get the month abbreviation
-  String getMonthAbbreviation(int month) {
-    switch (month) {
-      case 1:
-        return 'JAN';
-      case 2:
-        return 'FEB';
-      case 3:
-        return 'MAR';
-      case 4:
-        return 'APR';
-      case 5:
-        return 'MAY';
-      case 6:
-        return 'JUN';
-      case 7:
-        return 'JUL';
-      case 8:
-        return 'AUG';
-      case 9:
-        return 'SEP';
-      case 10:
-        return 'OCT';
-      case 11:
-        return 'NOV';
-      case 12:
-        return 'DEC';
-      default:
-        return '';
-    }
   }
 }

@@ -10,11 +10,11 @@
 		</data>
 		<key>flutter_assets/AssetManifest.bin</key>
 		<data>
-		jm5d2yho2hipEMsepKRjLcDLDFQ=
+		ui+z9SJIK/V072C3KMsUPm8Jrms=
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		Cv7Mwl0ZojJzIl+fdFiTLCdB3sg=
+		5bCaaX3QOtHGljdLoz1XxBp5pTM=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
@@ -22,7 +22,7 @@
 		</data>
 		<key>flutter_assets/NOTICES.Z</key>
 		<data>
-		oU5n/hFGHaBcyaoVpFOwmaf7RWk=
+		YOBde0ocXz29wxxrPt/7ZxzqNVk=
 		</data>
 		<key>flutter_assets/fonts/MaterialIcons-Regular.otf</key>
 		<data>
@@ -34,11 +34,11 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		HHbr3qPu6PvTaO0V4vgJusP0zMI=
+		ankCHUne0vwTJ+Eb5QznrAXibos=
 		</data>
 		<key>flutter_assets/lib/icons/.DS_Store</key>
 		<data>
-		mo4naA5RjbnmOWlPrJ20Dw5/Z9s=
+		ppSmV1Gdz7QnO/g2qJfH1Pyuovs=
 		</data>
 		<key>flutter_assets/lib/icons/OB1.jpg</key>
 		<data>
@@ -51,6 +51,10 @@
 		<key>flutter_assets/lib/icons/OB3.jpg</key>
 		<data>
 		P4EfKhVWSBoM1YIesalYvDbnbNg=
+		</data>
+		<key>flutter_assets/lib/icons/amzn.jpg</key>
+		<data>
+		vpcrsKnxz+BlxjxRQPZNNzyII7M=
 		</data>
 		<key>flutter_assets/lib/icons/apple.png</key>
 		<data>
@@ -67,6 +71,22 @@
 		<key>flutter_assets/lib/icons/av3.json</key>
 		<data>
 		b53cHwZSmZWp6e5ilh8ia/T531A=
+		</data>
+		<key>flutter_assets/lib/icons/carrot.svg</key>
+		<data>
+		kAkcd1c7HCY2sNuC9Adnlhj3Z/I=
+		</data>
+		<key>flutter_assets/lib/icons/christmas-gift.svg</key>
+		<data>
+		MsId1B2FUabvQTnKyh4EFVa8BoM=
+		</data>
+		<key>flutter_assets/lib/icons/diary.svg</key>
+		<data>
+		1dC8YUDoXr1+sDFj+0ZzfWoffWU=
+		</data>
+		<key>flutter_assets/lib/icons/diet-schedule.png</key>
+		<data>
+		yuGk8Jb1qNhCK9aKINCLZEa3jZs=
 		</data>
 		<key>flutter_assets/lib/icons/diet.png</key>
 		<data>
@@ -108,13 +128,53 @@
 		<data>
 		RzmsRt2N7M1+JoJXDKBN4savwb0=
 		</data>
+		<key>flutter_assets/lib/icons/meats.svg</key>
+		<data>
+		kKT+vEImhGQQxX1m+5QduQdjN38=
+		</data>
 		<key>flutter_assets/lib/icons/mental-health.png</key>
 		<data>
 		hdT+MRvsx3mJDWG/CjJJlvjju/c=
 		</data>
+		<key>flutter_assets/lib/icons/noon.jpg</key>
+		<data>
+		AOCKhjFWoo3zwbWzKXeU0AV/GA8=
+		</data>
+		<key>flutter_assets/lib/icons/orange.svg</key>
+		<data>
+		eqpj2eh+cqLOSZHuV1T7ZoWcVdM=
+		</data>
 		<key>flutter_assets/lib/icons/pill.json</key>
 		<data>
 		I7Bn1rEnbi16VpXmVFtnFyGB/+Q=
+		</data>
+		<key>flutter_assets/lib/icons/shopping%20(1).webp</key>
+		<data>
+		GymW1elIsv11hYh66hhTyhuDP7g=
+		</data>
+		<key>flutter_assets/lib/icons/shopping.webp</key>
+		<data>
+		powkRvgwSK1qNtjCWV6vBfosdzs=
+		</data>
+		<key>flutter_assets/lib/icons/socializing.jpg</key>
+		<data>
+		PZLoC+kSID+JedTbzHBn4c38OSg=
+		</data>
+		<key>flutter_assets/lib/icons/soup.svg</key>
+		<data>
+		1f8keodMysKFoqdSvZbACM1JLQg=
+		</data>
+		<key>flutter_assets/lib/icons/sport.png</key>
+		<data>
+		ufeK8VKl6xjZsRiy++3sRKFONFM=
+		</data>
+		<key>flutter_assets/lib/icons/sport.svg</key>
+		<data>
+		6GL38i+v1Jw43zjwRNfsmBFDpBs=
+		</data>
+		<key>flutter_assets/lib/icons/surprise.svg</key>
+		<data>
+		dF2gQXvc+OQ27NyW46ikD7DQQcs=
 		</data>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -151,14 +211,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			VxTCqwSIW63HyT2gAbu0+6w+LP9dg1/lHtCQxhruPqo=
+			F3GVaKpoqREAj8rB4Y4p+TMB6e4G5uqRadp7zKRwI/k=
 			</data>
 		</dict>
 		<key>flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			59xI1kfXYG0cd97Ebqf62U9SNQ//aBrME0ix9sB9ZKo=
+			1WvuO0nezrV75b1adquyBwVPXtThRuUyq0ru4ucAgG0=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
@@ -172,7 +232,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			cphxf3CqmMGW74Q4iqe2MNhGL2O6tvgIX0w91DgTtyw=
+			gSoPMinr9mgPQ9J43JYAjcYmlYOXuwF+xdRxe7ukxZc=
 			</data>
 		</dict>
 		<key>flutter_assets/fonts/MaterialIcons-Regular.otf</key>
@@ -193,7 +253,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			1XziFTvUt8UxRncFHN2Kcmw1lggJyCinsengVzP9CBg=
+			lSmj87Smfz0CmUqjG6lamE7Q7zGUWd1D20TLlehyYHA=
 			</data>
 		</dict>
 		<key>flutter_assets/lib/icons/OB1.jpg</key>
@@ -215,6 +275,13 @@
 			<key>hash2</key>
 			<data>
 			Rag0RyjGZWOF1sf9XiL99EOuQ1XVCyyBZDd+SHO6YS8=
+			</data>
+		</dict>
+		<key>flutter_assets/lib/icons/amzn.jpg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			BK+H6xs4t7pF25cExkKJMe/ILyZ7k2h2pnxmA3Pw7tI=
 			</data>
 		</dict>
 		<key>flutter_assets/lib/icons/apple.png</key>
@@ -243,6 +310,34 @@
 			<key>hash2</key>
 			<data>
 			zadaSWnzgwOzRBd744B1YBtprpRkX7cb9LGqCRUYN9k=
+			</data>
+		</dict>
+		<key>flutter_assets/lib/icons/carrot.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			XmCSgfQl1kUHieDGvBdgdDkv/AIq/+2m2a68FarBl3w=
+			</data>
+		</dict>
+		<key>flutter_assets/lib/icons/christmas-gift.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			rmQqoc73/yf8r5fQraZuRq6vCNWsqacMZ+1QOCh8bII=
+			</data>
+		</dict>
+		<key>flutter_assets/lib/icons/diary.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			0SJWt+CQut4CoGYqRz2s0l3dEvCRnJOLM7rKGJQ2FF8=
+			</data>
+		</dict>
+		<key>flutter_assets/lib/icons/diet-schedule.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			bC05suopFDY0/4H1fObM5YHPgmVJdpkTxSfkI5bhA3w=
 			</data>
 		</dict>
 		<key>flutter_assets/lib/icons/diet.png</key>
@@ -315,6 +410,13 @@
 			YuDfbXbTRdZ7bJU2cQMGjcKmLLloDWtFT/1FV5cHRtM=
 			</data>
 		</dict>
+		<key>flutter_assets/lib/icons/meats.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			+8dxi6Jz99SBX8skixbn7HCUbQv3YRigtHk+/5lzv2A=
+			</data>
+		</dict>
 		<key>flutter_assets/lib/icons/mental-health.png</key>
 		<dict>
 			<key>hash2</key>
@@ -322,11 +424,74 @@
 			qAed+VWvAt9Rq3Zq46N8ZhRx1Ob4XjUdFFHPJQKziKc=
 			</data>
 		</dict>
+		<key>flutter_assets/lib/icons/noon.jpg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			dq8rseYd7xlQ0jdcg7J00A6/vJyFBhoX6mFZfEdF98w=
+			</data>
+		</dict>
+		<key>flutter_assets/lib/icons/orange.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			ViPvgMcPvz1qVxT/zIW18OZ+wv7ZTVVOfyPPvDZm0tE=
+			</data>
+		</dict>
 		<key>flutter_assets/lib/icons/pill.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
 			vWhmrxZq4Yhuv76bMmuzoc0JONWlLfunaawWOf5n7ww=
+			</data>
+		</dict>
+		<key>flutter_assets/lib/icons/shopping%20(1).webp</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			HeLRbZl1PNZAb6T8iGy8gh1ls+61UxiQpp1bxjqWp+Y=
+			</data>
+		</dict>
+		<key>flutter_assets/lib/icons/shopping.webp</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			DVULQdpsRvMTmv6n8Mk37e/jZ5QgTC5ViqEwzk6k4yk=
+			</data>
+		</dict>
+		<key>flutter_assets/lib/icons/socializing.jpg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			tgmWlPYRcXbMUKALFQHX6NrE2O9532E2h6XDA8t1K6s=
+			</data>
+		</dict>
+		<key>flutter_assets/lib/icons/soup.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			wJ/ocRnKBoQ5QN1ZNwkv4LT5iGeXDWMjZQk6NSnK49w=
+			</data>
+		</dict>
+		<key>flutter_assets/lib/icons/sport.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			hjkrYh0j2DppfRXYWLxFq0YaTFYs07M752q9qsqprgs=
+			</data>
+		</dict>
+		<key>flutter_assets/lib/icons/sport.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			cXK64p+vph3k9HptvMvz25SJm/bSHRtUOOwNX5XSvzc=
+			</data>
+		</dict>
+		<key>flutter_assets/lib/icons/surprise.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			CuimaJBna0GWMNAr3TqpitTT+oYAkoc37IUSHxD43bo=
 			</data>
 		</dict>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>

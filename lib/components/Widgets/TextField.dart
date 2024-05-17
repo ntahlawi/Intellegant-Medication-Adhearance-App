@@ -25,6 +25,9 @@ class CustomTextField extends StatelessWidget {
         horizontal: SizeConfig.screenWidth * 0.05,
       ),
       child: TextField(
+        style: TextStyle(
+          color: Theme.of(context).textTheme.labelMedium!.color,
+        ),
         textAlign: TextAlign.justify,
         controller: controller,
         decoration: InputDecoration(
@@ -35,14 +38,13 @@ class CustomTextField extends StatelessWidget {
             ),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Theme.of(context).colorScheme.primaryContainer,
-            ),
+            borderSide:
+                BorderSide(color: Theme.of(context).colorScheme.background),
             borderRadius: BorderRadius.circular(24),
           ),
           hintText: hintText,
           hintStyle: TextStyle(
-            color: Theme.of(context).textTheme.bodyLarge!.color,
+            color: Theme.of(context).textTheme.labelMedium!.color,
           ),
           prefixIcon: Container(
             margin: EdgeInsets.only(

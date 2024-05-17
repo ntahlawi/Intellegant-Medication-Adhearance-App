@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
 
@@ -37,25 +38,25 @@ class _BuildOBpageState extends State<BuildOBpage> {
             SizedBox(
               height: SizeConfig.pointThreeHeight,
             ),
-            Text(
+            AutoSizeText(
               widget.title,
-              style: TextStyle(
-                  color: Theme.of(context).textTheme.titleSmall!.color,
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold),
+              maxLines: 1,
+              minFontSize: 32,
+              maxFontSize: 36,
+              style:
+                  const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             ),
             SizedBox(
-              height: SizeConfig.pointThreeHeight,
+              height: SizeConfig.pointFifteenHeight,
             ),
-            Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.screenWidth * 0.05),
-              child: Text(
-                widget.subtitle,
-                style: TextStyle(
-                    color: Theme.of(context).textTheme.titleSmall!.color),
-              ),
-            )
+            AutoSizeText(
+              widget.subtitle,
+              maxLines: 1,
+              minFontSize: 18,
+              maxFontSize: 24,
+              style:
+                  const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            ),
           ],
         ),
       ),

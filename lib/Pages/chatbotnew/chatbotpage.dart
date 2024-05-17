@@ -3,6 +3,8 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:medappfv/Pages/chatbotnew/keyp.dart';
 
+import '../../components/Themes/Sizing.dart';
+
 class ChatWidget extends StatefulWidget {
   const ChatWidget({
     required this.apiKey,
@@ -76,73 +78,75 @@ class _ChatWidgetState extends State<ChatWidget> {
 
     return Padding(
       padding: const EdgeInsets.only(top: 25.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: _apiKey.isNotEmpty
-                ? ListView.builder(
-                    controller: _scrollController,
-                    itemBuilder: (context, idx) {
-                      final content = _generatedContent[idx];
-                      return Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: MessageWidget(
-                          text: content.text,
-                          image: content.image,
-                          isFromUser: content.fromUser,
+      child: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: _apiKey.isNotEmpty
+                  ? ListView.builder(
+                      controller: _scrollController,
+                      itemBuilder: (context, idx) {
+                        final content = _generatedContent[idx];
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: MessageWidget(
+                            text: content.text,
+                            image: content.image,
+                            isFromUser: content.fromUser,
+                          ),
+                        );
+                      },
+                      itemCount: _generatedContent.length,
+                    )
+                  : ListView(
+                      children: const [
+                        Text(
+                          'No API key found. Please provide an API Key using '
+                          "'--dart-define' to set the 'API_KEY' declaration.",
                         ),
-                      );
-                    },
-                    itemCount: _generatedContent.length,
-                  )
-                : ListView(
-                    children: const [
-                      Text(
-                        'No API key found. Please provide an API Key using '
-                        "'--dart-define' to set the 'API_KEY' declaration.",
-                      ),
-                    ],
-                  ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 25,
-              horizontal: 15,
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    style: TextStyle(
-                        color: Theme.of(context).textTheme.titleSmall!.color),
-                    autofocus: false,
-                    focusNode: _textFieldFocus,
-                    decoration: textFieldDecoration,
-                    controller: _textController,
-                    onSubmitted: _sendChatMessage,
-                  ),
-                ),
-                const SizedBox.square(dimension: 15),
-                if (!_loading)
-                  IconButton(
-                    onPressed: () async {
-                      _sendChatMessage(_textController.text);
-                      _textFieldFocus.unfocus();
-                      _scrollDown();
-                    },
-                    icon: Icon(
-                      Icons.send,
-                      color: Theme.of(context).colorScheme.primary,
+                      ],
                     ),
-                  )
-                else
-                  const CircularProgressIndicator(),
-              ],
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 25,
+                horizontal: 15,
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      style: TextStyle(
+                          color: Theme.of(context).textTheme.titleSmall!.color),
+                      autofocus: false,
+                      focusNode: _textFieldFocus,
+                      decoration: textFieldDecoration,
+                      controller: _textController,
+                      onSubmitted: _sendChatMessage,
+                    ),
+                  ),
+                  const SizedBox.square(dimension: 15),
+                  if (!_loading)
+                    IconButton(
+                      onPressed: () async {
+                        _sendChatMessage(_textController.text);
+                        _textFieldFocus.unfocus();
+                        _scrollDown();
+                      },
+                      icon: Icon(
+                        Icons.send,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    )
+                  else
+                    const CircularProgressIndicator(),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -237,35 +241,42 @@ class MessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment:
-          isFromUser ? MainAxisAlignment.end : MainAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(right: 8.0),
-          child: Flexible(
-            child: Container(
-              constraints: const BoxConstraints(maxWidth: 520),
-              decoration: BoxDecoration(
-                color: isFromUser
-                    ? Theme.of(context).colorScheme.primary
-                    : Theme.of(context).colorScheme.secondary,
-                borderRadius: BorderRadius.circular(18),
-              ),
-              padding: const EdgeInsets.symmetric(
-                vertical: 15,
-                horizontal: 20,
-              ),
-              margin: const EdgeInsets.only(bottom: 8),
-              child: Column(
-                children: [
-                  if (text case final text?) MarkdownBody(data: text),
-                ],
+    return SafeArea(
+      child: Row(
+        mainAxisAlignment:
+            isFromUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Flexible(
+              child: Container(
+                constraints:
+                    BoxConstraints(maxWidth: SizeConfig.screenWidth * 0.7),
+                decoration: BoxDecoration(
+                  color: isFromUser
+                      ? Theme.of(context).colorScheme.primary
+                      : Theme.of(context).colorScheme.secondary,
+                  borderRadius: BorderRadius.circular(18),
+                ),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 15,
+                  horizontal: 20,
+                ),
+                margin: EdgeInsets.only(bottom: SizeConfig.screenHeight * 0.05),
+                child: Column(
+                  children: [
+                    if (text case final text?)
+                      MarkdownBody(
+                        data: text,
+                        shrinkWrap: true,
+                      ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

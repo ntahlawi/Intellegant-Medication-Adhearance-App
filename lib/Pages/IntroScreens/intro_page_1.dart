@@ -11,9 +11,9 @@ class IntroPage1 extends StatefulWidget {
 class _IntroPage1State extends State<IntroPage1> {
   @override
   Widget build(BuildContext context) {
-    return const BuildOBpage(
+    return  const BuildOBpage(
       subtitle:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore',
+          'Your medications and save them !',
       title: 'Track',
       urlImage: 'lib/icons/OB1.jpg',
     );

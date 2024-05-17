@@ -12,7 +12,7 @@ class MessageBubble extends StatefulWidget {
     super.key,
   });
 
-  final  content;
+  final content;
   final bool isUserMessage;
 
   @override
@@ -25,6 +25,7 @@ class _MessageBubbleState extends State<MessageBubble> {
     SizeConfig.init(context);
     final themeData = Theme.of(context);
     return Container(
+      constraints: BoxConstraints(maxWidth: SizeConfig.screenWidth * 0.95),
       margin: EdgeInsets.all(SizeConfig.screenWidth * 0.02),
       decoration: BoxDecoration(
         color: widget.isUserMessage

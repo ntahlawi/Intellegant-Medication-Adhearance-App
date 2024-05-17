@@ -39,15 +39,27 @@ class _NavBarState extends State<NavBar> {
             sindex = index;
           });
         },
-        items: const <Widget>[
+        items: <Widget>[
           // ignore: prefer_const_constructors
           Icon(
             UniconsLine.home,
           ),
-          Icon(UniconsLine.robot),
-          Icon(UniconsLine.chat),
-          Icon(UniconsLine.medkit),
-          Icon(UniconsLine.setting),
+          Icon(
+            UniconsLine.robot,
+            color: Theme.of(context).iconTheme.color,
+          ),
+          Icon(
+            UniconsLine.chat,
+            color: Theme.of(context).iconTheme.color,
+          ),
+          Icon(
+            UniconsLine.medkit,
+            color: Theme.of(context).iconTheme.color,
+          ),
+          Icon(
+            UniconsLine.setting,
+            color: Theme.of(context).iconTheme.color,
+          ),
         ],
       ),
       body: Screens[sindex],

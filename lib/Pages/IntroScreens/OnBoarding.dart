@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:medappfv/Pages/IntroScreens/intro_page_1.dart';
 import 'package:medappfv/Pages/IntroScreens/intro_page_2.dart';
 import 'package:medappfv/Pages/IntroScreens/intro_page_3.dart';
-import 'package:medappfv/Pages/login_signup/login_page.dart';
+import 'package:medappfv/Pages/login_signup/signup.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -26,6 +26,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Stack(
           children: [
@@ -43,9 +44,12 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 IntroPage3(),
               ],
             ),
+            SizedBox(
+              height: SizeConfig.pointFifteenHeight,
+            ),
             // dot indicators
             Container(
-              alignment: const Alignment(0, 0.75),
+              alignment: Alignment.bottomCenter,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -57,8 +61,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     child: Text(
                       'skip',
                       style: TextStyle(
-                          color: Theme.of(context).textTheme.titleSmall!.color,
-                          fontSize: SizeConfig.screenWidth * 0.045),
+                          color: Colors.black,
+                          fontSize: SizeConfig.screenWidth * 0.045,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
 
@@ -78,18 +83,16 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) {
-                                  return LoginPage();
+                                  return SignUpPage();
                                 },
                               ),
                             );
                           },
                           child: Text('Done',
                               style: TextStyle(
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .color,
-                                  fontSize: SizeConfig.screenWidth * 0.045)),
+                                  color: Colors.black,
+                                  fontSize: SizeConfig.screenWidth * 0.045,
+                                  fontWeight: FontWeight.bold)),
                         )
                       : GestureDetector(
                           onTap: () {
@@ -100,11 +103,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           child: Text(
                             'Next',
                             style: TextStyle(
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .color,
-                                fontSize: SizeConfig.screenWidth * 0.045),
+                                color: Colors.black,
+                                fontSize: SizeConfig.screenWidth * 0.045,
+                                fontWeight: FontWeight.bold),
                           ),
                         )
                 ],

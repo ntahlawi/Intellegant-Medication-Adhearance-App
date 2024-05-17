@@ -1,10 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:medappfv/Pages/Home.dart';
 import 'package:medappfv/Pages/login_signup/signup.dart';
+import 'package:medappfv/components/Widgets/NavBar.dart';
 import 'package:medappfv/components/Widgets/TextField.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
 
@@ -36,27 +37,43 @@ class _LoginPageState extends State<LoginPage> {
         email: emailtextcontroller.text,
         password: passwordextcontroller.text,
       );
+      Navigator.pop(context); // Pop the loading indicator
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) {
-            return const Home();
+            return const NavBar();
           },
         ),
       );
-      //pop loading circle
-      Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
-      //pop loading circle
-      Navigator.pop(context);
-      //Wrong E-mail
+      Navigator.pop(context); // Pop the loading indicator
+      // Show error message
+      String message;
       if (e.code == 'user-not-found') {
-        //show a dialog displaying 'Wrong e-mail'
+        message = 'Wrong e-mail';
+      } else if (e.code == 'wrong-password') {
+        message = 'Wrong password';
+      } else {
+        message = 'An error occurred';
       }
-      //Wrong Password
-      else if (e.code == 'wrong-password') {
-        //show a dialog displaying 'Wrong password'
-      }
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Error'),
+            content: Text(message),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Close'),
+              ),
+            ],
+          );
+        },
+      );
     }
   }
 
@@ -87,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                         'Welcome Back!',
                         style: TextStyle(
                             color:
-                                Theme.of(context).textTheme.titleSmall!.color,
+                                Theme.of(context).textTheme.labelSmall!.color,
                             fontSize: SizeConfig.screenWidth * 0.085,
                             fontWeight: FontWeight.bold),
                       ),
@@ -97,11 +114,10 @@ class _LoginPageState extends State<LoginPage> {
                       Text(
                         'We missed you around here',
                         style: TextStyle(
-                            color:
-                                Theme.of(context).textTheme.titleSmall!.color,
-                            fontSize: SizeConfig.screenWidth * 0.055,
-                            fontWeight: FontWeight.bold,
-                            height: 0),
+                          color: Theme.of(context).textTheme.labelSmall!.color,
+                          fontSize: SizeConfig.screenWidth * 0.055,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ],
                   ),
@@ -167,8 +183,19 @@ class _LoginPageState extends State<LoginPage> {
                             color: Theme.of(context).colorScheme.secondary,
                             borderRadius: BorderRadius.circular(24),
                           ),
-                          child: const Center(
-                            child: Text('Sign In'),
+                          child: Center(
+                            child: AutoSizeText(
+                              'Sign In',
+                              maxLines: 1,
+                              minFontSize: 12,
+                              maxFontSize: 16,
+                              style: TextStyle(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .color,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -194,7 +221,7 @@ class _LoginPageState extends State<LoginPage> {
                               thickness: 0.5,
                               color: Theme.of(context)
                                   .textTheme
-                                  .bodyLarge!
+                                  .labelMedium!
                                   .color!
                                   .withOpacity(.5),
                             ),
@@ -207,7 +234,7 @@ class _LoginPageState extends State<LoginPage> {
                               style: TextStyle(
                                 color: Theme.of(context)
                                     .textTheme
-                                    .bodyLarge!
+                                    .labelMedium!
                                     .color!
                                     .withOpacity(.5),
                               ),
@@ -218,7 +245,7 @@ class _LoginPageState extends State<LoginPage> {
                               thickness: 0.5,
                               color: Theme.of(context)
                                   .textTheme
-                                  .bodyLarge!
+                                  .labelMedium!
                                   .color!
                                   .withOpacity(.5),
                             ),
@@ -238,7 +265,7 @@ class _LoginPageState extends State<LoginPage> {
                         Center(
                           child: Container(
                             height: (SizeConfig.screenHeight * 0.05),
-                            width: (SizeConfig.screenWidth * 0.3),
+                            width: (SizeConfig.screenWidth * 0.6),
                             padding:
                                 EdgeInsets.all(SizeConfig.pointFifteenWidth),
                             margin: EdgeInsets.symmetric(
@@ -254,35 +281,17 @@ class _LoginPageState extends State<LoginPage> {
                                 SizedBox(
                                   width: SizeConfig.screenWidth * 0.009,
                                 ),
-                                const Text(
+                                AutoSizeText(
                                   'Google',
+                                  maxLines: 1,
+                                  minFontSize: 12,
+                                  maxFontSize: 16,
+                                  style: TextStyle(
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium!
+                                          .color),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        //apple
-                        //Apple
-                        Center(
-                          child: Container(
-                            height: (SizeConfig.screenHeight * 0.05),
-                            width: (SizeConfig.screenWidth * 0.3),
-                            padding:
-                                EdgeInsets.all(SizeConfig.pointFifteenWidth),
-                            margin: EdgeInsets.symmetric(
-                                horizontal: SizeConfig.pointFifteenWidth),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.secondary,
-                              borderRadius: BorderRadius.circular(24),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.apple),
-                                SizedBox(
-                                  width: SizeConfig.screenWidth * 0.009,
-                                ),
-                                const Text('Apple')
                               ],
                             ),
                           ),
@@ -297,15 +306,17 @@ class _LoginPageState extends State<LoginPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        AutoSizeText(
                           'Not a part of our family? ',
+                          maxLines: 1,
+                          minFontSize: 12,
+                          maxFontSize: 16,
                           style: TextStyle(
-                            color: Theme.of(context)
-                                .textTheme
-                                .bodyLarge!
-                                .color!
-                                .withOpacity(.5),
-                          ),
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .color!
+                                  .withOpacity(0.5)),
                         ),
                         GestureDetector(
                           onTap: () {
@@ -318,8 +329,11 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             );
                           },
-                          child: Text(
+                          child: AutoSizeText(
                             'Join our family now ! ',
+                            maxLines: 1,
+                            minFontSize: 12,
+                            maxFontSize: 16,
                             style: TextStyle(
                                 color: Theme.of(context)
                                     .colorScheme

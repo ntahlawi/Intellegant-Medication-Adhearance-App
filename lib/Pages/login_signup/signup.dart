@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -179,8 +180,21 @@ class _SignUpPageState extends State<SignUpPage> {
                               color: Theme.of(context).colorScheme.secondary,
                               borderRadius: BorderRadius.circular(24),
                             ),
-                            child: const Center(
-                              child: Text('Sign up'),
+                            child: Center(
+                              child: Center(
+                                child: AutoSizeText(
+                                  'Sign In',
+                                  maxLines: 1,
+                                  minFontSize: 12,
+                                  maxFontSize: 16,
+                                  style: TextStyle(
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium!
+                                        .color,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -201,7 +215,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 thickness: 0.5,
                                 color: Theme.of(context)
                                     .textTheme
-                                    .bodyLarge!
+                                    .labelMedium!
                                     .color!
                                     .withOpacity(.5),
                               ),
@@ -214,7 +228,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 style: TextStyle(
                                   color: Theme.of(context)
                                       .textTheme
-                                      .bodyLarge!
+                                      .labelMedium!
                                       .color!
                                       .withOpacity(.5),
                                 ),
@@ -225,7 +239,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 thickness: 0.5,
                                 color: Theme.of(context)
                                     .textTheme
-                                    .bodyLarge!
+                                    .labelMedium!
                                     .color!
                                     .withOpacity(.5),
                               ),
@@ -245,7 +259,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           Center(
                             child: Container(
                               height: (SizeConfig.screenHeight * 0.05),
-                              width: (SizeConfig.screenWidth * 0.3),
+                              width: (SizeConfig.screenWidth * 0.6),
                               padding:
                                   EdgeInsets.all(SizeConfig.pointFifteenWidth),
                               margin: EdgeInsets.symmetric(
@@ -261,35 +275,17 @@ class _SignUpPageState extends State<SignUpPage> {
                                   SizedBox(
                                     width: SizeConfig.screenWidth * 0.009,
                                   ),
-                                  const Text(
+                                  AutoSizeText(
                                     'Google',
+                                    maxLines: 1,
+                                    minFontSize: 12,
+                                    maxFontSize: 16,
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium!
+                                            .color),
                                   ),
-                                ],
-                              ),
-                            ),
-                          ),
-
-                          //Apple
-                          Center(
-                            child: Container(
-                              height: (SizeConfig.screenHeight * 0.05),
-                              width: (SizeConfig.screenWidth * 0.3),
-                              padding:
-                                  EdgeInsets.all(SizeConfig.pointFifteenWidth),
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: SizeConfig.pointFifteenWidth),
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.secondary,
-                                borderRadius: BorderRadius.circular(24),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(Icons.apple),
-                                  SizedBox(
-                                    width: SizeConfig.screenWidth * 0.009,
-                                  ),
-                                  const Text('Apple')
                                 ],
                               ),
                             ),
@@ -309,7 +305,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             style: TextStyle(
                               color: Theme.of(context)
                                   .textTheme
-                                  .bodyLarge!
+                                  .labelMedium!
                                   .color!
                                   .withOpacity(.5),
                             ),

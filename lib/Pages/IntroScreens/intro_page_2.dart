@@ -12,10 +12,9 @@ class _IntroPage2State extends State<IntroPage2> {
   @override
   Widget build(BuildContext context) {
     return const BuildOBpage(
-      subtitle:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore',
-      title: 'Check',
-      urlImage: 'lib/icons/OB2.jpg',
+      subtitle: 'Share your stories with our community',
+      title: 'Socialize!',
+      urlImage: 'lib/icons/socializing.jpg',
     );
   }
 }

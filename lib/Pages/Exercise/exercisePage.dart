@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
-import 'package:medappfv/components/Cards/date_card.dart';
 
 import '../../components/Cards/exercise_card.dart';
 
@@ -80,14 +79,6 @@ class _ExtrackingState extends State<Extracking> {
           ),
           child: Column(
             children: [
-              // cards display for each day
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: generateDateCards(),
-                ),
-              ),
               SizedBox(
                 height: SizeConfig.pointThreeHeight,
               ),
@@ -158,7 +149,8 @@ class _ExtrackingState extends State<Extracking> {
                 ),
                 TextFormField(
                   controller: caloriesController,
-                  decoration: const InputDecoration(labelText: 'Burned Calories'),
+                  decoration:
+                      const InputDecoration(labelText: 'Burned Calories'),
                   keyboardType: TextInputType.number,
                 ),
               ],
@@ -187,67 +179,6 @@ class _ExtrackingState extends State<Extracking> {
         );
       },
     );
-  }
-
-  // Function to generate date cards
-  List<Widget> generateDateCards() {
-    List<Widget> dateCards = [];
-    DateTime currentDate = DateTime.now();
-    for (int i = 0; i < 90; i++) {
-      DateTime nextDate = currentDate.add(Duration(days: i));
-      int day = nextDate.day;
-      int month = nextDate.month;
-
-      DateCard dateCard = DateCard(
-        date: day.toString(),
-        month: getMonthAbbreviation(month),
-        isSelected: selectedDates[i],
-        onTap: () {
-          setState(() {
-            for (int j = 0; j < selectedDates.length; j++) {
-              selectedDates[j] = (j == i);
-              print("Tapped DateCard Index: $i");
-            }
-          });
-        },
-      );
-
-      dateCards.add(dateCard);
-    }
-
-    return dateCards;
-  }
-
-  // Function to get the month abbreviation
-  String getMonthAbbreviation(int month) {
-    switch (month) {
-      case 1:
-        return 'JAN';
-      case 2:
-        return 'FEB';
-      case 3:
-        return 'MAR';
-      case 4:
-        return 'APR';
-      case 5:
-        return 'MAY';
-      case 6:
-        return 'JUN';
-      case 7:
-        return 'JUL';
-      case 8:
-        return 'AUG';
-      case 9:
-        return 'SEP';
-      case 10:
-        return 'OCT';
-      case 11:
-        return 'NOV';
-      case 12:
-        return 'DEC';
-      default:
-        return '';
-    }
   }
 
   CollectionReference userInfoCollection =
