@@ -12,11 +12,11 @@ ThemeData lightTheme = ThemeData(
     ),
   ),
   colorScheme: const ColorScheme.light(
-      background: Color.fromRGBO(247, 247, 247, 1),
+      surface: Color.fromRGBO(247, 247, 247, 1),
       primary: Color.fromRGBO(20, 24, 57, 1),
       secondary: Color.fromRGBO(90, 98, 140, 1),
       primaryContainer: Colors.white,
-      onBackground: Colors.black),
+      onSurface: Colors.black),
   iconTheme: const IconThemeData(color: Colors.white),
   textTheme: const TextTheme(
     // Define text styles with different sizes

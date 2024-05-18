@@ -67,7 +67,7 @@ class _regF1p1State extends State<regF1p1> {
     final TextEditingController _userNameController = TextEditingController();
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Column(
         children: [
           SizedBox(

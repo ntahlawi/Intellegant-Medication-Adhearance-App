@@ -71,7 +71,7 @@ class _regF1State extends State<regF1> {
     //showErrorDialog
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Column(
         children: [
           SizedBox(height: SizeConfig.screenHeight * 0.22),

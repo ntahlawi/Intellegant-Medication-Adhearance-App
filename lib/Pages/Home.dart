@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medappfv/Pages/Diet/dietpage.dart';
+import 'package:medappfv/Pages/Journal/MainJournal.dart';
 import 'package:medappfv/Pages/MedicationHealthandDiet/sugerlevelcheck.dart';
 import 'package:medappfv/Pages/Rewardspage/RewardPage.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
@@ -131,7 +132,7 @@ class _HomeState extends State<Home> {
     var White = Theme.of(context).textTheme.labelSmall!.color;
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -501,7 +502,7 @@ class _HomeState extends State<Home> {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return dietpage();
+                              return DietPage();
                             },
                           ),
                         );
@@ -546,7 +547,16 @@ class _HomeState extends State<Home> {
                         borderRadius: BorderRadius.circular(12),
                         color: Theme.of(context).colorScheme.primary),
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return Journal();
+                            },
+                          ),
+                        );
+                      },
                       child: Column(
                         children: [
                           SvgPicture.asset(

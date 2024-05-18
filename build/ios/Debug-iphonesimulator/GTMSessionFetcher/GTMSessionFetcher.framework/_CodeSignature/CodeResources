@@ -34,7 +34,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		kZvt0Hz/JmeM7q43o+DLTQXTYKk=
+		SuFDCH+Ijo+tLjN7NjN08UHvdnQ=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -45,6 +45,10 @@
 	<dict>
 		<key>GTMSessionFetcher_Core_Privacy.bundle/Info.plist</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			1Jy0Tq0LRZwvImPbgYFo0exzrks=
+			</data>
 			<key>hash2</key>
 			<data>
 			NWGwvQ0nJ/yTrgPHRZKH4WPhjS4Ctwy9DlQWbVYVxHE=
@@ -52,6 +56,10 @@
 		</dict>
 		<key>GTMSessionFetcher_Core_Privacy.bundle/PrivacyInfo.xcprivacy</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			GqeAMkwbcNQeG0K4qQhQh2vHhHo=
+			</data>
 			<key>hash2</key>
 			<data>
 			PkqTy+hqzvfdfgY6KMhJmS9Vbn9SytxfN8HosOG1RoY=
@@ -59,6 +67,10 @@
 		</dict>
 		<key>Headers/GTMSessionFetcher-umbrella.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			uk5tfn4+qFjgRMutCcPDErlSaiE=
+			</data>
 			<key>hash2</key>
 			<data>
 			3rne+xIEztt63voNklSVEM3UXM+Jkgc6ENNW5IKGMh8=
@@ -66,6 +78,10 @@
 		</dict>
 		<key>Headers/GTMSessionFetcher.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			Ulc7+XjdEaKvCr/DLAarGRBUBZM=
+			</data>
 			<key>hash2</key>
 			<data>
 			B1vv7hfcE+b9ruw3WtvWY3kDLRQJI9iAYa9YvWLv3pM=
@@ -73,6 +89,10 @@
 		</dict>
 		<key>Headers/GTMSessionFetcherLogging.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			OarAK/xhbLrf3l1Rs7fmZYjpY+s=
+			</data>
 			<key>hash2</key>
 			<data>
 			kLGAoYz9D1T929Ogar/2lyKQDrsGraqasNrbJRZXBLw=
@@ -80,6 +100,10 @@
 		</dict>
 		<key>Headers/GTMSessionFetcherService.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			DFpjWz72mxXlgmoeGdDAEHWiWik=
+			</data>
 			<key>hash2</key>
 			<data>
 			lyX4iP93tw2dHQLWwzXF14MUgWU4inmcONu4U+NBMy8=
@@ -87,6 +111,10 @@
 		</dict>
 		<key>Headers/GTMSessionUploadFetcher.h</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			g+gU93Tlop/ULWHnpDIV0PA6GWc=
+			</data>
 			<key>hash2</key>
 			<data>
 			sd5I5NTlbkAGFBQCcfr80mHfIKlbQQO2DyFA1iW6pZM=
@@ -94,6 +122,10 @@
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			Zd+B+N1kD6ufOJwjEQ1h4yl/05s=
+			</data>
 			<key>hash2</key>
 			<data>
 			s/7Ay5SAF/AZJnsEfDo0km7Zw2aVRXsBLuyUjeZo7/Y=

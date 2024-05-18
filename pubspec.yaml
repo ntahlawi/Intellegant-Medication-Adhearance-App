@@ -50,6 +50,8 @@ dependencies:
   percent_indicator: ^4.2.3
   flutter_svg: ^2.0.10+1
   flutter_ruler_picker: ^1.0.6
+  sqflite: ^2.3.3+1
+  path: ^1.9.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

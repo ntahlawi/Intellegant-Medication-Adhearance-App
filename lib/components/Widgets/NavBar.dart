@@ -33,7 +33,7 @@ class _NavBarState extends State<NavBar> {
       bottomNavigationBar: CurvedNavigationBar(
         color: Theme.of(context).colorScheme.primary,
         animationDuration: const Duration(milliseconds: 300),
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         onTap: (index) {
           setState(() {
             sindex = index;

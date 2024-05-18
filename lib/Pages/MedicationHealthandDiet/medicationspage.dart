@@ -365,8 +365,7 @@ class _MtrackingState extends State<Mtracking> {
                               });
                             },
                             style: ButtonStyle(
-                              side:
-                                  MaterialStateProperty.resolveWith<BorderSide>(
+                              side: WidgetStateBorderSide.resolveWith(
                                 (states) {
                                   if (selectedType == 'Pill') {
                                     return BorderSide(
@@ -388,8 +387,7 @@ class _MtrackingState extends State<Mtracking> {
                               });
                             },
                             style: ButtonStyle(
-                              side:
-                                  MaterialStateProperty.resolveWith<BorderSide>(
+                              side: WidgetStateBorderSide.resolveWith(
                                 (states) {
                                   if (selectedType == 'Syrup') {
                                     return BorderSide(

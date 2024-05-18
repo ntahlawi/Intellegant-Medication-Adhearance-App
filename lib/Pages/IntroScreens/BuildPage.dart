@@ -24,7 +24,7 @@ class _BuildOBpageState extends State<BuildOBpage> {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Container(
         color: Colors.white,
         child: Column(

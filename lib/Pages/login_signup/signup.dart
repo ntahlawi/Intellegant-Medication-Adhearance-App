@@ -65,7 +65,7 @@ class _SignUpPageState extends State<SignUpPage> {
     SizeConfig.init(context);
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(

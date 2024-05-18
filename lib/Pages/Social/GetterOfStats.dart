@@ -48,7 +48,7 @@ class UserInfo extends StatelessWidget {
           );
         } else {
           return Scaffold(
-            backgroundColor: Theme.of(context).colorScheme.background,
+            backgroundColor: Theme.of(context).colorScheme.surface,
             body: SafeArea(
               child: Column(
                 children: [

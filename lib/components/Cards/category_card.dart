@@ -29,7 +29,7 @@ class CategoryCard extends StatelessWidget {
           children: [
             Image.asset(
               imageUrl,
-              color: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.surface,
             ),
             SizedBox(width: SizeConfig.screenWidth * 0.02), // Responsive spacing
             Text(categoryName),

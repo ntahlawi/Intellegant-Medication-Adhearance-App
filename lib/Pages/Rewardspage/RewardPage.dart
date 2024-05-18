@@ -163,7 +163,7 @@ class _RewardsPageState extends State<RewardsPage> {
                       ),
                       TextButton(
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
+                          backgroundColor: WidgetStatePropertyAll<Color>(
                               Theme.of(context)
                                   .colorScheme
                                   .secondary), //button color
@@ -271,7 +271,7 @@ class _RewardsPageState extends State<RewardsPage> {
                       ),
                       TextButton(
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
+                          backgroundColor: WidgetStatePropertyAll<Color>(
                               Theme.of(context)
                                   .colorScheme
                                   .secondary), //button color

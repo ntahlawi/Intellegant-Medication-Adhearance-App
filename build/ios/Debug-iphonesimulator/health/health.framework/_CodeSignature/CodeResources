@@ -18,15 +18,15 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		iVofHSil49rKQr5ZDtcn2fP7YKQ=
+		u/JzxZTf0werTxaLbz6P1sPUkgM=
 		</data>
 		<key>Modules/health.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		UDs8Z4YDEy1cJ7UDhDjY5kReJQY=
+		dfBMmZvcrn/93ubhpmNRtmyOVKw=
 		</data>
 		<key>Modules/health.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		PheXy4RVGoJ9+PYZWfD9htnR5tQ=
+		rJ57EsUosqlqfq4NGNfRliL5Les=
 		</data>
 		<key>Modules/health.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -34,11 +34,11 @@
 		</data>
 		<key>Modules/health.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		B+4Nk0zpprNDoFsTV1FOQmdvBKM=
+		MF68Pb5tyD7ueIGhBfeuyu/gc+w=
 		</data>
 		<key>Modules/health.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		aWsiMjso9rvILXo183j5ZdSlFhc=
+		vBMm/Vev0eXm48sDDF+tt7erDL4=
 		</data>
 		<key>Modules/health.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -46,11 +46,11 @@
 		</data>
 		<key>Modules/health.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		+g4Myj6EIe7qJYxqDiHeYBT2zq0=
+		S5BuNo9g2TUgSptHvWSi02cgrDI=
 		</data>
 		<key>Modules/health.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		bg6bkqdSY3m8iiLZPkzUlkhnyxw=
+		fvcRBqyFqdcYJ5YuWbBPfTeuLIM=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -84,14 +84,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			J14AlVIQiZPhxATS3fhhc0WizeI1M2Tc7XLY0YOX6kU=
+			GQ80qQJqdf/2uHKGUAoemRiJr4KYNpGenb3ZrREEl3o=
 			</data>
 		</dict>
 		<key>Modules/health.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			08P0JI2fnxmWgODRbZ7UneBXI11+ww+8rQJYhAiknAc=
+			NrVtK903+6dj2ozcr2fd8k1fBBWF9/ENm3SggG4QYeE=
 			</data>
 		</dict>
 		<key>Modules/health.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
@@ -105,14 +105,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			4X4RXu+xWAZiW1hjjBgpN+eqU1VaxStza0GDRUlDXEk=
+			OyxvxJ08KKXgBccGGzRnfBPpCMKScqlZPPgX9vi3xS4=
 			</data>
 		</dict>
 		<key>Modules/health.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			AzAO0w/3W2uToBgc9dY07JenczXPyEtmaMDqetwf1+I=
+			fTF8yomIscBHRwY/OY6PNCsdsi0sreAXsEdpZDhB/DA=
 			</data>
 		</dict>
 		<key>Modules/health.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -126,14 +126,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			zQtMz+1jhl0zOYYbU2OKKNEmR7jsKcepi4ENaAh2RL0=
+			8Sgqm7iPm4gJKu3IddiB96W+dOp3jnp+tTnqhUjRWrM=
 			</data>
 		</dict>
 		<key>Modules/health.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			5mODBet9omi1AhMo3ivq9PmqgzuN4VRi3/6FETw1lQY=
+			VvM+uMcUi7jVUBY8mwdru0SUK+2BCYFkq3N7BeSDQHw=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

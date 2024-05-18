@@ -17,7 +17,7 @@ class _DietPageState extends State<DietPage> {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       floatingActionButtonLocation: FloatingActionButtonLocation.endContained,
       floatingActionButton: Padding(
         padding: EdgeInsets.only(bottom: SizeConfig.screenHeight * 0.03),

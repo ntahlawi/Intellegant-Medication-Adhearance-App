@@ -1,9 +1,9 @@
-// ignore_for_file: file_names
-
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:medappfv/Pages/Journal/DBhelper.dart';
 import 'package:medappfv/components/Themes/Sizing.dart';
-import 'package:medappfv/components/Widgets/TimeLineTile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Journal extends StatefulWidget {
   const Journal({super.key});
@@ -13,108 +13,254 @@ class Journal extends StatefulWidget {
 }
 
 class _JournalState extends State<Journal> {
+  List<Map<String, dynamic>> _journalEntries = [];
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadJournalEntries();
+  }
+
+  Future<void> _loadJournalEntries() async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      List<Map<String, dynamic>> entries =
+          await DatabaseHelper().getEntries(user.uid);
+      setState(() {
+        _journalEntries = entries;
+      });
+    }
+  }
+
+  Future<void> _addJournalEntry(
+      String date, String time, String content) async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      Map<String, String> entry = {
+        'userId': user.uid,
+        'date': date,
+        'time': time,
+        'content': content
+      };
+      await DatabaseHelper().insertEntry(entry);
+      _loadJournalEntries();
+    }
+  }
+
+  Future<void> _deleteJournalEntry(int id) async {
+    await DatabaseHelper().deleteEntry(id);
+    _loadJournalEntries();
+  }
+
+  void _showAddEntryDialog() {
+    final TextEditingController _entryController = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AutoSizeText(
+                  'Add Journal Entry',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  minFontSize: 12,
+                  maxFontSize: 18,
+                ),
+                SizedBox(height: SizeConfig.pointThreeHeight),
+                TextField(
+                  controller: _entryController,
+                  maxLines: 5,
+                  decoration: InputDecoration(
+                    hintText: 'Write your journal entry here...',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+                SizedBox(height: SizeConfig.pointThreeHeight),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_entryController.text.isNotEmpty) {
+                      final now = DateTime.now();
+                      _addJournalEntry(
+                        DateFormat('dd MMM yyyy').format(now),
+                        DateFormat('hh:mm a').format(now),
+                        _entryController.text,
+                      );
+                      Navigator.pop(context);
+                    }
+                  },
+                  child: AutoSizeText('Add Entry'),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _showFullEntryDialog(String date, String time, String content) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AutoSizeText(
+                  date,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  minFontSize: 12,
+                  maxFontSize: 18,
+                ),
+                AutoSizeText(
+                  time,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  minFontSize: 12,
+                  maxFontSize: 16,
+                ),
+                SizedBox(height: SizeConfig.pointThreeHeight),
+                AutoSizeText(
+                  content,
+                  style: TextStyle(fontSize: 16),
+                  minFontSize: 12,
+                  maxFontSize: 16,
+                ),
+                SizedBox(height: SizeConfig.pointThreeHeight),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: AutoSizeText('Close'),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.endContained,
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: SizeConfig.screenHeight * 0.03),
-        child: FloatingActionButton(
-onPressed: null,
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          child: Icon(
-            EvaIcons.plus,
-            color: Theme.of(context).iconTheme.color,
-          ),
-        ),
-      ),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        leading: BackButton(
-          onPressed: () => Navigator.of(context).pop(),
-          color: Theme.of(context).textTheme.titleSmall!.color,
-        ),
-        title: Text(
-          "My Journal",
-          style: TextStyle(
-              color: Theme.of(context).textTheme.titleSmall!.color,
-              fontWeight: FontWeight.w500,
-              fontSize: SizeConfig.screenWidth * 0.04),
+        title: AutoSizeText(
+          'Journal',
+          maxLines: 1,
+          minFontSize: 12,
+          maxFontSize: 18,
         ),
       ),
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: AutoSizeText(
+                '"The best way to predict the future is to create it."',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontStyle: FontStyle.italic,
+                ),
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                minFontSize: 12,
+                maxFontSize: 16,
+              ),
+            ),
             Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: SizeConfig.screenWidth * 0.04),
-                child: ListView(
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsets.only(top: SizeConfig.pointThreeHeight),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: SizeConfig.screenWidth * 0.05,
-                            ),
-                            child: Text(
-                              '2023',
-                              style: TextStyle(
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .color,
-                                  fontSize: SizeConfig.screenWidth * 0.05),
-                            ),
-                          ),
-                          Icon(
-                            EvaIcons.calendar,
-                            color:
-                                Theme.of(context).textTheme.titleSmall!.color,
-                          )
-                        ],
+              child: ListView.builder(
+                itemCount: _journalEntries.length,
+                itemBuilder: (context, index) {
+                  final entry = _journalEntries[index];
+                  return Dismissible(
+                    key: Key(entry['id'].toString()),
+                    direction: DismissDirection.endToStart,
+                    onDismissed: (direction) {
+                      _deleteJournalEntry(entry['id']);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: AutoSizeText('Journal entry deleted'),
+                        ),
+                      );
+                    },
+                    background: Container(
+                      color: Colors.red,
+                      alignment: Alignment.centerRight,
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Icon(
+                        Icons.delete,
+                        color: Colors.white,
                       ),
                     ),
-
-                    // start
-                    const MytimeLine(
-                      Isfirst: true,
-                      islast: false,
-                      ispast: true,
-                      journalText:
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit',
-                      date: 'Nov 20',
+                    child: Card(
+                      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      child: ListTile(
+                        title: AutoSizeText(
+                          entry['date']!,
+                          maxLines: 1,
+                          minFontSize: 12,
+                          maxFontSize: 18,
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AutoSizeText(
+                              entry['time']!,
+                              maxLines: 1,
+                              minFontSize: 12,
+                              maxFontSize: 16,
+                            ),
+                            AutoSizeText(
+                              entry['content']!,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              minFontSize: 12,
+                              maxFontSize: 16,
+                            ),
+                          ],
+                        ),
+                        onTap: () {
+                          _showFullEntryDialog(entry['date']!, entry['time']!,
+                              entry['content']!);
+                        },
+                      ),
                     ),
-                    //middle
-                    const MytimeLine(
-                      Isfirst: false,
-                      islast: false,
-                      ispast: true,
-                      journalText:
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit',
-                      date: 'Nov 21',
-                    ),
-                    //end
-                    const MytimeLine(
-                      Isfirst: false,
-                      islast: true,
-                      ispast: true,
-                      journalText:
-                          'im sadd, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit',
-                      date: 'Nov 22',
-                    ),
-                  ],
-                ),
+                  );
+                },
               ),
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _showAddEntryDialog,
+        child: Icon(Icons.add),
+        backgroundColor: Theme.of(context).colorScheme.secondary,
       ),
     );
   }

@@ -8,9 +8,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+
+  try {
+    await Firebase.initializeApp();
+  } catch (e) {
+    // Handle Firebase initialization error
+    print('Firebase initialization error: $e');
+  }
+
   final prefs = await SharedPreferences.getInstance();
   final showHome = prefs.getBool('showHome') ?? false;
+
   runApp(
     OBcheck(
       showHome: showHome,

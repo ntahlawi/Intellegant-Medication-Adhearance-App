@@ -35,7 +35,7 @@ class _regF2p1State extends State<regF2p1> {
     // final confirmpasswordextcontroller = TextEditingController();
     return Scaffold(
       appBar: AppBar(),
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Column(
         children: [
           SizedBox(
@@ -93,7 +93,7 @@ class _regF2p1State extends State<regF2p1> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          'How Tall are you? we use CM around here',
+                          'How Tall are you? ',
                           style: TextStyle(
                               fontSize: SizeConfig.screenWidth * 0.04,
                               color:

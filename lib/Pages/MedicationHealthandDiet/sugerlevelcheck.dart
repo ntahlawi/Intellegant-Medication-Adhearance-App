@@ -79,7 +79,7 @@ class _slevelcheckState extends State<slevelcheck> {
         widget.updateDateAndTime(
             formattedDate, formattedTime); // Update date and time
         widget.updateSugarLevel(sugarLevel);
-      // ignore: avoid_print
+        // ignore: avoid_print
       }).catchError((error) => print("Failed to add reading: $error"));
     });
   }
@@ -88,7 +88,7 @@ class _slevelcheckState extends State<slevelcheck> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Column(
         children: [
           SizedBox(
@@ -141,22 +141,21 @@ class _slevelcheckState extends State<slevelcheck> {
                   onBuildRulerScaleText: (index, value) {
                     return value.toInt().toString();
                   },
-                  rulerBackgroundColor:
-                      Theme.of(context).colorScheme.background,
+                  rulerBackgroundColor: Theme.of(context).colorScheme.surface,
                   ranges: ranges,
                   scaleLineStyleList: [
                     ScaleLineStyle(
-                        color: Theme.of(context).colorScheme.onBackground,
+                        color: Theme.of(context).colorScheme.onSurface,
                         width: SizeConfig.screenWidth * 0.0050,
                         height: SizeConfig.screenHeight * 0.04,
                         scale: 0),
                     ScaleLineStyle(
-                        color: Theme.of(context).colorScheme.onBackground,
+                        color: Theme.of(context).colorScheme.onSurface,
                         width: SizeConfig.screenWidth * 0.0030,
                         height: SizeConfig.screenHeight * 0.03,
                         scale: 5),
                     ScaleLineStyle(
-                        color: Theme.of(context).colorScheme.onBackground,
+                        color: Theme.of(context).colorScheme.onSurface,
                         width: SizeConfig.screenWidth * 0.0015,
                         height: SizeConfig.screenHeight * 0.02,
                         scale: -1)
