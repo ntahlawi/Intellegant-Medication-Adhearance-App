@@ -1,14 +1,10 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
 import 'package:medappfv/FireBase/addingData.dart';
 import 'dart:async';
-
 import 'package:pedometer/pedometer.dart';
-
-String formatDate(DateTime d) {
-  return d.toString().substring(0, 19);
-}
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class Scounter extends StatefulWidget {
   const Scounter({super.key});
@@ -22,6 +18,7 @@ class _ScounterState extends State<Scounter> {
   late Stream<StepCount> _stepCountStream;
   late Stream<PedestrianStatus> _pedestrianStatusStream;
   String _status = '?', _steps = '?';
+  int _currentDaySteps = 0;
 
   @override
   void initState() {
@@ -29,12 +26,13 @@ class _ScounterState extends State<Scounter> {
     initPlatformState();
   }
 
-  void onStepCount(StepCount event) {
+  void onStepCount(StepCount event) async {
     print(event);
     setState(() {
       _steps = event.steps.toString();
-      submitUserData({'Steps': event.steps.toString()});
+      _currentDaySteps = event.steps;
     });
+    await _updateStepsInFirestore(event.steps);
   }
 
   void onPedestrianStatusChanged(PedestrianStatus event) {
@@ -57,6 +55,21 @@ class _ScounterState extends State<Scounter> {
     setState(() {
       _steps = 'Step Count not available';
     });
+  }
+
+  Future<void> _updateStepsInFirestore(int steps) async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    final String? userId = user?.uid;
+    if (userId != null) {
+      String today = DateFormat('yyyyMMdd').format(DateTime.now());
+      DocumentReference stepsDoc = FirebaseFirestore.instance
+          .collection('UserInfo')
+          .doc(userId)
+          .collection('DailySteps')
+          .doc(today);
+
+      await stepsDoc.set({'steps': steps}, SetOptions(merge: true));
+    }
   }
 
   void initPlatformState() {

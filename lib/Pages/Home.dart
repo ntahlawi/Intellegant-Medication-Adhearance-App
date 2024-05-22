@@ -10,6 +10,8 @@ import 'package:medappfv/Pages/Diet/dietpage.dart';
 import 'package:medappfv/Pages/Journal/MainJournal.dart';
 import 'package:medappfv/Pages/MedicationHealthandDiet/sugerlevelcheck.dart';
 import 'package:medappfv/Pages/Rewardspage/RewardPage.dart';
+import 'package:medappfv/Pages/Exercise/exercisePage.dart'; // Import the exercise page
+import 'package:medappfv/Pages/Exercise/weekly_calories_graph.dart'; // Import the weekly calories graph
 import 'package:medappfv/components/Themes/Sizing.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -57,7 +59,7 @@ double goal = 100; // fetch the goal set by the user
 double limitedProgress = currentProgress.clamp(0.0, goal);
 double displayedPercent = limitedProgress / goal;
 
-DateTime now = DateTime.now(); // get the curent date
+DateTime now = DateTime.now(); // get the current date
 String formattedDate =
     DateFormat('dd MMM yyyy').format(now); // convert to dd/MM/yyyy
 String realName = '';
@@ -67,11 +69,17 @@ final CollectionReference userInfoCollection =
     FirebaseFirestore.instance.collection('UserInfo');
 
 class _HomeState extends State<Home> {
+  List<double> weeklyCalories = List.filled(7, 0.0); // List to hold weekly calories data
+  int totalCalories = 0;
+  bool isLoading = true;
+
   @override
   void initState() {
     super.initState();
     _fetchUserData(); // Fetch data on initialization
     getLatestReading();
+    _fetchWeekCalories(); // Fetch weekly calories data on initialization
+    _fetchTotalCalories(); // Fetch total calories data on initialization
     setState(() {});
   }
 
@@ -97,6 +105,65 @@ class _HomeState extends State<Home> {
       print('User is not logged in');
     }
     // Update variables and trigger UI update
+  }
+
+  Future<void> _fetchWeekCalories() async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    final String? userId = user?.uid;
+    if (userId != null) {
+      DateTime now = DateTime.now();
+      DateTime weekStart = now.subtract(Duration(days: now.weekday % 7)); // Ensuring week starts on Sunday
+
+      List<double> dailyCalories = List.filled(7, 0.0);
+
+      for (int i = 0; i < 7; i++) {
+        DateTime day = weekStart.add(Duration(days: i));
+        String dayId = DateFormat('yyyy-MM-dd').format(day);
+
+        DocumentSnapshot daySnapshot = await FirebaseFirestore.instance
+            .collection('UserInfo')
+            .doc(userId)
+            .collection('DailyCalories')
+            .doc(dayId)
+            .get();
+
+        if (daySnapshot.exists && daySnapshot.data() != null) {
+          var dayData = daySnapshot.data() as Map<String, dynamic>;
+          double calories = dayData['caloriesBurned'] ?? 0.0;
+          dailyCalories[i] = calories;
+        }
+      }
+
+      setState(() {
+        weeklyCalories = dailyCalories;
+        isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _fetchTotalCalories() async {
+    final User? user = FirebaseAuth.instance.currentUser;
+    final String? userId = user?.uid;
+    if (userId != null) {
+      DateTime now = DateTime.now();
+      String currentDayId = DateFormat('yyyy-MM-dd').format(now);
+
+      DocumentSnapshot daySnapshot = await FirebaseFirestore.instance
+          .collection('UserInfo')
+          .doc(userId)
+          .collection('DailyCalories')
+          .doc(currentDayId)
+          .get();
+
+      if (daySnapshot.exists && daySnapshot.data() != null) {
+        var dayData = daySnapshot.data() as Map<String, dynamic>;
+        double calories = dayData['caloriesBurned'] ?? 0.0;
+        setState(() {
+          totalCalories = calories.round(); // Round to the nearest integer
+          if (totalCalories < 0) totalCalories = 0; // Ensure non-negative value
+        });
+      }
+    }
   }
 
   @override
@@ -194,7 +261,7 @@ class _HomeState extends State<Home> {
 
                           AutoSizeText(
                             latestSugarLevel.toInt().toString(),
-                            minFontSize: 75,
+                            minFontSize: 70,
                             maxFontSize: 80,
                             maxLines: 1,
                             style: TextStyle(
@@ -265,7 +332,7 @@ class _HomeState extends State<Home> {
               SizedBox(
                 height: SizeConfig.screenHeight * 0.03,
               ),
-              // three progress cirles to show how are you going with ur targets
+              // three progress circles to show how are you going with your targets
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -306,11 +373,11 @@ class _HomeState extends State<Home> {
                         height: SizeConfig.screenHeight * 0.01,
                       ),
                       AutoSizeText(
-                        "$currentProgress out of $goal", // Display percentage
+                        "$currentProgress / $goal", // Display percentage
                         style: TextStyle(color: White),
                         maxLines: 1,
                         minFontSize: 12,
-                        maxFontSize: 16,
+                        maxFontSize: 14, // Smaller font size
                       ),
                     ],
                   ),
@@ -322,7 +389,7 @@ class _HomeState extends State<Home> {
                             0.12, // Adjust radius as needed
                         lineWidth: 9.0, // Adjust line width as needed
                         animation: true, // Enable animation (optional)
-                        percent: displayedPercent, // Calculate percentage
+                        percent: totalCalories / 2000, // Assume daily goal of 2000 calories
                         progressColor: Colors.orange,
 
                         center: Column(
@@ -331,14 +398,13 @@ class _HomeState extends State<Home> {
                             Icon(
                               Icons.whatshot,
                               size: SizeConfig.screenWidth * 0.085,
-                              color:
-                                  Theme.of(context).textTheme.labelSmall!.color,
+                              color: Theme.of(context).textTheme.labelSmall!.color,
                             ),
                             SizedBox(
                               height: SizeConfig.screenHeight * 0.005,
                             ),
                             AutoSizeText(
-                              "${currentProgress.toStringAsFixed(1)}%", // Display percentage
+                              "${(totalCalories / 2000 * 100).toStringAsFixed(0)}%", // Display percentage as integer
                               style: TextStyle(color: White),
                               maxLines: 1,
                               minFontSize: 12,
@@ -351,11 +417,11 @@ class _HomeState extends State<Home> {
                         height: SizeConfig.screenHeight * 0.01,
                       ),
                       AutoSizeText(
-                        "$currentProgress out of $goal", // Display percentage
+                        "${totalCalories.clamp(0, 2000)} / 2000 kcal", // Display total calories as integer
                         style: TextStyle(color: White),
                         maxLines: 1,
                         minFontSize: 12,
-                        maxFontSize: 16,
+                        maxFontSize: 14, // Smaller font size
                       ),
                     ],
                   ),
@@ -369,7 +435,6 @@ class _HomeState extends State<Home> {
                         animation: true, // Enable animation (optional)
                         percent: displayedPercent, // Calculate percentage
                         progressColor: Colors.orange,
-
                         center: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -396,20 +461,32 @@ class _HomeState extends State<Home> {
                         height: SizeConfig.screenHeight * 0.01,
                       ),
                       AutoSizeText(
-                        "$currentProgress out of $goal", // Display percentage
+                        "$currentProgress / $goal", // Display percentage
                         style: TextStyle(color: White),
                         maxLines: 1,
                         minFontSize: 12,
-                        maxFontSize: 16,
+                        maxFontSize: 14, // Smaller font size
                       ),
                     ],
                   ),
                 ],
               ),
-
-              //optional: a chart
               SizedBox(
-                height: SizeConfig.screenHeight * 0.005,
+                height: SizeConfig.screenHeight * 0.03,
+              ),
+              Container(
+                height: SizeConfig.screenHeight * 0.4,
+                width: SizeConfig.screenWidth * 0.9,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(24),
+                    color: Theme.of(context).colorScheme.primary),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: WeeklyCaloriesGraph(weeklyCalories: weeklyCalories),
+                ),
+              ),
+              SizedBox(
+                height: SizeConfig.screenHeight * 0.03,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -423,7 +500,16 @@ class _HomeState extends State<Home> {
                         borderRadius: BorderRadius.circular(12),
                         color: Theme.of(context).colorScheme.primary),
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ExerciseTracking();
+                            },
+                          ),
+                        );
+                      },
                       child: Column(
                         children: [
                           SvgPicture.asset(
@@ -439,8 +525,8 @@ class _HomeState extends State<Home> {
                             style: TextStyle(
                                 color: Black, fontWeight: FontWeight.bold),
                             maxLines: 1,
-                            minFontSize: 12,
-                            maxFontSize: 16,
+                            minFontSize: 10,
+                            maxFontSize: 10,
                           ),
                         ],
                       ),
@@ -480,8 +566,8 @@ class _HomeState extends State<Home> {
                             style: TextStyle(
                                 color: Black, fontWeight: FontWeight.bold),
                             maxLines: 1,
-                            minFontSize: 12,
-                            maxFontSize: 16,
+                            minFontSize: 10,
+                            maxFontSize: 10,
                           ),
                         ],
                       ),
@@ -522,8 +608,8 @@ class _HomeState extends State<Home> {
                             style: TextStyle(
                                 color: Black, fontWeight: FontWeight.bold),
                             maxLines: 1,
-                            minFontSize: 12,
-                            maxFontSize: 16,
+                            minFontSize: 10,
+                            maxFontSize: 10,
                           ),
                         ],
                       ),
